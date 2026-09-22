@@ -1,0 +1,20 @@
+node_modules/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+review/
+*.log
+
+# Local tools, retired layouts, and unpublished media
+tools/
+categories.css
+presentation.css
+styles.css
+workflow.css
+workflow.js
+assets/workflow/layout-preview.html
+assets/video/lora-motion.mp4
+assets/video/lora-motion-poster.jpg
+assets/video/controlnet-comparison.mp4
+assets/video/controlnet-poster.jpg

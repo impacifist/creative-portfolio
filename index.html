@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="캐릭터 LoRA, AI 영상 제작, ComfyUI 워크플로우와 제작 도구 개발 포트폴리오.">
+  <meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#f7f7f2">
+  <title>impacifist — AI Visual Portfolio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2322241e'/%3E%3Cpath d='M19 16h8v32h-8zm18 0h8v32h-8z' fill='%23deff60'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="site.css"><script defer src="content.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 바로가기</a>
+  <header class="header wrap"><a class="brand" href="#">impacifist<span>AI Visual Portfolio</span></a><a class="text-link" href="https://github.com/impacifist" target="_blank" rel="noopener noreferrer">GitHub ↗</a></header>
+  <nav class="portfolio-navigation wrap" role="tablist" aria-label="포트폴리오 분야">
+    <button type="button" id="portfolio-tab-video" role="tab" aria-controls="video" aria-selected="true" data-portfolio="video">영상 제작</button>
+    <button type="button" id="portfolio-tab-images" role="tab" aria-controls="images" aria-selected="false" data-portfolio="images" tabindex="-1">이미지 생성</button>
+    <button type="button" id="portfolio-tab-technology" role="tab" aria-controls="technology" aria-selected="false" data-portfolio="technology" tabindex="-1">기술·파이프라인</button>
+    <button type="button" id="portfolio-tab-workflow" role="tab" aria-controls="workflow" aria-selected="false" data-portfolio="workflow" tabindex="-1">워크플로우</button>
+  </nav>
+  <main id="main" class="wrap">
+    <section id="images" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-images" data-portfolio-panel tabindex="0" hidden>
+      <div id="work" class="page-intro"><h1>캐릭터의 특징을,<br>새로운 장면에도.</h1><p>직접 학습한 LoRA로 생성한 두 캐릭터의 외형을 원본과 비교합니다.</p></div>
+      <div class="tabs" role="tablist" aria-label="비교할 캐릭터"><button type="button" id="tab-kotone" role="tab" aria-selected="true" aria-controls="character-panel" data-case="kotone">후지타 코토네</button><button type="button" id="tab-velina" role="tab" aria-selected="false" aria-controls="character-panel" data-case="velina" tabindex="-1">벨리나</button></div>
+      <div id="character-panel" role="tabpanel" aria-labelledby="tab-kotone" tabindex="0">
+        <div class="case-heading"><h2 id="case-name"></h2><p id="case-work"></p></div>
+        <div class="comparison">
+          <figure><div class="image-head">참조 원본</div><button class="image-button reference" id="reference-button" type="button"><img id="reference-image" alt="" width="690" height="947"><span class="zoom-hint">확대 ↗</span></button><figcaption id="reference-caption"></figcaption></figure>
+          <figure><div class="image-head">LoRA 생성 결과</div><button class="image-button generated" id="generated-button" type="button"><img id="generated-image" alt="" width="1080" height="1920"><span class="zoom-hint">확대 ↗</span></button><figcaption>직접 제작한 LoRA · 생성 직후 결과 · 후처리 없음</figcaption></figure>
+        </div>
+        <div class="observations"><div><h3>유지된 특징</h3><p id="preserved"></p></div><div><h3>달라진 표현</h3><p id="variation"></p></div><div><h3>세부 차이</h3><p id="limitations"></p></div></div>
+        <details class="source-detail"><summary>원본 이미지 출처</summary><div id="case-sources"></div></details>
+      </div>
+      <section id="process" class="editorial-section"><h2>데이터에서 생성까지</h2><ol class="simple-flow"><li><h3>데이터 선별</h3><p>캐릭터별 50~150장.<br>의상의 일관성을 고려했습니다.</p></li><li><h3>배경 제거</h3><p>ComfyUI의 SAM3 노드로<br>캐릭터 영역을 분리했습니다.</p></li><li><h3>캡션 검수</h3><p>자동 태깅 후 배경 태그를 정리하고 트리거 워드를 부여했습니다.</p></li><li><h3>LoRA 학습</h3><p>kohya_ss로 학습하고<br>ComfyUI에서 생성했습니다.</p></li></ol><p id="evaluation" class="muted">화풍·캐릭터 특징·의상과 액세서리·포즈 구현을 기준으로 검토했습니다.</p><div class="inline-links"><a href="technical-notes.html#image-process">전처리 과정 자세히 보기 ↗</a><a href="#video">생성 이미지를 참조한 영상 보기 →</a></div></section>
+      <section id="credits" class="editorial-section credits"><h2>출처와 제작 기여</h2><div><p><strong>후지타 코토네 · 학원 아이돌마스터</strong><br>THE IDOLM@STER™&amp; ©Bandai Namco Entertainment Inc.<br><a href="https://gakuen.idolmaster-official.jp/idol/kotone/" target="_blank" rel="noopener noreferrer">공식 캐릭터 소개 ↗</a></p><p><strong>벨리나 · 젠레스 존 제로</strong><br>작품·캐릭터: HoYoverse<br><a href="https://zenless.hoyoverse.com/ko-kr/" target="_blank" rel="noopener noreferrer">공식 작품 사이트 ↗</a></p><p>NVIDIA Cosmos 기반 파생 모델인 <a href="https://huggingface.co/circlestone-labs/Anima" target="_blank" rel="noopener noreferrer">Anima</a>와 <a href="https://github.com/bmaltais/kohya_ss" target="_blank" rel="noopener noreferrer">kohya_ss</a>를 사용했습니다. 본인 작업은 데이터 전처리, LoRA 학습, 워크플로우 구성과 이미지 생성입니다.</p><p class="fine-print">원작 캐릭터 기반의 비공식 개인 작업입니다. 비교 내용은 선택한 이미지의 관찰이며 정량 유사도 평가가 아닙니다.</p></div></section>
+      <noscript><p><a href="assets/kotone-reference.webp">참조 이미지</a> · <a href="assets/kotone-generated.png">생성 이미지</a>. 캐릭터 전환에는 JavaScript가 필요합니다.</p></noscript>
+    </section>
+    <section id="video" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-video" data-portfolio-panel tabindex="0">
+      <div class="page-intro"><h1>잠에서 깨어,<br>하루를 준비하는 표정.</h1><p>후지타 코토네의 아침을 담은 2D 일상 애니메이션. 직접 학습한 LoRA 이미지를 참조하고, 두 클립의 연출을 프롬프트로 구성했습니다.</p></div>
+      <p class="media-meta">30초 등교 · MiniMax H3 / ComfyUI <span>완성본 29.24초 / 2752 × 1536 / 48fps</span></p>
+      <figure class="video-showcase"><video id="school-video" controls playsinline preload="none" poster="assets/video/school-morning-poster.jpg" width="2752" height="1536" aria-label="후지타 코토네의 기상과 등교 준비를 담은 일상 애니메이션"><source src="assets/video/school-morning.mp4" type="video/mp4"><a href="assets/video/school-morning.mp4">영상 파일 열기</a></video><figcaption>후지타 코토네 · 학원 아이돌마스터 / 소리가 포함되어 있습니다.</figcaption></figure>
+      <section class="school-direction" aria-labelledby="school-direction-title"><h2 id="school-direction-title">두 클립, 하나의 아침</h2><p class="direction-intro">각 15초·7개 샷을 목표로 작성한 입력 프롬프트입니다. 아래 스틸은 완성 영상에서 추출했습니다.</p>
+        <article class="school-clip" aria-labelledby="school-clip-01"><div class="clip-heading"><span>CLIP 01</span><h3 id="school-clip-01">잠에서 깨어나는 순간</h3><p>알람 → 졸린 얼굴 → 기지개</p></div><div class="clip-stills"><figure><img src="assets/video/school-sleepy.jpg" width="960" height="536" alt="베개에 기댄 졸린 얼굴"><figcaption>베개에 기댄 졸린 얼굴</figcaption></figure><figure><img src="assets/video/school-alarm.jpg" width="960" height="536" alt="알람을 끄는 손 인서트"><figcaption>알람을 끄는 손 인서트</figcaption></figure><figure><img src="assets/video/school-stretch.jpg" width="960" height="536" alt="상반신 구도로 보여주는 기지개"><figcaption>상반신 구도로 보여주는 기지개</figcaption></figure></div><p class="clip-description">알람과 손의 짧은 인서트로 행동을 연결하고, 얼굴 클로즈업으로 잠기운을 표현하도록 설계했습니다. 기지개에는 긴 호흡을 배정해 컷의 속도에 차이를 주었습니다.</p><p class="clip-focus">고정 카메라 · 표정 중심의 클로즈업 · 알람이 멎은 뒤의 정적</p><details class="video-prompt"><summary><span class="prompt-open-label">클립 01 프롬프트 열기</span><span class="prompt-close-label">클립 01 프롬프트 닫기</span></summary><div class="video-prompt-content"><p>원본 영상의 워크플로우에 저장된 입력 프롬프트입니다. 타임코드는 클립별로 0초부터 시작합니다.</p><pre><code>subject_definitions:
+  &lt;Subject 1&gt;: Fujita Kotone, as identified by the user. Use &lt;Picture 1&gt; for character identity, facial design,
+  hairstyle, hair color, and 2D illustration style. Replace the reference outfit with an opaque, loose white T-shirt.
+  The bedroom, bed, bedding, bedside table, and alarm clock are requested scene additions. &lt;Picture 1&gt; is a character
+  and style reference, not an exact opening frame.
+
+  summary:
+  [reference generation] A 15-second, seven-shot 2D morning scene. &lt;Subject 1&gt; wakes reluctantly to an alarm, silences
+  it, briefly nestles back into the pillow, then sits up, stretches, and rubs one sleepy eye. Alternate environmental
+  framing, object inserts, and facial reactions. Keep every camera locked and use direct cuts only.
+
+  retention_analysis:
+  &lt;Subject 1&gt;: partially_preserved in [Shot 1] and [Shot 3]–[Shot 7]. Preserve the identity, facial design, hairstyle,
+  hair color, and drawing style assigned to &lt;Picture 1&gt;. Change outfit, setting, pose, and expression as specified. The
+  hand insert belongs to the same character.
+
+  detailed_description:
+  Use the 2D drawing and shading style of &lt;Picture 1&gt;, with stable linework, readable held poses, and selective
+  movement. Soft morning light enters from screen left. The alarm is on the character&#x27;s right, appearing toward screen
+  right in the bedside compositions. Keep the room layout consistent. All cameras are static: no pan, zoom, tracking,
+  drift, or reframing. Use exactly seven shots. No dissolves, morphing transitions, extra cuts, or speed ramps.
+
+  [Shot 1] A fixed wide view establishes the modest bedroom, bed, and bedside table. &lt;Subject 1&gt;, retaining the identity
+  and hairstyle from &lt;Picture 1&gt;, lies under the bedding with the head visible on the pillow. Morning light falls across
+  the bed. At approximately half a second, the bedside alarm begins ringing.
+
+  At 00:01.000, [Shot 2] cut to a close-up of the ringing alarm on the table, with a small portion of the bed behind it.
+  Keep clock markings unobtrusive; no readable text is required.
+
+  At 00:02.000, [Shot 3] cut to a close-up of the character&#x27;s face against the pillow. One cheek is gently compressed by
+  the pillow. The brow contracts slightly, then one eye opens narrowly and looks toward screen right, toward the alarm.
+  Keep the head resting. Convey sleepy reluctance through the eyelid and brow, without a large grimace.
+
+  At 00:04.000, [Shot 4] cut to the clock and the character&#x27;s hand. The hand enters from the bed side, reaches the top
+  button, and presses it once. Stop the alarm exactly at contact. Let the fingers rest briefly after the press.
+
+  At 00:05.500, [Shot 5] return to the same facial framing as Shot 3. Both eyes close. The cheek nestles slightly deeper
+  into the pillow, then holds. This is a brief wish to remain asleep, not a new sleep sequence.
+
+  At 00:07.000, [Shot 6] cut forward in time to a waist-up view with the character already seated in bed, wearing the
+  white T-shirt and with the lower body covered by bedding. Start with the head slightly bowed. The character
+  straightens and raises both arms into one slow overhead stretch, eyes closed. Include the hands comfortably inside the
+  fixed frame. Hold the extended pose briefly.
+
+  At 00:11.000, [Shot 7] cut to a face close-up as the shoulders relax from that stretch. One hand rubs one closed eye
+  gently, then lowers out of frame. The eyes reopen slowly. Hold the still-sleepy expression through the final moment.
+  Avoid additional gestures.
+
+  overall_soundscape:
+  Begin with quiet room ambience. The alarm starts during Shot 1, continues uninterrupted through the following cuts,
+  and stops at the button press in Shot 4. Include a small button click and restrained pillow, bedding, and clothing
+  rustles. The sudden absence of the alarm should be noticeable. No dialogue, narration, or expressive vocal sounds.
+
+  non_diegetic_music:
+  N/A</code></pre></div></details></article>
+        <article class="school-clip" aria-labelledby="school-clip-02"><div class="clip-heading"><span>CLIP 02</span><h3 id="school-clip-02">하루를 준비하는 표정</h3><p>머리 정돈 → 작은 미소 → 교복 차림</p></div><div class="clip-stills"><figure><img src="assets/video/school-hair.jpg" width="960" height="536" alt="머리카락을 정리하는 손끝"><figcaption>머리카락을 정리하는 손끝</figcaption></figure><figure><img src="assets/video/school-smile.jpg" width="960" height="536" alt="입가에 집중한 작은 미소"><figcaption>입가에 집중한 작은 미소</figcaption></figure><figure><img src="assets/video/school-uniform.jpg" width="960" height="536" alt="교복 차림으로 준비를 마친 모습"><figcaption>교복 차림으로 준비를 마친 모습</figcaption></figure></div><p class="clip-description">손끝과 입가의 클로즈업으로 준비 과정을 나눴습니다. 환복과 이동은 컷 사이에서 생략하도록 지시하고, 마지막에는 교복 차림의 또렷해진 표정으로 감정 변화를 마무리했습니다.</p><p class="clip-focus">부분 클로즈업 · 컷 사이의 시간 생략 · 의상 전환 지시</p><details class="video-prompt"><summary><span class="prompt-open-label">클립 02 프롬프트 열기</span><span class="prompt-close-label">클립 02 프롬프트 닫기</span></summary><div class="video-prompt-content"><p>원본 영상의 워크플로우에 저장된 입력 프롬프트입니다. 타임코드는 클립별로 0초부터 시작합니다.</p><pre><code>subject_definitions:
+  &lt;Subject 1&gt;: Fujita Kotone, as identified by the user. Use &lt;Picture 1&gt; for character identity, facial design,
+  hairstyle, hair color, and 2D illustration style. In [Shot 1]–[Shot 4], the character wears an opaque, loose white T-
+  shirt, visible where framing permits. From [Shot 5] onward, use a school uniform consisting of a white collared shirt,
+  a navy blazer, and a small burgundy ribbon tie. This uniform is a requested costume addition, not an outfit inferred
+  from &lt;Picture 1&gt;. The bed edge, slippers, mirror, desk, plain notebook, school bag, and doorway are requested scene
+  additions. &lt;Picture 1&gt; is a character and style reference, not an exact opening frame.
+
+  summary:
+  [reference generation] A 15-second, seven-shot 2D morning preparation scene. &lt;Subject 1&gt; puts on slippers, tidies a
+  stray lock of hair, checks a sleepy face in the mirror, and practices a small smile while wearing a white T-shirt.
+  After an editorial time skip, the character is already dressed in the specified school uniform, packs a notebook, and
+  lifts a school bag. Finish with an alert, quietly cheerful expression at the bedroom doorway. Use fixed cameras,
+  close-ups, and direct cuts.
+
+  retention_analysis:
+  &lt;Subject 1&gt;: partially_preserved across [Shot 1]–[Shot 7]. Preserve the identity, facial design, hairstyle, hair
+  color, and drawing style assigned to &lt;Picture 1&gt;. Change setting, pose, expression, and clothing as specified. Keep
+  the white T-shirt through Shot 4 and the same school uniform throughout Shots 5–7. All body-part inserts belong to
+  this character. Tidying one stray lock must not redesign the hairstyle.
+
+  detailed_description:
+  Use the 2D drawing and shading style of &lt;Picture 1&gt;, with stable linework, readable poses, and restrained secondary
+  movement. Soft morning light enters from screen left. Maintain consistent character proportions and prop designs.
+  Every camera is locked: no pan, zoom, tracking, drift, or automatic reframing. Use exactly seven shots with direct
+  cuts. Omit elapsed preparation time between shots where specified. The clothing change happens entirely between Shots
+  4 and 5; do not show dressing, morphing clothes, or an on-screen transformation.
+
+  [Shot 1] A floor-level close-up shows the bed edge, the character&#x27;s feet, and two slippers. One foot slides into its
+  slipper, followed by the other. End with both feet settled. Keep the action small and unhurried. Do not show standing
+  or walking.
+
+  At 00:01.500, [Shot 2] cut forward in time to a direct side close-up of the character&#x27;s hair near the temple and one
+  hand. The fingertips smooth one small stray lock into the hairstyle specified by &lt;Picture 1&gt;, then withdraw. A small
+  portion of the white T-shirt shoulder may appear at the lower edge. Preserve the existing hairstyle and hair
+  accessories.
+
+  At 00:03.500, [Shot 3] cut to the face and white-T-shirt shoulders reflected in a mirror. Include a narrow mirror
+  edge, keeping the physical body outside the frame so only one face is visible. The character studies the reflection
+  with slightly heavy eyelids and makes one slow blink. Hold a neutral, self-assessing expression.
+
+  At 00:05.500, [Shot 4] cut closer to the reflected mouth and cheeks, maintaining the orientation from Shot 3. The
+  corners of the closed mouth rise tentatively into a practiced smile. The lips then relax slightly, leaving a softer,
+  more natural smile. This is a quiet, private rehearsal of a cheerful expression, without speech, laughter, or a
+  theatrical grin.
+
+  At 00:08.000, [Shot 5] cut forward in time to a close-up of an open school bag on the desk. The character has already
+  changed into the school uniform. A navy blazer sleeve and white shirt cuff are clearly visible as one hand slides a
+  single plain, unlettered notebook into the bag. Finish the insertion within this shot. Do not add other packing
+  actions.
+
+  At 00:10.000, [Shot 6] cut forward to a tighter view of the same bag&#x27;s handle. The bag is now closed; its closure
+  occurred during the omitted interval. One hand, with the same navy blazer sleeve and white shirt cuff, grips the
+  handle and lifts the bag just clear of the desk. Cut before carrying or walking begins.
+
+  At 00:11.500, [Shot 7] cut forward to a fixed chest-up view at the bedroom doorway. The character is already standing
+  still there, wearing the white collared shirt, navy blazer, and small burgundy ribbon tie. Keep the face prominent
+  while clearly showing the collar and lapels. A narrow doorframe establishes the location; the bag stays below frame.
+  The eyes are more alert than in Shot 3. The small smile practiced in the mirror returns, now relaxed and assured. Hold
+  the expression for the final second. End ready to leave for school, without a nod, turn, walking sequence, or
+  additional cut.
+
+  overall_soundscape:
+  Quiet morning room ambience, soft slipper contact, faint hair and clothing rustles, the notebook sliding into the bag,
+  and a brief handle creak as the bag is lifted. Keep the mirror shots almost quiet. Do not add footsteps across omitted
+  movement or a zipper sound for the unseen bag closure. No dialogue, narration, or expressive vocal reactions.
+
+  non_diegetic_music:
+  N/A</code></pre></div></details></article>
+      </section>
+      <section class="editorial-section production"><div><h2>직접 제작한 부분</h2><p>데이터 전처리와 LoRA 학습으로 캐릭터 참조 이미지를 만들고, ComfyUI 워크플로우를 구성해 영상을 생성했습니다. 콘티·프롬프트는 AI와 함께 구성하고, 생성 결과를 보고 클로즈업과 컷 전환 지시를 수정했습니다.</p><a href="#images">참조 이미지와 학습 과정 보기 →</a></div><div><h2>제작 환경</h2><dl class="hardware-specs"><div><dt>CPU</dt><dd>AMD Ryzen 7 7800X3D</dd></div><div><dt>RAM</dt><dd>48GB</dd></div><div><dt>GPU</dt><dd>NVIDIA GeForce RTX 3090</dd></div><div><dt>VRAM</dt><dd>24GB</dd></div></dl></div></section>
+      <p class="fine-print video-credit">캐릭터: <a href="https://gakuen.idolmaster-official.jp/idol/kotone/" target="_blank" rel="noopener noreferrer">후지타 코토네 · 학원 아이돌마스터</a><br>THE IDOLM@STER™&amp; ©Bandai Namco Entertainment Inc.<br>원작 캐릭터 기반의 비공식 개인 AI 영상 작업입니다.<br>웹 재생용 H.264 사본으로, 변환 시 해상도·프레임률을 유지하고 별도 노이즈 보정은 적용하지 않았습니다.</p>
+    </section>
+    <section id="technology" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-technology" data-portfolio-panel tabindex="0" hidden>
+      <div class="page-intro"><h1>제작을 돕는<br>자동화와 도구.</h1><p>반복 작업을 줄이기 위해 구성한 두 가지 프로젝트입니다.</p></div>
+      <article id="vlm-pipeline" class="project-row"><div class="project-number" aria-hidden="true">01</div><div><h2>VLM 프롬프트 자동화</h2><p class="project-lead">이미지와 한국어 연출 지시를<br>MiniMax H3용 프롬프트로 변환합니다.</p>
+        <dl class="vlm-specs" aria-label="VLM 사용 사양">
+          <div><dt>사용 모델</dt><dd>Qwen 3.8 · 27B<span>기반 파생 모델</span></dd></div>
+          <div><dt>모델 형식 · 양자화</dt><dd>GGUF · IQ4_XS<span>로컬 실행용 양자화</span></dd></div>
+          <div><dt>실행 환경</dt><dd>Ollama + ComfyUI<span>이미지와 텍스트를 함께 입력</span></dd></div>
+          <div><dt>출력 대상</dt><dd>MiniMax H3<span>6개 섹션의 영상 프롬프트</span></dd></div>
+        </dl>
+        <p class="vlm-rationale">한국어 연출 지시의 해석과 양자화 환경에서의 응답성을 직접 확인하며 선택했습니다. 이미지 속 특징을 설명하는 능력을 영상 제작 지시 작성에 활용합니다.</p>
+        <ol class="vlm-process" aria-label="프롬프트 변환 과정">
+          <li><h3>이미지에서 시각적 기준 추출</h3><p>캐릭터의 외형·화풍·현재 자세를 읽고, 참조 이미지가 담당할 역할을 구분합니다.</p></li>
+          <li><h3>사용자의 연출 의도 결합</h3><p>한국어 지시에서 동작·길이·카메라·금지 조건을 정리합니다. 유지할 외형과 바꿀 의상·배경을 나눕니다.</p></li>
+          <li><h3>H3 형식으로 구조화</h3><p>시스템 프롬프트로 참조 번호, 숏과 시간, 음향 규칙을 지정하고 6개 섹션의 영어 프롬프트를 작성하도록 지시합니다.</p></li>
+        </ol>
+        <p class="vlm-example-heading">변환 예시 <span>참조 외형은 유지하고, 의상과 동작은 요청에 맞게</span></p>
+        <div class="prompt-demo" aria-label="참조 이미지와 한국어 지시를 H3 프롬프트로 변환하는 설명용 예시">
+          <div class="prompt-input">
+            <p class="demo-label">입력</p>
+            <figure class="prompt-reference"><img src="assets/kotone-generated.png" alt="참조로 사용하는 후지타 코토네 LoRA 생성 이미지. 금발 땋은 머리와 민트색 재킷." width="1080" height="1920"><figcaption><code>&lt;Picture 1&gt;</code><br>캐릭터 외형·화풍 참조<br><a href="index.html#credits">캐릭터 출처 ↗</a></figcaption></figure>
+            <h3>사용자의 한국어 지시</h3>
+            <blockquote>15초. 코토네가 흰색 티셔츠 차림으로 침대에 앉아 기지개를 펴고 팔을 내린다. 카메라는 고정하고, 대사와 음악은 넣지 않는다.</blockquote>
+            <p class="conversion-caption">외형은 이미지에서,<br>행동과 연출은 사용자 지시에서.</p>
+          </div>
+          <div class="prompt-output">
+            <p class="demo-label">변환 → H3 프롬프트</p>
+            <pre><code><span class="field-name">subject_definitions:</span>
+&lt;Subject 1&gt;: The character in &lt;Picture 1&gt;. Retain her face, golden-blonde braided twin tails, and 2D illustrated style. Replace the reference outfit with a plain opaque white T-shirt.
+
+<span class="field-name">summary:</span>
+[reference generation] A 15-second scene: &lt;Subject 1&gt; sits in bed, stretches, then lowers her arms. &lt;Picture 1&gt; guides character identity and style only.
+
+<span class="field-name">retention_analysis:</span>
+&lt;Subject 1&gt;: [Shot 1] — partially_preserved. Retain identity and style; change the outfit, pose, and setting as requested.
+
+<span class="field-name">detailed_description:</span>
+Maintain the reference's 2D visual style.
+[Shot 1] A fixed eye-level medium view. &lt;Subject 1&gt; sits in bed wearing the white T-shirt, with bedding covering her lower body. She slowly raises both arms overhead, briefly holds the stretch, then lowers her arms and remains seated through the end. No cuts, zoom, pan, tracking, dialogue, or music.
+
+<span class="field-name">overall_soundscape:</span>
+Quiet room tone and soft bedding rustle.
+
+<span class="field-name">non_diegetic_music:</span>
+N/A</code></pre>
+          </div>
+        </div>
+        <div class="inline-links"><a href="technical-notes.html#vlm-design">모델과 설계 과정 ↗</a><a href="https://github.com/impacifist/local-vlm-video-prompt-pipeline" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div></article>
+      <article id="dataset-tools" class="project-row"><div class="project-number" aria-hidden="true">02</div><div><h2 id="dataset-title">데이터셋 툴</h2><p class="project-lead">LoRA 관리와 프롬프트 준비를<br>ComfyUI 안에서 한 번에.</p>
+        <figure class="dataset-capture"><a href="assets/dataset/dataset-tools.png" target="_blank" rel="noopener" aria-label="데이터셋 툴 관리 화면 크게 보기"><img src="assets/dataset/dataset-tools.png" width="1240" height="820" alt="데이터셋 목록과 Missing·Installed 상태, Sync·Analyze 버튼을 보여주는 관리 화면. 모델 이미지·이름·경로는 가려져 있습니다."></a><figcaption>관리 화면 · 모델 이미지·이름·경로와 프롬프트 출력 선택 영역을 제외한 공개용 캡처. 클릭하면 크게 볼 수 있습니다.</figcaption></figure>
+        <ol class="text-flow"><li>목록·설치 상태 확인</li><li>필요한 LoRA 복사</li><li>캡션으로 프롬프트 준비</li></ol><p><strong>Sync</strong>로 LoRA를 ComfyUI 폴더에 복사하고, <strong>Analyze</strong>로 캡션의 공통 특징을 추출해 프롬프트를 클립보드로 가져옵니다.</p><p>Python과 Codex로 개발했습니다. 모델 설치 상태 확인과 캡션 기반 프롬프트 구성을 연결하고, 로컬에서 직접 사용하며 개선했습니다.</p><a href="technical-notes.html#dataset-implementation">기능과 구현 방식 ↗</a></div></article>
+      <div class="inline-links section-links"><a href="#workflow">워크플로우 둘러보기 →</a><a href="#images">이미지 생성 사례 →</a></div>
+    </section>
+    <section id="workflow" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-workflow" data-portfolio-panel tabindex="0" hidden>
+      <div class="page-intro"><h1>짧은 클립을 이어,<br>더 긴 이야기로.</h1><p>앞 클립의 움직임 정보를 다음 생성에 활용하고, 겹치는 구간을 정리해 연결하는 반복 제작 구조입니다.</p></div>
+      <figure class="clip-connection" aria-labelledby="clip-connection-title">
+        <h2 id="clip-connection-title">앞 클립의 움직임을, 다음 클립으로.</h2>
+        <p>끝부분의 모션 정보를 이어받아 다음 장면을 생성하고, 겹치는 구간을 덜어 연결합니다.</p>
+        <div class="connection-row"><span class="connection-label">첫 클립</span><div class="connection-track"><span class="segment clip-a">클립 01</span><span class="segment context-tail">끝부분</span><span class="track-space"></span></div></div>
+        <div class="context-transfer"><span aria-hidden="true">↓</span> Motion Context 전달</div>
+        <div class="connection-row"><span class="connection-label">다음 클립</span><div class="connection-track"><span class="track-space"></span><span class="segment context-repeat">겹친 구간</span><span class="segment clip-b">클립 02</span></div></div>
+        <div class="connection-action">겹친 앞부분 제거 <span aria-hidden="true">↓</span> 두 클립 연결</div>
+        <div class="connection-row"><span class="connection-label">완성 영상</span><div class="connection-result"><span class="segment clip-a">클립 01</span><span class="segment clip-b">클립 02</span><span class="connection-more" aria-label="같은 과정으로 이어서 확장">…</span></div></div>
+        <figcaption>같은 과정을 반복해 다음 클립으로 확장합니다. 구간의 길이는 원리를 설명하기 위한 도식입니다.</figcaption>
+      </figure>
+      <div class="viewer-heading"><span>ComfyUI에서의 구성 · 핵심 노드 10개 묶음</span><a class="workflow-map-link" href="assets/workflow/core-viewer.html" target="_blank" rel="noopener noreferrer">큰 화면으로 열기 ↗</a></div>
+      <div id="motion-example" class="workflow-canvas-wrap"><iframe id="workflow-viewer" src="assets/workflow/core-viewer.html" title="드래그와 확대가 가능한 핵심 워크플로우" loading="lazy"></iframe></div>
+      <p class="workflow-caption">앞 클립의 모션 정보를 다음 생성에 전달 → 중복 구간 제거 → 연결. 이 과정을 반복하고, 최종 영상을 보간해 저장합니다.</p><p class="fine-print">Motion Context 워크플로우의 핵심 노드를 묶은 구조도입니다. 클립을 연결할 때는 외형과 움직임의 연속성을 확인하고 필요한 구간을 재생성합니다.</p>
+    </section>
+  </main>
+  <footer class="wrap"><span>impacifist · AI Visual Portfolio</span><a href="#">맨 위로 ↑</a></footer>
+  <dialog id="lightbox" aria-labelledby="lightbox-title"><div class="lightbox-header"><h2 id="lightbox-title"></h2><button type="button" id="close-lightbox" aria-label="확대 이미지 닫기">닫기 ×</button></div><img id="lightbox-image" alt=""><p id="lightbox-credit"></p></dialog>
+</body></html>

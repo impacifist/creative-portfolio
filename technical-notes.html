@@ -1,0 +1,32 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>제작 기술 기록 — impacifist</title><link rel="stylesheet" href="site.css"></head><body><main class="notes wrap"><a class="back-link" href="index.html#technology">← 포트폴리오로 돌아가기</a><h1>제작 기술 기록</h1><section id="image-process"><h2>이미지 전처리와 캡션</h2>      <div class="application-grid"><article><h4>캐릭터 자동 감지로 배경 제거</h4><p>캐릭터별로 약 50~150장의 데이터셋 이미지를 활용하고, 의상이 일관되도록 자료를 구성했습니다. ComfyUI에서 SAM3 감지 노드를 활용해 캐릭터만 자동으로 감지하고 나머지 배경을 제거했습니다. 배경이나 소품이 캐릭터와 함께 학습되어 외형 재현에 영향을 주는 것을 최소화하기 위한 전처리입니다.</p></article><article><h4>배경 태그 정리와 트리거 워드 부여</h4><p>SmilingWolf/wd-convnext-tagger-v3로 이미지별 태그를 자동 생성한 뒤, 이미지를 한 장씩 직접 검수했습니다. 캡션에서 <code>simple background</code>와 같은 배경 관련 태그를 제거하고, 학습 대상에 이름을 붙이는 트리거 워드를 부여했습니다. 캐릭터의 시각적 요소를 중심으로 학습 데이터를 구성하기 위한 작업입니다.</p></article></div></section><section id="vlm-design"><h2>VLM 모델과 프롬프트 설계</h2>      <div class="application-grid"><article><h4>한국어 지시 해석과 로컬 실행 성능</h4><p>직접 사용하면서 한국어 연출 지시를 잘 해석하고, 양자화 모델에서도 응답 속도와 지시 해석의 정확도가 작업에 충분하다고 느낀 점이 Qwen3.8-27B 계열 모델을 선택한 가장 큰 이유였습니다.</p><a class="text-link" href="https://huggingface.co/Qwen/Qwen3.8-27B" target="_blank" rel="noopener noreferrer">기반 모델 출처 · Qwen 공식 모델 카드 ↗</a></article><article><h4>ComfyUI에서 로컬 VLM 연결</h4><p>저장된 워크플로우에서는 Qwen3.8-27B 기반의 파생 GGUF 모델을 IQ4_XS 양자화로 사용합니다. Ollama를 통해 ComfyUI의 프롬프트 생성 단계에 연결했습니다.</p><p>특히 이미지 속 상황을 해석하고, 이를 바탕으로 새로운 상황을 프롬프트로 구성하는 능력이 인상적이었습니다. 이 기능을 사용자의 연출 방향을 반영한 영상 프롬프트 작성에 활용했습니다.</p></article></div>
+
+
+      <div class="observations"><div><h4>참조 이미지의 역할 분리</h4><p>장면의 시각적 기준과 선택적 질감 참조의 역할을 나눠, 보조 이미지의 인물·사물이 장면에 섞이는 문제에 대응합니다.</p></div><div><h4>동작 반복과 연결 관리</h4><p>이전 클립에서 완료된 사건을 기록합니다. 다음 프롬프트는 미리 계획하되, 실제 생성에는 이전 클립의 마지막 프레임을 전달합니다.</p></div><div><h4>모델 실행 순서 정리</h4><p>프롬프트 두 개를 먼저 작성한 뒤 VLM을 해제하도록 설계했습니다. VLM과 영상 모델의 GPU 메모리 경쟁을 줄이기 위한 구성입니다.</p></div></div>
+      <section class="workflow-section" aria-labelledby="prompt-design-title">
+        <div class="workflow-section-title"><span>SYSTEM PROMPT / DESIGN</span><h3 id="prompt-design-title">연출 의도를 유지하도록 설계한 변환 규칙.</h3></div>
+        <p class="workflow-body-copy">시스템 프롬프트는 참조 이미지에서 확인할 수 있는 그림체와 캐릭터 특징을 구체적으로 묘사하고, 사용자의 요청을 관찰 가능한 영상 제작 지시로 확장하도록 구성했습니다. 기본 모드에서는 임의의 이야기를 덧붙이지 않고, 사용자가 이야기 창작을 요청했을 때만 장면을 확장하도록 지시합니다.</p>
+        <div class="application-grid">
+          <article><h4>관찰한 이미지와 참조 역할 구분</h4><p>VLM이 직접 본 이미지와 H3에 전달할 참조 이미지를 구분합니다. 첫 프레임은 시작 구도와 자세, 캐릭터 참조는 외형과 의상, 스타일 참조는 화풍을 담당하도록 사용자가 지정한 역할을 유지합니다. 보지 못한 참조 이미지의 세부 외형은 만들어내지 않도록 지시합니다.</p></article>
+          <article><h4>동작·카메라·금지 조건 보존</h4><p>행동 순서, 횟수, 좌우 방향과 마지막 상태를 보존하도록 지시합니다. 기본값은 하나의 연속 숏과 고정 카메라입니다. 요청하지 않은 인물·소품·동작·대사·음악을 임의로 추가하지 않으며, 지정된 대사는 원문을 유지합니다.</p></article>
+          <article><h4>입력 누락과 요구 충돌 처리</h4><p>이미지·길이·의도 누락, 상충하는 조건, 시간 안에 담기 어려운 필수 행동이나 대사를 확인하도록 지시합니다. 문제가 있으면 일부 요구를 조용히 삭제하는 대신 오류 한 줄을 반환하도록 설계했습니다. 이 프로필의 단일 클립 허용 범위는 보수적으로 4~15초로 설정했습니다.</p></article>
+          <article><h4>일관된 6개 섹션으로 출력</h4><p>참조 대상 정의, 요약, 보존할 속성, 숏별 연출, 환경음, 배경음악을 정해진 순서로 출력하도록 지시합니다. 참조·대상·숏 번호는 1부터 시작하고, 시간은 0초부터 시작합니다. 설명이나 분석을 덧붙이지 않고 완성 프롬프트 또는 오류 한 줄만 반환하도록 구성했습니다.</p></article>
+        </div>
+        <details class="source-detail"><summary>출력 필드와 역할 보기 <span aria-hidden="true">＋</span></summary>
+          <dl>
+            <dt><code>subject_definitions</code></dt><dd>참조 이미지와 대상별 속성·역할 정의</dd>
+            <dt><code>summary</code></dt><dd>영상 길이, 요청 행동과 참조 역할 요약</dd>
+            <dt><code>retention_analysis</code></dt><dd>숏별로 유지하거나 변경할 속성 지정</dd>
+            <dt><code>detailed_description</code></dt><dd>그림체, 외형, 동작, 카메라와 시간 흐름 기술</dd>
+            <dt><code>overall_soundscape</code></dt><dd>허용된 환경음과 물리적 소리 지정</dd>
+            <dt><code>non_diegetic_music</code></dt><dd>요청한 배경음악만 기술, 기본값은 N/A</dd>
+          </dl>
+        </details>
+        <p class="scope-note">제작에 사용한 시스템 프롬프트의 설계 규칙입니다. 모델의 실제 준수율이나 생성 영상의 정확도를 보장하는 측정 결과는 아닙니다.</p>
+      </section>
+      <p class="scope-note">공개 저장소의 설계와 검증 범위를 소개합니다. 단일 스모크 테스트를 모델 성능 비교로 해석하지 않으며, 제작 시간 단축률은 아직 제시하지 않습니다.</p>
+</section><section id="dataset-implementation"><h2>데이터셋 툴 구현</h2>        <div class="observations"><div><h4>학습 데이터의 재활용</h4><p>캡션의 태그 빈도와 키워드 규칙으로 공통 특징을 추출합니다. 학습에 사용한 정보를 생성용 프롬프트 준비에도 활용합니다.</p></div><div><h4>원본을 보존하는 복사 방식</h4><p>원본을 이동·삭제하지 않고 복사합니다. 이름이 같은 파일은 크기로 상태를 구분하고, 크기가 다른 경우 기본적으로 덮어쓰기를 막습니다.</p></div><div><h4>관리 화면과 노드의 연결</h4><p>Python 백엔드와 JavaScript 관리 화면을 연결했습니다. 캡션 분석과 LoRA 정보 출력은 커스텀 노드로도 사용할 수 있습니다.</p></div></div>
+          <p><strong>Caption Analyzer</strong> — 캡션 파일을 읽고 반복 태그를 추출해 캐릭터·의상·액세서리 요소로 분류합니다. 트리거 워드와 결합한 문자열을 생성 단계에 전달합니다.</p>
+          <p><strong>LoRA Sync</strong> — 데이터셋 폴더에서 LoRA 후보를 찾고, 파일명 규칙으로 epoch·step 체크포인트를 제외합니다. 선택한 모델의 이름·경로·상태를 출력하며 복사는 옵션으로 실행합니다.</p>
+          <p><strong>관리 UI</strong> — 데이터셋 검색, 미리보기, 상태 필터, 대상 폴더 선택, 미설치 모델 일괄 복사와 프롬프트 클립보드 복사를 제공합니다.</p>
+          <p>캡션 분류는 빈도·키워드 규칙 기반입니다. 같은 크기의 파일을 건너뛰는 처리는 파일 내용의 해시 검증을 의미하지 않습니다.</p>
+        </section></main><footer class="wrap"><span>impacifist · 제작 기술 기록</span><a href="index.html">포트폴리오로 돌아가기 →</a></footer></body></html>
