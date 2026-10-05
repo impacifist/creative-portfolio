@@ -87,7 +87,74 @@ function routePortfolio() {
   const target = byId(location.hash.slice(1));
   const panel = target?.closest('[data-portfolio-panel]');
   selectPortfolio(panel?.id || 'video');
+  const project = target?.closest('.project-row');
+  if (project) selectTechnology(project.id);
   if (target && panel) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
 }
+// Keep the original articles intact: without JavaScript every project remains readable.
+const technologyProjects = [...document.querySelectorAll('#technology .project-row')];
+const technologyNav = document.createElement('div');
+technologyNav.className = 'technology-nav';
+technologyNav.setAttribute('role', 'tablist');
+technologyNav.setAttribute('aria-label', '살펴볼 제작 기술');
+const technologySummaries = [
+  ['이미지 → 영상 프롬프트', 'VLM · Ollama · MiniMax H3'],
+  ['LoRA 관리 → 프롬프트 준비', 'Python · ComfyUI'],
+  ['문구 저장 → 선택 → 연결', 'Python · JavaScript · ComfyUI'],
+];
+technologyProjects.forEach((project, index) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.id = `technology-tab-${project.id}`;
+  button.setAttribute('role', 'tab');
+  button.setAttribute('aria-controls', project.id);
+  button.dataset.technology = project.id;
+  const number = document.createElement('span');
+  number.className = 'technology-index';
+  number.dataset.number = `0${index + 1}`;
+  number.textContent = `0${index + 1} / TOOL`;
+  const title = document.createElement('strong');
+  title.textContent = project.querySelector('h2').textContent;
+  const description = document.createElement('span');
+  description.textContent = technologySummaries[index][0];
+  const stack = document.createElement('small');
+  stack.textContent = technologySummaries[index][1];
+  button.append(number, title, description, stack);
+  button.addEventListener('click', () => selectTechnology(project.id, { updateUrl: true }));
+  button.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? technologyProjects.length - 1 :
+      (index + (event.key === 'ArrowRight' ? 1 : -1) + technologyProjects.length) % technologyProjects.length;
+    selectTechnology(technologyProjects[next].id, { focus: true, updateUrl: true });
+  });
+  technologyNav.append(button);
+  project.setAttribute('role', 'tabpanel');
+  project.setAttribute('aria-labelledby', button.id);
+  project.tabIndex = 0;
+});
+byId('technology').querySelector('.page-intro').after(technologyNav);
+function selectTechnology(key, { focus = false, updateUrl = false } = {}) {
+  technologyProjects.forEach(project => { project.hidden = project.id !== key; });
+  technologyNav.querySelectorAll('button').forEach(button => {
+    const selected = button.dataset.technology === key;
+    button.setAttribute('aria-selected', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    if (selected && focus) button.focus();
+  });
+  if (updateUrl && location.hash !== `#${key}`) history.pushState(null, '', `#${key}`);
+}
+// Long examples stay available on demand, without dominating the overview.
+const promptDemo = document.querySelector('.prompt-demo');
+const promptHeading = document.querySelector('.vlm-example-heading');
+if (promptDemo && promptHeading) {
+  const details = document.createElement('details');
+  details.className = 'technology-example';
+  const summary = document.createElement('summary');
+  summary.textContent = '변환 예시 · 입력 이미지와 H3 프롬프트 보기';
+  promptHeading.before(details);
+  details.append(summary, promptHeading, promptDemo);
+}
+selectTechnology(technologyProjects[0].id);
 window.addEventListener('hashchange', routePortfolio);
 routePortfolio();
