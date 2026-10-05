@@ -1,19 +1,11 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>이미지에서 영상까지 · 기능 연결도</title><link rel="stylesheet" href="core-viewer.css"><script defer src="core-viewer.js"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>영상 제작 · 노드 연결도</title><link rel="stylesheet" href="core-viewer.css"><script defer src="core-viewer.js"></script></head>
 <body>
-  <header><span class="eyebrow">WORKFLOW / FUNCTION MAP</span><h1>입력에서 완성까지</h1><p>단계를 선택하면 연결한 기능과 사용하는 방법을 볼 수 있습니다.</p></header>
-  <main>
-    <nav id="stages" aria-label="제작 단계 선택"></nav>
-    <p class="branch-note">첫 클립은 두 갈래로 이어집니다. <strong>프레임·latent → 다음 생성의 문맥</strong> / <strong>영상·오디오 → 최종 연결</strong></p>
-    <article id="detail" aria-labelledby="detail-title" aria-live="polite">
-      <div class="detail-heading"><span id="detail-number"></span><h2 id="detail-title"></h2></div>
-      <p id="detail-purpose"></p>
-      <dl><div><dt>들어오는 것</dt><dd id="detail-input"></dd></div><div><dt>연결한 기능</dt><dd id="detail-functions"></dd></div><div><dt>다음으로 전달</dt><dd id="detail-output"></dd></div></dl>
-      <div class="usage"><h3>이렇게 사용합니다</h3><p id="detail-use"></p></div>
-      <p id="detail-note" class="note"></p>
-    </article>
-  </main>
-  <footer>실제 연결을 기능별로 묶어 다시 그린 설명용 도식입니다. 원본 파일·프롬프트·개인 설정은 포함하지 않습니다.</footer>
-</body>
-</html>
+<header><strong>영상 제작 · 노드 연결도</strong><nav aria-label="보기 영역"><button data-view="all">전체</button><button data-view="input">입력</button><button data-view="generate">생성</button><button data-view="finish">연결·출력</button></nav><nav aria-label="확대 및 배치"><button id="minus" aria-label="축소">−</button><output id="zoom">100%</output><button id="plus" aria-label="확대">＋</button><button id="reset">배치 초기화</button></nav></header>
+<main id="canvas" tabindex="0" aria-label="노드 연결도. 빈 곳을 드래그해 이동하고 노드를 드래그해 배치합니다. 휠로 확대, 방향키로 이동, Home 키로 전체 보기.">
+<svg id="graph" xmlns="http://www.w3.org/2000/svg" aria-labelledby="graph-title"><title id="graph-title">이미지와 클립별 지시에서 영상 생성, 움직임 문맥 전달, 중복 정리와 최종 저장까지의 연결</title><g id="viewport"><g id="groups"></g><g id="wires"></g><g id="nodes"></g></g></svg>
+</main>
+<aside aria-live="polite"><strong id="detail-title">노드를 선택해 보세요</strong><p id="detail-text">빈 곳 드래그로 이동 · 노드 드래그로 배치 · 휠 또는 두 손가락으로 확대</p></aside>
+<footer><span><i class="image"></i>영상 <i class="text"></i>텍스트 <i class="context"></i>문맥 <i class="audio"></i>오디오</span><span>공개용 기능 구조도 · 개인 입력 제외</span></footer>
+</body></html>
