@@ -1,45 +1,101 @@
 'use strict';
-const canvas = document.getElementById('canvas');
-const viewport = document.getElementById('viewport');
-const svgNS = 'http://www.w3.org/2000/svg';
-const W = 1480, H = 690, NW = 232, NH = 156;
-const colors = { image:'#90c99c', text:'#93b9e8', context:'#d6aa72', audio:'#ce91bf' };
-const nodes = [
-  {id:'image',x:32,y:105,n:'01',title:'참조 이미지',types:['LoadImage'],input:'',output:'이미지',color:'image'},
-  {id:'prompt',x:324,y:105,n:'02',title:'VLM 프롬프트',types:['OllamaGenerateV2 × 2'],input:'참조 · 한국어 지시',output:'클립별 프롬프트',color:'text'},
-  {id:'clip1',x:616,y:105,n:'03',title:'첫 클립 생성',types:['Ref2V · Sampler','VAE Decode'],input:'참조 · 프롬프트',output:'영상 · 오디오 · latent',color:'image'},
-  {id:'motion',x:908,y:105,n:'04',title:'Motion Context',types:['MiniMaxH3MotionContext'],input:'이전 프레임 · latent',output:'다음 생성의 문맥',color:'context'},
-  {id:'clip2',x:1200,y:105,n:'05',title:'다음 클립 생성',types:['Ref2V · Sampler','VAE Decode'],input:'프롬프트 · 문맥',output:'영상 · 오디오',color:'image'},
-  {id:'trim',x:1200,y:432,n:'06',title:'중복 구간 제거',types:['Motion Context Trim'],input:'두 번째 클립',output:'겹친 앞부분 제거',color:'image',reverse:true},
-  {id:'join',x:908,y:432,n:'07',title:'영상 · 오디오 연결',types:['ImageBatch · AudioConcat'],input:'첫 클립 + 정리한 클립',output:'연결된 영상 · 오디오',color:'image',reverse:true},
-  {id:'upscale',x:616,y:432,n:'08',title:'업스케일',types:['RTX Upscaler / Refiner'],input:'연결된 프레임',output:'해상도 보정',color:'image',reverse:true},
-  {id:'rife',x:324,y:432,n:'09',title:'프레임 보간',types:['RIFE · FrameInterpolate'],input:'업스케일된 프레임',output:'중간 프레임 추가',color:'image',reverse:true},
-  {id:'save',x:32,y:432,n:'10',title:'영상 저장',types:['CreateVideo · SaveVideo'],input:'프레임 · 오디오',output:'최종 비디오',color:'image',reverse:true},
+// Public explanations authored from connections, never loaded from a private workflow.
+const stages = [
+  {
+    title: '입력 준비', summary: '참조 이미지 + 클립별 지시',
+    purpose: '이미지의 시각 정보와 사람이 원하는 연출을 분리해 준비합니다.',
+    input: '참조 이미지 한 장, 첫 번째·두 번째 클립의 연출 지시',
+    functions: '이미지 로드 → VLM 이미지 입력 / Prompt Selector 두 개 → 각 VLM의 텍스트 입력',
+    output: '같은 참조 이미지와 서로 다른 클립별 지시를 두 프롬프트 생성 경로로 전달',
+    use: '이미지를 고른 뒤 각 클립에서 일어날 동작과 카메라 방향을 따로 준비합니다. 재사용할 지시는 저장하고, 원본을 고칠 때는 수정합니다.',
+    note: '여기서 로드한 이미지는 두 VLM의 입력으로 연결됩니다. 영상 생성기의 참조 조건은 별도의 생성 가이드에서 구성합니다.'
+  },
+  {
+    title: '프롬프트 구성', summary: '이미지 해석 → 클립별 텍스트',
+    purpose: '이미지와 연출 지시를 영상 생성에 넣을 텍스트로 바꿉니다.',
+    input: '참조 이미지 + 각 Prompt Selector의 현재 텍스트',
+    functions: '공유 Ollama 연결·옵션 → OllamaGenerateV2 두 개 → 텍스트 확인 → 클립별 Director 입력',
+    output: '첫 클립용 프롬프트와 다음 클립용 프롬프트',
+    use: '생성된 문장에서 인물 묘사, 동작, 카메라 방향이 의도와 맞는지 확인합니다. 수정이 필요하면 해당 클립의 지시를 조정합니다.',
+    note: '두 VLM은 각각 입력을 받습니다. 첫 VLM의 결과가 두 번째 VLM으로 자동 전달되는 대화 체인은 아닙니다.'
+  },
+  {
+    title: '생성 조건 설정', summary: '가이드 · LoRA · 시드',
+    purpose: '공통 모델 자원은 공유하면서 클립별 연출과 변형 조건을 나눕니다.',
+    input: '클립별 프롬프트, 모델·텍스트 인코더·영상/오디오 VAE',
+    functions: 'Director 두 개 → 클립별 LoRA 로더 → DirectorGuide / 개별 시드 → 샘플러',
+    output: '각 클립의 conditioning·초기 latent·모델·노이즈',
+    use: '클립별 모드와 길이를 정하고 필요한 LoRA를 선택합니다. 두 번째 클립의 너비·높이는 첫 번째 설정에서 전달받습니다. 샘플러·스케줄러·스텝은 공통 설정으로 관리합니다.',
+    note: '캐시·연산 설정·프리뷰도 연결되어 있습니다. 특정 모델 파일명, LoRA 이름, 개인별 수치는 공개 도식에 담지 않았습니다.'
+  },
+  {
+    title: '첫 클립 생성', summary: '영상 · 오디오 · latent',
+    purpose: '다음 생성의 기준이 될 첫 클립을 만들고 별도 저장 경로를 둡니다.',
+    input: '첫 클립의 가이드·모델·시드·샘플링 설정',
+    functions: 'SamplerCustomAdvanced → 영상 VAE Decode + Audio Decode → 첫 클립 저장',
+    output: '저장 노드를 통과한 프레임 + 샘플러 latent → 문맥 단계 / 첫 영상·오디오 → 연결 단계',
+    use: '첫 클립의 결과를 따로 확인할 수 있게 보관합니다. 이후 클립과 연결할 때는 마지막 부분의 자세와 움직임을 기준으로 봅니다.',
+    note: '첫 클립은 개별 파일과 최종 연결 영상으로 각각 확인할 수 있습니다. 문맥에 넘기는 latent는 첫 샘플러의 출력에서 가져옵니다.'
+  },
+  {
+    title: '움직임 문맥 전달', summary: '이전 프레임 + latent',
+    purpose: '이전 클립의 움직임 정보를 다음 클립의 생성 조건에 반영합니다.',
+    input: '첫 클립의 프레임·latent + 두 번째 클립의 conditioning·초기 latent',
+    functions: 'MiniMaxH3MotionContext → 두 번째 클립의 conditioning 갱신',
+    output: '문맥이 반영된 conditioning → 다음 샘플러 / trim_frames → 중복 구간 제거',
+    use: '다음 클립의 지시는 이어질 동작을 설명하도록 준비합니다. 문맥에 사용할 프레임 범위는 생성 결과를 보며 조정할 수 있습니다.',
+    note: '영상 프레임과 latent가 함께 연결됩니다. 외형이나 동작의 연속성은 결과에서 직접 확인합니다.'
+  },
+  {
+    title: '다음 클립 생성', summary: '새 지시 + 이전 움직임',
+    purpose: '새로운 연출 지시와 앞 클립의 문맥을 함께 사용해 두 번째 클립을 생성합니다.',
+    input: '두 번째 클립의 모델·시드·초기 latent + 문맥이 반영된 conditioning',
+    functions: 'BasicGuider → SamplerCustomAdvanced → 영상·오디오 Decode',
+    output: '두 번째 클립의 영상 프레임과 오디오',
+    use: '첫 클립에서 이어지는 동작인지 확인합니다. 연결이 어색하면 두 번째 지시나 생성 조건을 조정해 다시 비교합니다.',
+    note: '현재 구성은 두 클립을 연결합니다. 각 클립의 생성 결과와 접합부를 사람이 검토합니다.'
+  },
+  {
+    title: '중복 정리 · 연결', summary: '영상과 오디오를 함께 정리',
+    purpose: '문맥으로 겹친 구간을 제거한 뒤 두 클립을 순서대로 연결합니다.',
+    input: '첫 클립 + 두 번째 클립 + Motion Context에서 전달한 trim_frames',
+    functions: 'MiniMaxH3MotionContextTrim → ImageBatch / AudioConcat',
+    output: '연결된 프레임 → 영상 후처리 / 연결된 오디오 → 최종 저장',
+    use: '접합부에서 동작이 반복되거나 갑자기 바뀌는지, 소리가 끊기거나 어긋나지 않는지 확인합니다.',
+    note: '이미지와 오디오를 각각 연결합니다. 오디오는 영상 프레임 보간·업스케일 경로를 거치지 않습니다.'
+  },
+  {
+    title: '후처리 · 저장', summary: '프레임 보간 → 화질 처리',
+    purpose: '연결된 영상의 프레임과 출력 형식을 정리하고 오디오와 함께 저장합니다.',
+    input: '연결된 영상 프레임 + 별도 경로의 연결된 오디오',
+    functions: 'FrameInterpolate → 선택적 리사이즈·모델 업스케일 → RTX 화질 처리 → 선택적 워터마크 → 영상 저장',
+    output: '후처리된 프레임 + 출력 FPS + 연결된 오디오 → 최종 비디오',
+    use: '생성 결과를 확인한 후 필요한 후처리만 켭니다. 보간 배수와 출력 FPS를 맞추고 최종 파일에서 재생 속도·화질·음성 동기를 확인합니다.',
+    note: '확인한 구성은 프레임 보간과 RTX 처리를 사용합니다. 리사이즈·모델 업스케일·워터마크·클립별 latent 업스케일은 선택적으로 켜는 기능입니다.'
+  }
 ];
-function el(tag,attrs={},text){const e=document.createElementNS(svgNS,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;return e;}
-const index=Object.fromEntries(nodes.map(n=>[n.id,n]));
-const port=(id,output)=>{const n=index[id];return [n.x+(output!==!!n.reverse?NW:0),n.y+(output?126:88)];};
-function wire(from,to,color,route){const a=port(from,true),b=port(to,false);let d;if(route)d=route(a,b);else{const sign=index[from].reverse?-1:1;d=`M${a} C${a[0]+sign*45},${a[1]} ${b[0]-sign*45},${b[1]} ${b}`;}document.getElementById('wires').append(el('path',{d,stroke:colors[color],class:'wire'}));}
-wire('image','prompt','image');wire('prompt','clip1','text');wire('clip1','motion','context');wire('motion','clip2','context');
-wire('clip2','trim','image',(a,b)=>`M${a} C1480,${a[1]} 1480,${b[1]} ${b}`);
-wire('trim','join','image');wire('join','upscale','image');wire('upscale','rife','image');wire('rife','save','image');
-wire('prompt','clip2','text',(a,b)=>`M${a} C${a[0]+28},${a[1]} ${a[0]+28},42 ${a[0]+52},42 L${b[0]-52},42 Q${b[0]-22},42 ${b[0]-22},74 L${b[0]-22},${b[1]-22} Q${b[0]-22},${b[1]} ${b}`);
-wire('image','clip1','image',(a,b)=>`M${a} C${a[0]+24},${a[1]} ${a[0]+24},312 ${a[0]+48},312 L${b[0]-42},312 Q${b[0]-20},312 ${b[0]-20},288 L${b[0]-20},${b[1]+22} Q${b[0]-20},${b[1]} ${b}`);
-wire('clip1','join','image',(a,b)=>`M${a} C${a[0]+24},${a[1]} ${a[0]+24},344 ${a[0]+48},344 L${b[0]+28},344 Q${b[0]+50},344 ${b[0]+50},368 L${b[0]+50},${b[1]-24} Q${b[0]+50},${b[1]} ${b}`);
-wire('join','save','audio',(a,b)=>`M${a} C${a[0]-25},${a[1]} ${a[0]-25},640 ${a[0]-48},640 L${b[0]+45},640 Q${b[0]+20},640 ${b[0]+20},614 L${b[0]+20},${b[1]+22} Q${b[0]+20},${b[1]} ${b}`);
-for(const n of nodes){const g=el('g',{class:'node'+(n.id==='motion'?' context':''),'data-node':n.id,transform:`translate(${n.x} ${n.y})`});g.append(el('rect',{width:NW,height:NH,rx:9,class:'node-body'}),el('path',{d:`M9 0 H${NW-9} Q${NW} 0 ${NW} 9 V38 H0 V9 Q0 0 9 0`,class:'node-header'}),el('text',{x:13,y:25,class:'node-title'},n.title),el('text',{x:NW-29,y:25,class:'node-number'},n.n));n.types.forEach((t,i)=>g.append(el('text',{x:13,y:57+i*15,class:'node-type'},t)));for(const output of [false,true]){const label=output?n.output:n.input;if(!label)continue;const right=output!==!!n.reverse;const y=output?126:88;g.append(el('circle',{cx:right?NW:0,cy:y,r:5,fill:colors[n.color],stroke:'#17181a','stroke-width':2}),el('text',{x:right?NW-13:13,y:y+4,'text-anchor':right?'end':'start',class:'port-label'},label));}document.getElementById('nodes').append(g);}
-document.getElementById('nodes').append(el('text',{x:32,y:28,class:'lane-label'},'생성  →'),el('text',{x:32,y:405,class:'lane-label'},'←  연결 · 후처리'));
-let state={x:0,y:0,scale:1}, initialized=false, userChanged=false;
-function draw(){viewport.setAttribute('transform',`translate(${state.x} ${state.y}) scale(${state.scale})`);document.getElementById('zoom').value=`${Math.round(state.scale*100)}%`;canvas.style.backgroundSize=`${22*state.scale}px ${22*state.scale}px`;canvas.style.backgroundPosition=`${state.x}px ${state.y}px`;}
-function fit(){const {width,height}=canvas.getBoundingClientRect();if(!width||!height)return;state.scale=Math.min((width-24)/W,(height-24)/H,1.25);state.x=(width-W*state.scale)/2;state.y=(height-H*state.scale)/2;initialized=true;userChanged=false;draw();}
-function zoom(factor,cx=canvas.clientWidth/2,cy=canvas.clientHeight/2){const next=Math.min(2.5,Math.max(.12,state.scale*factor));const ratio=next/state.scale;state.x=cx-(cx-state.x)*ratio;state.y=cy-(cy-state.y)*ratio;state.scale=next;userChanged=true;draw();}
-document.getElementById('fit').onclick=fit;document.getElementById('plus').onclick=()=>zoom(1.25);document.getElementById('minus').onclick=()=>zoom(.8);
-canvas.addEventListener('wheel',e=>{e.preventDefault();const r=canvas.getBoundingClientRect();zoom(Math.exp(-e.deltaY*.0015),e.clientX-r.left,e.clientY-r.top);},{passive:false});
-const pointers=new Map();
-const midpoint=()=>{const p=[...pointers.values()];return {x:(p[0].x+p[1].x)/2,y:(p[0].y+p[1].y)/2,d:Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)};};
-canvas.addEventListener('pointerdown',e=>{if(e.button!==0&&e.pointerType==='mouse')return;canvas.focus({preventScroll:true});canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});canvas.classList.add('dragging');});
-canvas.addEventListener('pointermove',e=>{const old=pointers.get(e.pointerId);if(!old)return;const before=pointers.size===2?midpoint():null;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(before){const after=midpoint(),r=canvas.getBoundingClientRect();state.x+=after.x-before.x;state.y+=after.y-before.y;if(before.d>0)zoom(after.d/before.d,after.x-r.left,after.y-r.top);}else{state.x+=e.clientX-old.x;state.y+=e.clientY-old.y;}userChanged=true;draw();});
-function release(e){pointers.delete(e.pointerId);if(!pointers.size)canvas.classList.remove('dragging');}
-canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',release);
-canvas.addEventListener('keydown',e=>{if(e.key==='Home'||e.key==='0'){e.preventDefault();fit();return;}if(['+','=','-'].includes(e.key)){e.preventDefault();zoom(e.key==='-'?.8:1.25);return;}const moves={ArrowLeft:[60,0],ArrowRight:[-60,0],ArrowUp:[0,60],ArrowDown:[0,-60]};if(moves[e.key]){e.preventDefault();state.x+=moves[e.key][0];state.y+=moves[e.key][1];userChanged=true;draw();}});
-new ResizeObserver(()=>{if(!initialized||!userChanged)fit();}).observe(canvas);fit();
+const nav = document.getElementById('stages');
+function select(index, updateHash = true) {
+  const stage = stages[index];
+  [...nav.children].forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
+  document.getElementById('detail-number').textContent = String(index + 1).padStart(2, '0');
+  document.getElementById('detail-title').textContent = stage.title;
+  for (const field of ['purpose', 'input', 'functions', 'output', 'use', 'note']) document.getElementById(`detail-${field}`).textContent = stage[field];
+  if (updateHash) history.replaceState(null, '', `#step-${index + 1}`);
+}
+stages.forEach((stage, index) => {
+  const button = document.createElement('button'); button.type = 'button'; button.setAttribute('aria-controls', 'detail');
+  for (const [tag, text] of [['span', `${String(index + 1).padStart(2, '0')} →`], ['strong', stage.title], ['small', stage.summary]]) {
+    const element = document.createElement(tag); element.textContent = text; button.append(element);
+  }
+  button.addEventListener('click', () => select(index));
+  button.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? stages.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + stages.length) % stages.length;
+    select(next); nav.children[next].focus();
+  });
+  nav.append(button);
+});
+const initial = /^#step-([1-8])$/.exec(location.hash);
+select(initial ? Number(initial[1]) - 1 : 0, false);

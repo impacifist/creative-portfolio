@@ -229,20 +229,14 @@ N/A</code></pre>
       <div class="inline-links section-links"><a href="#workflow">워크플로우 둘러보기 →</a><a href="#images">이미지 생성 사례 →</a></div>
     </section>
     <section id="workflow" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-workflow" data-portfolio-panel tabindex="0" hidden>
-      <div class="page-intro"><h1>짧은 클립을 이어,<br>더 긴 이야기로.</h1><p>앞 클립의 움직임 정보를 다음 생성에 활용하고, 겹치는 구간을 정리해 연결하는 반복 제작 구조입니다.</p></div>
-      <figure class="clip-connection" aria-labelledby="clip-connection-title">
-        <h2 id="clip-connection-title">앞 클립의 움직임을, 다음 클립으로.</h2>
-        <p>끝부분의 모션 정보를 이어받아 다음 장면을 생성하고, 겹치는 구간을 덜어 연결합니다.</p>
-        <div class="connection-row"><span class="connection-label">첫 클립</span><div class="connection-track"><span class="segment clip-a">클립 01</span><span class="segment context-tail">끝부분</span><span class="track-space"></span></div></div>
-        <div class="context-transfer"><span aria-hidden="true">↓</span> Motion Context 전달</div>
-        <div class="connection-row"><span class="connection-label">다음 클립</span><div class="connection-track"><span class="track-space"></span><span class="segment context-repeat">겹친 구간</span><span class="segment clip-b">클립 02</span></div></div>
-        <div class="connection-action">겹친 앞부분 제거 <span aria-hidden="true">↓</span> 두 클립 연결</div>
-        <div class="connection-row"><span class="connection-label">완성 영상</span><div class="connection-result"><span class="segment clip-a">클립 01</span><span class="segment clip-b">클립 02</span><span class="connection-more" aria-label="같은 과정으로 이어서 확장">…</span></div></div>
-        <figcaption>같은 과정을 반복해 다음 클립으로 확장합니다. 구간의 길이는 원리를 설명하기 위한 도식입니다.</figcaption>
-      </figure>
-      <div class="viewer-heading"><span>ComfyUI에서의 구성 · 핵심 노드 10개 묶음</span><a class="workflow-map-link" href="assets/workflow/core-viewer.html" target="_blank" rel="noopener noreferrer">큰 화면으로 열기 ↗</a></div>
-      <div id="motion-example" class="workflow-canvas-wrap"><iframe id="workflow-viewer" src="assets/workflow/core-viewer.html" title="드래그와 확대가 가능한 핵심 워크플로우" loading="lazy"></iframe></div>
-      <p class="workflow-caption">앞 클립의 모션 정보를 다음 생성에 전달 → 중복 구간 제거 → 연결. 이 과정을 반복하고, 최종 영상을 보간해 저장합니다.</p><p class="fine-print">Motion Context 워크플로우의 핵심 노드를 묶은 구조도입니다. 클립을 연결할 때는 외형과 움직임의 연속성을 확인하고 필요한 구간을 재생성합니다.</p>
+      <div class="page-intro"><h1>이미지와 연출을,<br>하나의 영상으로.</h1><p>프롬프트 준비부터 두 클립의 생성, 움직임 연결, 후처리와 저장까지. 제가 사용하는 기능들을 어떤 순서로 연결하고 조작하는지 정리했습니다.</p></div>
+      <div class="workflow-overview"><span>01 · 준비<br><strong>이미지 + 클립별 지시</strong></span><span>02 · 생성<br><strong>VLM + 생성 가이드</strong></span><span>03 · 연결<br><strong>움직임 문맥 + 중복 정리</strong></span><span>04 · 완성<br><strong>보간 + 화질 처리 + 저장</strong></span></div>
+      <div class="viewer-heading"><span>기능 연결도 · 8개 단계 선택</span><a class="workflow-map-link" href="assets/workflow/core-viewer.html" target="_blank" rel="noopener noreferrer">큰 화면으로 열기 ↗</a></div>
+      <div id="motion-example" class="workflow-canvas-wrap workflow-explorer"><iframe id="workflow-viewer" src="assets/workflow/core-viewer.html" title="단계별 기능과 사용 방법을 살펴보는 영상 제작 흐름" loading="lazy"></iframe></div>
+      <p class="workflow-caption">단계를 누르면 입력, 연결한 기능, 출력, 사용하는 방법이 바뀝니다. 실제 연결 관계를 바탕으로 새로 작성한 설명이며 개인 프롬프트·파일명·경로·워크플로우 원본은 포함하지 않았습니다.</p>
+      <section class="editorial-section"><h2>실제로 사용하는 순서</h2><ol class="simple-flow"><li><h3>클립별 연출 준비</h3><p>참조 이미지를 고르고 두 Prompt Selector에 각 클립의 지시를 준비합니다. VLM이 만든 텍스트를 확인하고 필요한 표현을 조정합니다.</p></li><li><h3>생성 조건 맞추기</h3><p>클립별 가이드와 LoRA·시드를 설정합니다. 해상도는 첫 클립에서 다음 클립으로 전달하고 샘플링 설정은 함께 관리합니다.</p></li><li><h3>연결부 확인</h3><p>첫 클립을 별도로 저장하고, 프레임과 latent를 다음 생성에 전달합니다. 중복을 정리한 접합부의 동작과 소리를 확인합니다.</p></li><li><h3>후처리와 출력</h3><p>연결된 프레임을 보간하고 필요한 화질 처리를 적용합니다. 출력 FPS와 오디오 동기를 맞춰 최종 파일을 확인합니다.</p></li></ol></section>
+      <section class="editorial-section"><h2>연결할 때 구분한 것</h2><div class="observations"><article><h3>공유하는 설정과 개별 연출</h3><p>모델 자원과 샘플링 설정은 공통으로 관리하고, 프롬프트·LoRA·시드는 클립별로 나눴습니다. 두 VLM에는 같은 이미지와 서로 다른 지시가 들어갑니다.</p></article><article><h3>움직임을 넘기는 경로</h3><p>첫 클립의 프레임과 latent는 다음 생성의 문맥으로, 첫 영상과 오디오는 최종 연결로 전달됩니다. 문맥 단계에서 나온 제거 프레임 수로 두 번째 클립의 중복 구간을 정리합니다.</p></article><article><h3>영상과 오디오의 후처리</h3><p>영상은 연결 → 프레임 보간 → 크기·화질 처리 → 저장 순서입니다. 오디오는 따로 연결해 최종 저장에 전달합니다. 리사이즈·업스케일·워터마크는 필요한 경우에 켭니다.</p></article></div></section>
+      <div class="workflow-contribution"><h2>제가 구성한 부분</h2><p>기존 생성·모션 컨텍스트·후처리 노드를 조합하고, Prompt Selector와 로컬 VLM을 클립별 입력에 연결했습니다. 첫 클립 저장, 다음 생성으로 넘기는 문맥, 영상·오디오 연결과 출력 경로를 하나의 제작 흐름으로 정리했습니다.</p><p class="fine-print">기반 모델과 외부 노드의 알고리즘은 각 제작자의 작업입니다. 이 페이지는 기능의 연결과 활용을 설명합니다. 현재 구성은 두 클립 기준이며, 외형·동작·오디오의 연속성은 결과를 직접 확인합니다.</p></div>
     </section>
   </main>
   <footer class="wrap"><span>impacifist · AI Visual Portfolio</span><a href="#">맨 위로 ↑</a></footer>

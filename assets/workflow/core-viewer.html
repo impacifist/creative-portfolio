@@ -1,10 +1,19 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>핵심 워크플로우</title><link rel="stylesheet" href="core-viewer.css"><script defer src="core-viewer.js"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>이미지에서 영상까지 · 기능 연결도</title><link rel="stylesheet" href="core-viewer.css"><script defer src="core-viewer.js"></script></head>
 <body>
-  <header><div><strong>Motion Context</strong><span>핵심 노드 흐름</span></div><nav aria-label="캔버스 조작"><button id="minus" aria-label="축소">−</button><output id="zoom" aria-live="polite">100%</output><button id="plus" aria-label="확대">＋</button><button id="fit">전체 보기</button></nav></header>
-  <main id="canvas" tabindex="0" aria-label="워크플로우 캔버스. 드래그로 이동, 휠로 확대 및 축소. 방향키로 이동, 더하기와 빼기로 확대 및 축소, Home 키로 전체 보기.">
-    <svg id="graph" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="graph-title graph-desc"><title id="graph-title">Motion Context 핵심 워크플로우</title><desc id="graph-desc">윗줄은 왼쪽에서 오른쪽으로: 참조 이미지, VLM 프롬프트, 첫 클립 생성, Motion Context, 다음 클립 생성. 아랫줄은 오른쪽에서 왼쪽으로: 중복 구간 제거, 영상과 오디오 연결, 업스케일, 프레임 보간, 영상 저장. 첫 클립도 연결 노드로 전달되며, 오디오는 영상 후처리를 거치지 않고 저장으로 전달됩니다.</desc><g id="viewport"><g id="wires"></g><g id="nodes"></g></g></svg>
+  <header><span class="eyebrow">WORKFLOW / FUNCTION MAP</span><h1>입력에서 완성까지</h1><p>단계를 선택하면 연결한 기능과 사용하는 방법을 볼 수 있습니다.</p></header>
+  <main>
+    <nav id="stages" aria-label="제작 단계 선택"></nav>
+    <p class="branch-note">첫 클립은 두 갈래로 이어집니다. <strong>프레임·latent → 다음 생성의 문맥</strong> / <strong>영상·오디오 → 최종 연결</strong></p>
+    <article id="detail" aria-labelledby="detail-title" aria-live="polite">
+      <div class="detail-heading"><span id="detail-number"></span><h2 id="detail-title"></h2></div>
+      <p id="detail-purpose"></p>
+      <dl><div><dt>들어오는 것</dt><dd id="detail-input"></dd></div><div><dt>연결한 기능</dt><dd id="detail-functions"></dd></div><div><dt>다음으로 전달</dt><dd id="detail-output"></dd></div></dl>
+      <div class="usage"><h3>이렇게 사용합니다</h3><p id="detail-use"></p></div>
+      <p id="detail-note" class="note"></p>
+    </article>
   </main>
-  <footer><span>드래그 이동 · 휠 / 두 손가락 확대</span><span>관련 노드를 묶은 구조도</span></footer>
-</body></html>
+  <footer>실제 연결을 기능별로 묶어 다시 그린 설명용 도식입니다. 원본 파일·프롬프트·개인 설정은 포함하지 않습니다.</footer>
+</body>
+</html>
