@@ -8,7 +8,7 @@ LoRA 이미지 생성, AI 애니메이션 제작, VLM 프롬프트 자동화와 
 
 - 영상 제작: 30초 등교 애니메이션(완성본 29.24초), 두 클립의 스틸과 입력 프롬프트, 제작 기여와 PC 사양
 - 이미지 생성: 두 캐릭터의 공식 참조 이미지와 LoRA 생성 결과, 데이터 전처리와 학습 과정
-- 기술·파이프라인: VLM 프롬프트 변환 구조와 데이터셋 툴
+- 기술·파이프라인: VLM 프롬프트 변환 구조, 데이터셋 툴, Prompt Selector 프롬프트 라이브러리
 - 워크플로우: Motion Context의 클립 연결 방식과 드래그·확대 가능한 핵심 노드 구조도
 
 영상은 웹 재생용 H.264 사본이며 2752×1536, 48fps입니다. 원본은 로컬에 별도로 보존합니다.
@@ -27,3 +27,6 @@ GitHub Pages는 `main` 브랜치의 루트(`/`)를 게시합니다. `.nojekyll`�
 검색 제외 메타 태그는 접근 제어 기능이 아닙니다.
 
 공개 기술 프로젝트: https://github.com/impacifist/local-vlm-video-prompt-pipeline
+
+Prompt Selector: https://github.com/impacifist/ComfyUI-Prompt-Selector
+공개 예제만 담은 별도 테스트 환경의 화면을 사용하며, 개인 작업 화면이나 개인 프롬프트는 포함하지 않습니다.

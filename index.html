@@ -217,6 +217,15 @@ N/A</code></pre>
       <article id="dataset-tools" class="project-row"><div class="project-number" aria-hidden="true">02</div><div><h2 id="dataset-title">데이터셋 툴</h2><p class="project-lead">LoRA 관리와 프롬프트 준비를<br>ComfyUI 안에서 한 번에.</p>
         <figure class="dataset-capture"><a href="assets/dataset/dataset-tools.png" target="_blank" rel="noopener" aria-label="데이터셋 툴 관리 화면 크게 보기"><img src="assets/dataset/dataset-tools.png" width="1240" height="820" alt="데이터셋 목록과 Missing·Installed 상태, Sync·Analyze 버튼을 보여주는 관리 화면. 모델 이미지·이름·경로는 가려져 있습니다."></a><figcaption>관리 화면 · 모델 이미지·이름·경로와 프롬프트 출력 선택 영역을 제외한 공개용 캡처. 클릭하면 크게 볼 수 있습니다.</figcaption></figure>
         <ol class="text-flow"><li>목록·설치 상태 확인</li><li>필요한 LoRA 복사</li><li>캡션으로 프롬프트 준비</li></ol><p><strong>Sync</strong>로 LoRA를 ComfyUI 폴더에 복사하고, <strong>Analyze</strong>로 캡션의 공통 특징을 추출해 프롬프트를 클립보드로 가져옵니다.</p><p>Python과 Codex로 개발했습니다. 모델 설치 상태 확인과 캡션 기반 프롬프트 구성을 연결하고, 로컬에서 직접 사용하며 개선했습니다.</p><a href="technical-notes.html#dataset-implementation">기능과 구현 방식 ↗</a></div></article>
+      <article id="prompt-selector" class="project-row"><div class="project-number" aria-hidden="true">03</div><div><h2>Prompt Selector</h2><p class="project-lead">자주 쓰는 프롬프트를 저장하고,<br>워크플로우 안에서 골라 씁니다.</p>
+        <figure class="dataset-capture"><a href="assets/prompt-selector/shared-workflow.png" target="_blank" rel="noopener noreferrer" aria-label="Prompt Selector의 목록 공유 예제 크게 보기"><img src="assets/prompt-selector/shared-workflow.png" width="1034" height="853" loading="lazy" alt="같은 프롬프트 목록을 공유하는 두 Prompt Selector 노드. 왼쪽은 카메라 전진, 오른쪽은 창가 조명 프롬프트를 선택한 상태."></a><figcaption>별도 테스트 환경에서 공개 예제만 넣어 촬영했습니다. 두 노드는 목록을 공유하면서 서로 다른 항목을 선택합니다. 클릭하면 크게 볼 수 있습니다.</figcaption></figure>
+        <ol class="text-flow"><li>이름·태그로 저장</li><li>검색·정렬해서 선택</li><li>텍스트 입력에 연결</li></ol>
+        <p>메모장이나 이전 워크플로우에서 프롬프트를 찾아 복사하는 반복 작업을 줄이기 위해 만든 ComfyUI 커스텀 노드입니다. 카메라, 조명, 스타일별 문구를 모아 두고 필요한 입력에 연결합니다.</p>
+        <p><strong>저장</strong>은 현재 내용을 새 항목으로 추가하고, <strong>수정</strong>은 선택한 항목을 변경합니다. 원본을 남긴 채 변형을 비교하거나 기존 문구를 고치는 작업을 구분했습니다. 이름·태그·본문 검색, 즐겨찾기, 한글·영문 이름 정렬과 JSON 가져오기·내보내기를 지원합니다.</p>
+        <p>같은 워크플로우의 노드끼리 저장 목록을 공유하되 각 노드의 선택과 미저장 편집은 유지합니다. 현재 편집한 문자열을 그대로 출력하며, 라이브러리는 워크플로우와 함께 저장됩니다. 다른 워크플로우로 옮길 때는 JSON을 사용합니다.</p>
+        <p>Python과 JavaScript로 구현하고 Codex와 함께 개선했습니다. Python 테스트 10개, JavaScript 테스트 18개와 Canvas·Vue 모드별 브라우저 검증 26개를 통과했습니다. 별도 생성 모델 없이 사용할 수 있으며 MIT 라이선스로 공개했습니다.</p>
+        <div class="inline-links"><a href="https://github.com/impacifist/ComfyUI-Prompt-Selector" target="_blank" rel="noopener noreferrer">GitHub · 설치 파일 ↗</a><a href="https://github.com/impacifist/ComfyUI-Prompt-Selector/blob/main/README.ko.md" target="_blank" rel="noopener noreferrer">사용 방법과 예제 ↗</a></div>
+      </div></article>
       <div class="inline-links section-links"><a href="#workflow">워크플로우 둘러보기 →</a><a href="#images">이미지 생성 사례 →</a></div>
     </section>
     <section id="workflow" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-workflow" data-portfolio-panel tabindex="0" hidden>
