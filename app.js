@@ -73,6 +73,7 @@ function selectPortfolio(key, { focus = false, updateUrl = false } = {}) {
   });
   if (dialog.open) dialog.close();
   if (updateUrl && location.hash !== `#${key}`) history.pushState(null, '', `#${key}`);
+  if (updateUrl) window.scrollTo({ top: 0, behavior: 'instant' });
 }
 portfolioTabs.forEach((tab, index) => {
   tab.addEventListener('click', () => selectPortfolio(tab.dataset.portfolio, { updateUrl: true }));
@@ -89,8 +90,25 @@ function routePortfolio() {
   selectPortfolio(panel?.id || 'video');
   const project = target?.closest('.project-row');
   if (project && panel?.id === 'technology') selectTechnology(project.id);
-  if (target && panel) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  if (target && panel) requestAnimationFrame(() => {
+    if (target === panel) window.scrollTo({ top: 0, behavior: 'instant' });
+    else target.scrollIntoView({ block: 'start' });
+  });
 }
+// Page-level shortcuts preserve the selected portfolio and its URL.
+document.querySelectorAll('a[href="#"]').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    portfolioTabs.find(tab => tab.getAttribute('aria-selected') === 'true').focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+});
+document.querySelector('.skip').addEventListener('click', event => {
+  event.preventDefault();
+  const panel = portfolioPanels.find(panel => !panel.hidden);
+  panel.focus({ preventScroll: true });
+  panel.scrollIntoView({ block: 'start' });
+});
 // Keep the original articles intact: without JavaScript every project remains readable.
 const technologyProjects = [...document.querySelectorAll('#technology .project-row')];
 const technologyNav = document.createElement('div');
@@ -159,5 +177,28 @@ if (promptDemo && promptHeading) {
   details.append(summary, promptHeading, promptDemo);
 }
 selectTechnology(technologyProjects[0].id);
+
+// Each single-map clip is a spatial crop of the same public comparison video.
+const controlVideo = byId('control-preview');
+const controlChoices = [...document.querySelectorAll('[data-control-view]')];
+const controlViews = {
+  all: ['control-comparison.mp4', '전체 비교 · 왼쪽 Pose / 가운데 Depth / 오른쪽 Canny', 1152],
+  pose: ['pose.mp4', 'Pose · 자세와 움직임을 확인합니다.', 384],
+  depth: ['depth.mp4', 'Depth · 장면의 깊이와 배치를 확인합니다.', 384],
+  canny: ['canny.mp4', 'Canny · 윤곽선과 장면 구조를 확인합니다.', 384],
+};
+function selectControlView(key) {
+  const [file, label, width] = controlViews[key];
+  controlVideo.pause();
+  controlVideo.src = `assets/video-control-studio/${file}`;
+  controlVideo.width = width;
+  controlVideo.setAttribute('aria-label', label);
+  byId('control-caption').textContent = label;
+  controlChoices.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.controlView === key)));
+  controlVideo.load();
+}
+controlChoices.forEach(button => button.addEventListener('click', () => selectControlView(button.dataset.controlView)));
+selectControlView(window.matchMedia('(max-width: 600px)').matches ? 'pose' : 'all');
 window.addEventListener('hashchange', routePortfolio);
+window.addEventListener('pageshow', routePortfolio);
 routePortfolio();

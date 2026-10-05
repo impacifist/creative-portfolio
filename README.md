@@ -34,4 +34,6 @@ Prompt Selector: https://github.com/impacifist/ComfyUI-Prompt-Selector
 
 Video Control Studio: https://github.com/impacifist/ComfyUI-Video-Control-Studio
 
+`pose.mp4`, `depth.mp4`, `canny.mp4`는 공개 비교 MP4(1152×284)를 384×284 영역으로 분리한 보기용 영상입니다. FFmpeg `crop=384:284:x:0`에서 x=0/384/768을 사용하고 H.264 CRF 18·yuv420p·faststart로 저장했습니다. 원래 3초·24 FPS를 유지하며 새 추론 결과가 아닙니다. 모바일에서는 한 종류를 크게 보고 전체 비교로 전환할 수 있습니다.
+
 `assets/video-control-studio/`의 한국어 UI 캡처와 비교 MP4는 위 공개 저장소의 커밋 `08489d5e6ab63b8aa6548d751078050429ad340e`에서 가져왔습니다. 원본 경로는 `docs/studio-ko.png`, `docs/control-comparison.mp4`입니다. MP4는 동일한 3초 구간의 Pose·Depth·Canny 제어 맵 비교이며 24 FPS입니다. UI 캡처에는 공개 도형 예제를 사용합니다. 원본 영상과 오디오는 포함하지 않으며 패키지 MIT 라이선스는 원본 영상의 권리를 부여하지 않습니다.
