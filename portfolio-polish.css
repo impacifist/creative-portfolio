@@ -26,6 +26,12 @@ body{background:radial-gradient(ellipse at 95% 0%,#e5dcff 0,transparent 42rem),r
 .vlm-specs{background:#f1edf8;border:0;border-radius:12px;padding:18px;gap:16px}.vlm-process{gap:16px}.vlm-process li{border-top:1px solid var(--line);padding-top:14px}
 .technology-example{border-top:1px solid var(--line);margin-top:24px;padding-top:18px}.technology-example summary{cursor:pointer;font-size:14px;color:var(--accent);font-weight:600;padding:8px 0}.technology-example .vlm-example-heading{margin-top:18px}
 .dataset-capture img{border:1px solid var(--line);border-radius:12px}.section-links{padding:24px 0}
+.control-demo{margin:24px 0}.control-studio-capture img{width:auto;max-height:650px;margin-inline:auto}.control-studio-capture a{display:block;background:#f1edf8;border-radius:12px;padding:16px}
+.project-repository{display:inline-block;margin-top:18px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:5px}
+#video-control-studio .project-row{background:#ffffff70;border:1px solid var(--line);border-radius:20px;padding:32px;grid-template-columns:36px minmax(0,1fr);gap:18px}
+#video-control-studio .project-number{font-size:13px;color:var(--accent)}
+@media(max-width:800px){.portfolio-navigation{flex-wrap:wrap}.portfolio-navigation button{flex:1 1 28%}#video-control-studio .project-row{padding:24px;grid-template-columns:minmax(0,1fr);gap:8px}}
+@media(max-width:520px){#video-control-studio .project-row{padding:20px 16px;border-radius:14px}.control-studio-capture a{padding:8px}}
 /* Color marks interactive surfaces; static reading cards stay neutral. */
 a:not(.brand):not(.skip){color:var(--accent)}
 a:not(.brand):not(.skip):hover{color:#4f2999}

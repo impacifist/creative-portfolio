@@ -88,7 +88,7 @@ function routePortfolio() {
   const panel = target?.closest('[data-portfolio-panel]');
   selectPortfolio(panel?.id || 'video');
   const project = target?.closest('.project-row');
-  if (project) selectTechnology(project.id);
+  if (project && panel?.id === 'technology') selectTechnology(project.id);
   if (target && panel) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
 }
 // Keep the original articles intact: without JavaScript every project remains readable.
@@ -135,7 +135,10 @@ technologyProjects.forEach((project, index) => {
 });
 byId('technology').querySelector('.page-intro').after(technologyNav);
 function selectTechnology(key, { focus = false, updateUrl = false } = {}) {
-  technologyProjects.forEach(project => { project.hidden = project.id !== key; });
+  technologyProjects.forEach(project => {
+    project.hidden = project.id !== key;
+    if (project.hidden) project.querySelectorAll('video').forEach(video => video.pause());
+  });
   technologyNav.querySelectorAll('button').forEach(button => {
     const selected = button.dataset.technology === key;
     button.setAttribute('aria-selected', String(selected));
