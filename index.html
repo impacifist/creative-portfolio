@@ -10,15 +10,16 @@
 </head>
 <body>
   <a class="skip" href="#main">본문으로 바로가기</a>
-  <header class="header wrap"><a class="brand" href="#">impacifist<span>AI Visual Portfolio</span></a><a class="text-link" href="https://github.com/impacifist" target="_blank" rel="noopener noreferrer">GitHub ↗</a></header>
-  <p class="portfolio-intro wrap">AI 영상과 이미지를 만들고, 제작에 필요한 도구를 개발합니다.</p>
-  <nav class="portfolio-navigation wrap" role="tablist" aria-label="포트폴리오 분야">
+  <header class="header wrap"><a class="brand" href="#">impacifist<span>AI Visual Portfolio</span></a>
+  <nav class="portfolio-navigation" role="tablist" aria-label="포트폴리오 분야">
     <button type="button" id="portfolio-tab-video" role="tab" aria-controls="video" aria-selected="true" data-portfolio="video">영상 제작</button>
     <button type="button" id="portfolio-tab-images" role="tab" aria-controls="images" aria-selected="false" data-portfolio="images" tabindex="-1">이미지 생성</button>
-    <button type="button" id="portfolio-tab-technology" role="tab" aria-controls="technology" aria-selected="false" data-portfolio="technology" tabindex="-1">기술·파이프라인</button>
-    <button type="button" id="portfolio-tab-video-control-studio" role="tab" aria-controls="video-control-studio" aria-selected="false" data-portfolio="video-control-studio" tabindex="-1">Video Control Studio</button>
+    <button type="button" id="portfolio-tab-technology" role="tab" aria-controls="technology" aria-selected="false" data-portfolio="technology" tabindex="-1" aria-label="기술·파이프라인"><span class="nav-wide">기술·파이프라인</span><span class="nav-compact" aria-hidden="true">제작 도구</span></button>
+    <button type="button" id="portfolio-tab-video-control-studio" role="tab" aria-controls="video-control-studio" aria-selected="false" data-portfolio="video-control-studio" tabindex="-1">제어 맵 도구</button>
     <button type="button" id="portfolio-tab-workflow" role="tab" aria-controls="workflow" aria-selected="false" data-portfolio="workflow" tabindex="-1">워크플로우</button>
   </nav>
+  <a class="text-link" href="https://github.com/impacifist" target="_blank" rel="noopener noreferrer" aria-label="impacifist GitHub 프로필 · 새 창">GitHub ↗</a></header>
+  <p class="portfolio-intro wrap">AI 영상과 이미지를 만들고, 제작에 필요한 도구를 개발합니다.</p>
   <main id="main" class="wrap">
     <section id="images" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-images" data-portfolio-panel tabindex="0" hidden>
       <div id="work" class="page-intro"><h1>캐릭터의 특징을,<br>새로운 장면에도.</h1><p>직접 학습한 LoRA로 생성한 두 캐릭터의 외형을 원본과 비교합니다.</p></div>

@@ -84,3 +84,64 @@
   #technology{grid-template-columns:270px minmax(0,1fr);gap:0 36px}
   .project-layout{gap:40px}
 }
+
+/* Navigation has one home; destination links and disclosure controls have
+   different visual weights. Typography and the work remain the focal point. */
+html{scroll-padding-top:110px}
+.header.wrap{height:auto;min-height:84px;display:grid;grid-template-columns:minmax(170px,1fr) auto minmax(90px,1fr);gap:24px;align-items:center;margin-top:12px;border-bottom:1px solid var(--line)}
+.brand{display:block;width:fit-content;line-height:1.4}
+.brand span{display:block;margin:3px 0 0 22px;font-size:11px}
+.header>.text-link{justify-self:end;white-space:nowrap;padding:8px 12px;font-size:12px;border-radius:8px}
+.portfolio-navigation{display:flex;gap:6px;padding:0;border:0;border-radius:0;background:none;align-self:stretch;align-items:stretch}
+.portfolio-navigation button{flex:0 0 auto;min-height:44px;padding:16px 14px;font-size:14px;border-radius:0;color:var(--muted);white-space:nowrap;box-shadow:none;transition:color .15s,background .15s}
+.portfolio-navigation button:hover:not([aria-selected=true]){color:var(--ink);background:#6940bf08}
+.portfolio-navigation button[aria-selected=true]{color:var(--accent);background:none;box-shadow:none}
+.portfolio-navigation button[aria-selected=true]::after{display:block;bottom:-1px;left:14px;right:14px;height:3px;background:var(--accent);border-radius:3px 3px 0 0}
+.nav-compact{display:none}
+.portfolio-intro{margin-top:14px;margin-bottom:0;font-size:12px}
+.technology-index{display:none}
+.technology-nav button{border-radius:10px;box-shadow:none;transform:none}
+.technology-nav button:hover{transform:none;box-shadow:none}
+.technology-nav button[aria-selected=true],.technology-nav button[aria-selected=true]:hover{background:var(--action-soft);border-color:var(--action-border);color:#503184;box-shadow:inset 3px 0 var(--accent)}
+.technology-nav button[aria-selected=true] .technology-index{color:var(--accent)}
+.technology-nav small{font-size:11px;opacity:.8}
+.inline-links{align-items:center;gap:10px 18px}
+.inline-links a{display:inline-flex;align-items:center;min-height:44px}
+.inline-links a:not(.primary-action){background:none;border-color:transparent;padding:9px 0;border-radius:0;text-decoration:underline;text-decoration-color:#baa2e5;text-underline-offset:5px;box-shadow:none}
+.inline-links a:not(.primary-action):hover{background:none;border-color:transparent;color:#4f2999;text-decoration-color:currentColor;box-shadow:none}
+.source-detail summary,.technology-example summary{padding:10px 0;border:0;border-radius:0;background:none;font-weight:500;min-height:44px}
+.source-detail summary:hover,.technology-example summary:hover{background:none;color:#4f2999;box-shadow:none}
+.source-detail[open] summary,.technology-example[open] summary{background:none;border:0}
+.project-copy .primary-action{padding:11px 16px}
+.control-choices button{min-height:44px}
+@media(min-width:1200px){
+  .header.wrap{position:sticky;top:0;z-index:5;background:var(--bg);margin-top:0;min-height:88px}
+  .category-panel{padding-top:28px}
+  #technology>.technology-nav,.project-media{top:112px}
+  .technology-nav button{padding:14px 16px}
+}
+@media(min-width:801px) and (max-width:1100px){
+  .header.wrap{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding-bottom:0}
+  .header>.text-link{grid-column:2;grid-row:1}
+  .portfolio-navigation{grid-column:1/-1;grid-row:2;justify-content:flex-start}
+  .brand{padding-top:8px}
+}
+@media(max-width:800px){
+  html{scroll-padding-top:20px}
+  .header.wrap{grid-template-columns:minmax(0,1fr) auto;gap:14px 10px;padding-top:6px}
+  .brand span{display:none}
+  .header>.text-link{grid-column:2;grid-row:1;padding:7px 10px;min-height:44px;display:flex;align-items:center}
+  .portfolio-navigation{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px}
+  .portfolio-navigation button{padding:13px 3px;min-height:48px;font-size:12px;white-space:normal;line-height:1.45}
+  .portfolio-navigation button[aria-selected=true]::after{left:4px;right:4px}
+  .nav-wide{display:none}.nav-compact{display:inline}
+  .portfolio-intro{font-size:11px;line-height:1.8;margin-top:14px}
+}
+@media(max-width:520px){
+  .portfolio-navigation button{font-size:11px}
+  .technology-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .technology-nav button{display:flex;padding:12px;gap:0}
+  .technology-nav strong{font-size:14px;margin-bottom:6px;line-height:1.5}
+  .technology-nav button>span:not(.technology-index){font-size:11px;line-height:1.5}
+  .technology-nav small{display:none}
+}
