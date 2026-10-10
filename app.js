@@ -187,7 +187,7 @@ if (promptDemo && promptHeading) {
 selectTechnology(technologyProjects[0].id);
 
 // Group each project's explanation beside its evidence on wide screens.
-document.querySelectorAll('#technology .project-row, #video-control-studio .project-row').forEach(project => {
+document.querySelectorAll('#technology .project-row').forEach(project => {
   const body = project.lastElementChild;
   const layout = document.createElement('div');
   layout.className = 'project-layout';

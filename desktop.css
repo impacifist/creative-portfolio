@@ -68,15 +68,6 @@
   #images>.credits,#images>noscript{grid-column:1/-1}
   .image-button{height:clamp(390px,30vw,540px)}
   .observations{gap:24px}
-  #video-control-studio{display:grid;grid-template-columns:minmax(300px,.65fr) minmax(0,1.35fr);gap:0 36px;align-items:start}
-  #video-control-studio>*{grid-column:1/-1}
-  #video-control-studio>.page-intro{grid-column:1;grid-row:1;display:block}
-  #video-control-studio>.page-intro p{margin-top:18px}
-  #video-control-studio>.control-choices{grid-column:1;grid-row:2;margin-top:0}
-  #video-control-studio>.control-demo{grid-column:2;grid-row:1/3}
-  #video-control-studio>.project-row{margin-top:24px;padding:28px;border-radius:14px;grid-template-columns:minmax(0,1fr);gap:0}
-  #video-control-studio .project-number{display:none}
-  #video-control-studio .project-layout{grid-template-columns:minmax(0,1fr) minmax(360px,1fr)}
   .workflow-canvas-wrap.workflow-explorer{height:clamp(620px,72vh,880px)}
 }
 @media(min-width:2000px){
@@ -117,6 +108,42 @@ html{scroll-padding-top:110px}
 .control-choices button{min-width:0;min-height:44px;padding:10px 6px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:13px;font-weight:500;line-height:1.5;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
 .control-choices button:hover{background:#ffffff90;color:var(--ink)}
 .control-choices button[aria-pressed=true]{background:#fff;color:var(--accent);font-weight:650;border:0;box-shadow:0 1px 4px #29263d18}
+.control-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:12px 0 30px}
+.control-intro h1{font-size:clamp(30px,3vw,48px);letter-spacing:-1.5px}
+.control-intro p{color:var(--muted);font-size:14px;margin-top:12px;line-height:1.8}
+.control-intro .project-repository{margin:0;flex-shrink:0}
+.control-workbench{display:grid;grid-template-columns:minmax(0,1fr);gap:30px;align-items:start}
+.control-stage{min-width:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.control-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 22px}
+.control-toolbar h2{font-size:15px;white-space:nowrap;margin:0}
+.control-toolbar .control-choices{max-width:380px;margin:0}
+#video-control-studio .control-demo{margin:0;padding:0 12px}
+#video-control-studio .control-demo video{display:block;width:100%;max-width:none;height:auto;aspect-ratio:2.7;object-fit:contain;border-radius:8px;background:#191b22;margin:0}
+.control-demo figcaption{padding:16px 10px 20px;font-size:12px;line-height:1.8}
+#video-control-studio .control-overview{display:block;border:0;border-radius:0;padding:0;margin:0;background:none}
+.control-overview .project-number{display:none}
+.control-overview h2{font-size:20px;margin-bottom:16px}
+.control-overview .vlm-process{grid-template-columns:1fr;gap:0;margin:22px 0}
+.control-overview .vlm-process li{display:grid;grid-template-columns:100px minmax(0,1fr);align-items:baseline;gap:12px;border-top:1px solid var(--line);padding:13px 0}
+.control-overview .vlm-process h3{font-size:13px}
+.control-overview .vlm-process h3::before{display:none}
+.control-overview .vlm-process p{margin:0;font-size:13px}
+.control-overview .text-flow{font-size:12px;gap:8px 12px}
+.control-overview .text-flow li:not(:last-child)::after{margin-left:12px}
+.control-overview .technology-example,.control-overview .source-detail{border-top:1px solid var(--line);margin-top:18px;padding-top:8px}
+.control-overview .studio-credit{font-size:11px}
+@media(min-width:1200px){.control-workbench{grid-template-columns:minmax(0,1.9fr) minmax(320px,.8fr);gap:40px}.control-stage{position:sticky;top:112px}}
+@media(max-width:600px){
+  .control-intro{display:block;margin:6px 0 24px}
+  .control-intro .project-repository{margin-top:18px}
+  .control-toolbar{display:block;padding:16px 12px}
+  .control-toolbar h2{margin:0 0 12px 4px}
+  .control-toolbar .control-choices{max-width:none}
+  #video-control-studio .control-demo{padding:0 8px}
+  #video-control-studio .control-demo video{aspect-ratio:4/3}
+  .control-demo figcaption{font-size:11px;padding:12px 4px 16px}
+  .control-overview .vlm-process li{grid-template-columns:90px minmax(0,1fr)}
+}
 @media(min-width:1200px){
   .header.wrap{position:sticky;top:0;z-index:5;background:var(--bg);margin-top:0;min-height:88px}
   .category-panel{padding-top:28px}
