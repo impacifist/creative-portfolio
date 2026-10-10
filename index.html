@@ -15,7 +15,7 @@
     <button type="button" id="portfolio-tab-video" role="tab" aria-controls="video" aria-selected="true" data-portfolio="video">영상 제작</button>
     <button type="button" id="portfolio-tab-images" role="tab" aria-controls="images" aria-selected="false" data-portfolio="images" tabindex="-1">이미지 생성</button>
     <button type="button" id="portfolio-tab-technology" role="tab" aria-controls="technology" aria-selected="false" data-portfolio="technology" tabindex="-1" aria-label="기술·파이프라인"><span class="nav-wide">기술·파이프라인</span><span class="nav-compact" aria-hidden="true">제작 도구</span></button>
-    <button type="button" id="portfolio-tab-video-control-studio" role="tab" aria-controls="video-control-studio" aria-selected="false" data-portfolio="video-control-studio" tabindex="-1">제어 맵 도구</button>
+    <button type="button" id="portfolio-tab-video-control-studio" role="tab" aria-controls="video-control-studio" aria-selected="false" data-portfolio="video-control-studio" tabindex="-1">Video Control net</button>
     <button type="button" id="portfolio-tab-workflow" role="tab" aria-controls="workflow" aria-selected="false" data-portfolio="workflow" tabindex="-1">워크플로우</button>
   </nav>
   <a class="text-link" href="https://github.com/impacifist" target="_blank" rel="noopener noreferrer" aria-label="impacifist GitHub 프로필 · 새 창">GitHub ↗</a></header>
@@ -171,7 +171,7 @@
       <p class="fine-print video-credit">캐릭터: <a href="https://gakuen.idolmaster-official.jp/idol/kotone/" target="_blank" rel="noopener noreferrer">후지타 코토네 · 학원 아이돌마스터</a><br>THE IDOLM@STER™&amp; ©Bandai Namco Entertainment Inc.<br>원작 캐릭터 기반의 비공식 개인 AI 영상 작업입니다.<br>웹 재생용 H.264 사본으로, 변환 시 해상도·프레임률을 유지하고 별도 노이즈 보정은 적용하지 않았습니다.</p>
     </section>
     <section id="technology" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-technology" data-portfolio-panel tabindex="0" hidden>
-      <div class="page-intro"><h1>제작을 돕는<br>자동화와 도구.</h1><p>캐릭터 설정부터 콘티, 프롬프트와 제작 재료까지.<br>도구를 선택해 실제 화면과 구현 내용을 살펴보세요.</p></div>
+      <div class="page-intro"><h1>제작을 돕는<br>자동화와 도구.</h1></div>
       <article id="storyboard-generator" class="project-row"><div class="project-number" aria-hidden="true">01</div><div>
         <h2>AI 영상 스토리보드 생성기</h2>
         <p class="project-lead">캐릭터의 성격을 콘티로,<br>콘티를 영상 프롬프트로.</p>
@@ -240,15 +240,15 @@ N/A</code></pre>
         <p>목록은 워크플로우에 저장하며 JSON 파일로 옮길 수 있습니다. Python과 JavaScript로 구현하고 Codex와 함께 개선했습니다. 별도 생성 모델 없이 사용하는 MIT 공개 도구입니다.</p>
         <div class="inline-links"><a href="https://github.com/impacifist/ComfyUI-Prompt-Selector" target="_blank" rel="noopener noreferrer">GitHub · 설치 파일 ↗</a><a href="https://github.com/impacifist/ComfyUI-Prompt-Selector/blob/main/README.ko.md" target="_blank" rel="noopener noreferrer">사용 방법과 예제 ↗</a></div>
       </div></article>
-      <div class="inline-links section-links"><a href="#video-control-studio">Video Control Studio →</a><a href="#workflow">워크플로우 둘러보기 →</a><a href="#images">이미지 생성 사례 →</a></div>
+      <div class="inline-links section-links"><a href="#video-control-studio">Video Control net →</a><a href="#workflow">워크플로우 둘러보기 →</a><a href="#images">이미지 생성 사례 →</a></div>
     </section>
     <section id="video-control-studio" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-video-control-studio" data-portfolio-panel tabindex="0" hidden>
-      <div class="page-intro"><span class="eyebrow">COMFYUI CUSTOM NODE</span><h1>Video Control Studio</h1><a class="project-repository primary-action" href="https://github.com/impacifist/ComfyUI-Video-Control-Studio" target="_blank" rel="noopener noreferrer">GitHub 저장소 ↗</a><p>영상에서 자세·깊이·윤곽을 추출하고 비교하는 도구입니다.</p></div>
+      <div class="page-intro"><span class="eyebrow">COMFYUI CUSTOM NODE</span><h1>Video Control net</h1><a class="project-repository primary-action" href="https://github.com/impacifist/ComfyUI-Video-Control-Studio" target="_blank" rel="noopener noreferrer">GitHub 저장소 ↗</a><p>영상에서 자세·깊이·윤곽을 추출하고 비교하는 도구입니다.</p></div>
       <div class="control-choices" role="group" aria-label="크게 볼 제어 맵">
         <button type="button" data-control-view="all" aria-pressed="true" aria-controls="control-preview">전체 비교</button>
-        <button type="button" data-control-view="pose" aria-pressed="false" aria-controls="control-preview">Pose · 자세</button>
-        <button type="button" data-control-view="depth" aria-pressed="false" aria-controls="control-preview">Depth · 깊이</button>
-        <button type="button" data-control-view="canny" aria-pressed="false" aria-controls="control-preview">Canny · 윤곽</button>
+        <button type="button" data-control-view="pose" aria-pressed="false" aria-controls="control-preview" aria-label="Pose · 자세 비교">Pose</button>
+        <button type="button" data-control-view="depth" aria-pressed="false" aria-controls="control-preview" aria-label="Depth · 깊이 비교">Depth</button>
+        <button type="button" data-control-view="canny" aria-pressed="false" aria-controls="control-preview" aria-label="Canny · 윤곽 비교">Canny</button>
       </div>
       <figure class="video-showcase control-demo"><video id="control-preview" controls playsinline preload="metadata" width="1152" height="284" aria-label="Pose, Depth, Canny 전체 비교"><source src="assets/video-control-studio/control-comparison.mp4" type="video/mp4"><a href="assets/video-control-studio/control-comparison.mp4">비교 영상 열기</a></video><figcaption><span id="control-caption" aria-live="polite">전체 비교 · 왼쪽 Pose / 가운데 Depth / 오른쪽 Canny</span><br>같은 3초 구간 · 24 FPS · 생성 영상이 아닌 제어 맵 추출 예시입니다.</figcaption></figure>
       <article class="project-row"><div class="project-number" aria-hidden="true">01</div><div><h2>생성 전에, 참조부터 확인하기</h2>
