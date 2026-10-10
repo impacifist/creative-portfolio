@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#fcfaff">
   <title>impacifist — AI Visual Portfolio</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2322241e'/%3E%3Cpath d='M19 16h8v32h-8zm18 0h8v32h-8z' fill='%23deff60'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="site.css"><link rel="stylesheet" href="portfolio-polish.css"><script defer src="content.js"></script><script defer src="app.js"></script>
+  <link rel="stylesheet" href="site.css"><link rel="stylesheet" href="portfolio-polish.css"><link rel="stylesheet" href="desktop.css"><script defer src="content.js"></script><script defer src="app.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">본문으로 바로가기</a>
@@ -170,8 +170,20 @@
       <p class="fine-print video-credit">캐릭터: <a href="https://gakuen.idolmaster-official.jp/idol/kotone/" target="_blank" rel="noopener noreferrer">후지타 코토네 · 학원 아이돌마스터</a><br>THE IDOLM@STER™&amp; ©Bandai Namco Entertainment Inc.<br>원작 캐릭터 기반의 비공식 개인 AI 영상 작업입니다.<br>웹 재생용 H.264 사본으로, 변환 시 해상도·프레임률을 유지하고 별도 노이즈 보정은 적용하지 않았습니다.</p>
     </section>
     <section id="technology" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-technology" data-portfolio-panel tabindex="0" hidden>
-      <div class="page-intro"><span class="eyebrow">CREATIVE ENGINEERING / 03 TOOLS</span><h1>제작을 돕는<br>자동화와 도구.</h1><p>이미지를 읽고, 재료를 정리하고, 연출을 연결합니다.<br>아래에서 기술을 선택해 제작 과정과 구현 내용을 살펴보세요.</p></div>
-      <article id="vlm-pipeline" class="project-row"><div class="project-number" aria-hidden="true">01</div><div><h2>VLM 프롬프트 자동화</h2><p class="project-lead">이미지와 한국어 연출 지시를<br>MiniMax H3용 프롬프트로 변환합니다.</p>
+      <div class="page-intro"><h1>제작을 돕는<br>자동화와 도구.</h1><p>캐릭터 설정부터 콘티, 프롬프트와 제작 재료까지.<br>도구를 선택해 실제 화면과 구현 내용을 살펴보세요.</p></div>
+      <article id="storyboard-generator" class="project-row"><div class="project-number" aria-hidden="true">01</div><div>
+        <h2>AI 영상 스토리보드 생성기</h2>
+        <p class="project-lead">캐릭터의 성격을 콘티로,<br>콘티를 영상 프롬프트로.</p>
+        <ol class="text-flow" aria-label="스토리보드 제작 흐름"><li>캐릭터·상황 설정</li><li>컷별 콘티 편집</li><li>영상 프롬프트 변환</li></ol>
+        <p>두 인물의 성격과 말투, 관계와 상황을 입력해 대사·행동·카메라 연출을 담은 콘티를 만드는 로컬 웹앱입니다. 컷을 편집하고 고정하거나, 저장한 콘티를 검색해 다시 작업할 수 있습니다.</p>
+        <p>Seedance 2.0·MiniMax H3 가이드에 맞춰 변환하며, 30초 콘티는 15초 클립 두 개로 나눕니다. 대사와 화자는 프로그램이 원문 그대로 조립하고 영상 지시문은 영어로 구성합니다.</p>
+        <p>Python과 JavaScript로 구현했습니다. OpenAI·호환 API, Claude, Ollama를 연결하며 한국어·영어·일본어 UI를 지원합니다. 캐릭터별 여러 참조 이미지를 지정하고 프롬프트 TXT·JSON·이미지 ZIP으로 내보낼 수 있습니다.</p>
+        <details class="source-detail"><summary>출력 검증과 현재 범위</summary><p>시간·컷 순서·대사 보존·공유 경계 상태를 검사하고, 구조화된 출력이 검증에 실패하면 최대 한 번 추가 호출로 교정합니다. 실제 영상과 콘티 이미지를 생성하는 기능은 포함하지 않습니다.</p><p>공개 베타이며 자동 검증은 모의 AI로 수행했습니다. 실제 유료 모델의 생성 품질과 영상의 연속성을 보장하지 않습니다.</p></details>
+        <div class="inline-links"><a class="primary-action" href="https://github.com/impacifist/ai-video-storyboard-generator" target="_blank" rel="noopener noreferrer">GitHub · 다운로드 ↗</a><a href="https://github.com/impacifist/ai-video-storyboard-generator/blob/main/README.ko.md" target="_blank" rel="noopener noreferrer">한국어 사용 안내 ↗</a></div>
+        <figure class="dataset-capture"><a href="assets/storyboard-generator/create-ko.png" target="_blank" rel="noopener noreferrer" aria-label="한국어 스토리보드 제작 화면 크게 보기"><img src="assets/storyboard-generator/create-ko.png" width="1600" height="1050" alt="캐릭터 성격과 말투를 설정하고 대사·행동·카메라 연출이 있는 컷을 편집하는 한국어 화면. 첫 컷은 고정된 상태."></a><figcaption>직접 작성한 공개 예시로 촬영한 실제 UI입니다. 클릭하면 크게 볼 수 있습니다.</figcaption></figure>
+        <details class="technology-example"><summary>30초 → 15초씩 두 클립 · 변환 결과 보기</summary><figure class="dataset-capture"><a href="assets/storyboard-generator/convert-ko.png" target="_blank" rel="noopener noreferrer" aria-label="15초 클립 분할과 프롬프트 결과 크게 보기"><img src="assets/storyboard-generator/convert-ko.png" width="1920" height="1250" loading="lazy" alt="원본 6컷, 15초 클립 두 개의 계획과 영어 지시문·한국어 대사로 구성된 변환 결과를 나란히 보여주는 화면."></a><figcaption>모의 AI 응답을 사용한 작동 예시입니다. 실제 유료 모델의 출력 품질을 보여주는 자료는 아닙니다.</figcaption></figure></details>
+      </div></article>
+      <article id="vlm-pipeline" class="project-row"><div class="project-number" aria-hidden="true">02</div><div><h2>VLM 프롬프트 자동화</h2><p class="project-lead">이미지와 한국어 연출 지시를<br>MiniMax H3용 프롬프트로 변환합니다.</p>
         <details class="source-detail model-detail"><summary>사용 모델과 실행 환경</summary><dl class="vlm-specs" aria-label="VLM 사용 사양">
           <div><dt>사용 모델</dt><dd>Qwen 3.8 · 27B<span>기반 파생 모델</span></dd></div>
           <div><dt>모델 형식 · 양자화</dt><dd>GGUF · IQ4_XS<span>로컬 실행용 양자화</span></dd></div>
@@ -216,10 +228,10 @@ N/A</code></pre>
           </div>
         </div>
         <div class="inline-links"><a href="technical-notes.html#vlm-design">모델과 설계 과정 ↗</a><a href="https://github.com/impacifist/local-vlm-video-prompt-pipeline" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div></article>
-      <article id="dataset-tools" class="project-row"><div class="project-number" aria-hidden="true">02</div><div><h2 id="dataset-title">데이터셋 툴</h2><p class="project-lead">LoRA 관리와 프롬프트 준비를<br>ComfyUI 안에서 한 번에.</p>
+      <article id="dataset-tools" class="project-row"><div class="project-number" aria-hidden="true">03</div><div><h2 id="dataset-title">데이터셋 툴</h2><p class="project-lead">LoRA 관리와 프롬프트 준비를<br>ComfyUI 안에서 한 번에.</p>
         <figure class="dataset-capture"><a href="assets/dataset/dataset-tools.png" target="_blank" rel="noopener" aria-label="데이터셋 툴 관리 화면 크게 보기"><img src="assets/dataset/dataset-tools.png" width="1240" height="820" alt="데이터셋 목록과 Missing·Installed 상태, Sync·Analyze 버튼을 보여주는 관리 화면. 모델 이미지·이름·경로는 가려져 있습니다."></a><figcaption>관리 화면 · 모델 이미지·이름·경로와 프롬프트 출력 선택 영역을 제외한 공개용 캡처. 클릭하면 크게 볼 수 있습니다.</figcaption></figure>
         <ol class="text-flow"><li>목록·설치 상태 확인</li><li>필요한 LoRA 복사</li><li>캡션으로 프롬프트 준비</li></ol><p><strong>Sync</strong>로 LoRA를 ComfyUI 폴더에 복사하고, <strong>Analyze</strong>로 캡션의 공통 특징을 추출해 프롬프트를 클립보드로 가져옵니다.</p><p>Python과 Codex로 개발했습니다. 모델 설치 상태 확인과 캡션 기반 프롬프트 구성을 연결하고, 로컬에서 직접 사용하며 개선했습니다.</p><a href="technical-notes.html#dataset-implementation">기능과 구현 방식 ↗</a></div></article>
-      <article id="prompt-selector" class="project-row"><div class="project-number" aria-hidden="true">03</div><div><h2>Prompt Selector</h2><p class="project-lead">자주 쓰는 프롬프트를 저장하고,<br>워크플로우 안에서 골라 씁니다.</p>
+      <article id="prompt-selector" class="project-row"><div class="project-number" aria-hidden="true">04</div><div><h2>Prompt Selector</h2><p class="project-lead">자주 쓰는 프롬프트를 저장하고,<br>워크플로우 안에서 골라 씁니다.</p>
         <figure class="dataset-capture"><a href="assets/prompt-selector/shared-workflow.png" target="_blank" rel="noopener noreferrer" aria-label="Prompt Selector의 목록 공유 예제 크게 보기"><img src="assets/prompt-selector/shared-workflow.png" width="1034" height="853" loading="lazy" alt="같은 프롬프트 목록을 공유하는 두 Prompt Selector 노드. 왼쪽은 카메라 전진, 오른쪽은 창가 조명 프롬프트를 선택한 상태."></a><figcaption>별도 테스트 환경에서 공개 예제만 넣어 촬영했습니다. 두 노드는 목록을 공유하면서 서로 다른 항목을 선택합니다. 클릭하면 크게 볼 수 있습니다.</figcaption></figure>
         <ol class="text-flow"><li>이름·태그로 저장</li><li>검색·정렬해서 선택</li><li>텍스트 입력에 연결</li></ol>
         <p>메모장이나 이전 워크플로우에서 프롬프트를 찾아 복사하는 반복 작업을 줄이기 위해 만든 ComfyUI 커스텀 노드입니다. 카메라, 조명, 스타일별 문구를 모아 두고 필요한 입력에 연결합니다.</p>

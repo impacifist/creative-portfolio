@@ -115,11 +115,12 @@ const technologyNav = document.createElement('div');
 technologyNav.className = 'technology-nav';
 technologyNav.setAttribute('role', 'tablist');
 technologyNav.setAttribute('aria-label', '살펴볼 제작 기술');
-const technologySummaries = [
-  ['이미지 → 영상 프롬프트', 'VLM · Ollama · MiniMax H3'],
-  ['LoRA 관리 → 프롬프트 준비', 'Python · ComfyUI'],
-  ['문구 저장 → 선택 → 연결', 'Python · JavaScript · ComfyUI'],
-];
+const technologySummaries = {
+  'storyboard-generator': ['캐릭터 → 콘티 → 영상 프롬프트', 'Python · JavaScript · AI API'],
+  'vlm-pipeline': ['이미지 → 영상 프롬프트', 'VLM · Ollama · MiniMax H3'],
+  'dataset-tools': ['LoRA 관리 → 프롬프트 준비', 'Python · ComfyUI'],
+  'prompt-selector': ['문구 저장 → 선택 → 연결', 'Python · JavaScript · ComfyUI'],
+};
 technologyProjects.forEach((project, index) => {
   const button = document.createElement('button');
   button.type = 'button';
@@ -130,20 +131,20 @@ technologyProjects.forEach((project, index) => {
   const number = document.createElement('span');
   number.className = 'technology-index';
   number.dataset.number = `0${index + 1}`;
-  number.textContent = `0${index + 1} / TOOL`;
+  number.textContent = `0${index + 1}`;
   const title = document.createElement('strong');
   title.textContent = project.querySelector('h2').textContent;
   const description = document.createElement('span');
-  description.textContent = technologySummaries[index][0];
+  description.textContent = technologySummaries[project.id][0];
   const stack = document.createElement('small');
-  stack.textContent = technologySummaries[index][1];
+  stack.textContent = technologySummaries[project.id][1];
   button.append(number, title, description, stack);
   button.addEventListener('click', () => selectTechnology(project.id, { updateUrl: true }));
   button.addEventListener('keydown', event => {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
     const next = event.key === 'Home' ? 0 : event.key === 'End' ? technologyProjects.length - 1 :
-      (index + (event.key === 'ArrowRight' ? 1 : -1) + technologyProjects.length) % technologyProjects.length;
+      (index + (['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1) + technologyProjects.length) % technologyProjects.length;
     selectTechnology(technologyProjects[next].id, { focus: true, updateUrl: true });
   });
   technologyNav.append(button);
@@ -152,6 +153,13 @@ technologyProjects.forEach((project, index) => {
   project.tabIndex = 0;
 });
 byId('technology').querySelector('.page-intro').after(technologyNav);
+byId('technology').classList.add('technology-enhanced');
+const technologyDesktop = window.matchMedia('(min-width: 1200px)');
+function updateTechnologyOrientation() {
+  technologyNav.setAttribute('aria-orientation', technologyDesktop.matches ? 'vertical' : 'horizontal');
+}
+updateTechnologyOrientation();
+technologyDesktop.addEventListener('change', updateTechnologyOrientation);
 function selectTechnology(key, { focus = false, updateUrl = false } = {}) {
   technologyProjects.forEach(project => {
     project.hidden = project.id !== key;
@@ -177,6 +185,22 @@ if (promptDemo && promptHeading) {
   details.append(summary, promptHeading, promptDemo);
 }
 selectTechnology(technologyProjects[0].id);
+
+// Group each project's explanation beside its evidence on wide screens.
+document.querySelectorAll('#technology .project-row, #video-control-studio .project-row').forEach(project => {
+  const body = project.lastElementChild;
+  const layout = document.createElement('div');
+  layout.className = 'project-layout';
+  const copy = document.createElement('div');
+  copy.className = 'project-copy';
+  const media = document.createElement('div');
+  media.className = 'project-media';
+  [...body.children].forEach(child => {
+    (child.matches('.dataset-capture, .technology-example, .model-detail') ? media : copy).append(child);
+  });
+  layout.append(copy, media);
+  body.append(layout);
+});
 
 // Each single-map clip is a spatial crop of the same public comparison video.
 const controlVideo = byId('control-preview');
