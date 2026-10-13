@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#fcfaff">
   <title>impacifist — AI Visual Portfolio</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2322241e'/%3E%3Cpath d='M19 16h8v32h-8zm18 0h8v32h-8z' fill='%23deff60'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="site.css"><link rel="stylesheet" href="portfolio-polish.css"><link rel="stylesheet" href="desktop.css"><script defer src="content.js"></script><script defer src="app.js"></script>
+  <link rel="stylesheet" href="site.css"><link rel="stylesheet" href="portfolio-polish.css"><link rel="stylesheet" href="desktop.css"><link rel="stylesheet" href="studio.css"><script defer src="content.js"></script><script defer src="app.js"></script><script defer src="studio.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">본문으로 바로가기</a>
@@ -41,6 +41,20 @@
       <div class="page-intro"><h1>잠에서 깨어,<br>하루를 준비하는 표정.</h1><p>후지타 코토네의 아침을 담은 2D 일상 애니메이션. 직접 학습한 LoRA 이미지를 참조하고, 두 클립의 연출을 프롬프트로 구성했습니다.</p></div>
       <p class="media-meta">30초 등교 · MiniMax H3 / ComfyUI <span>완성본 29.24초 / 2752 × 1536 / 48fps</span></p>
       <figure class="video-showcase"><video id="school-video" controls playsinline preload="none" poster="assets/video/school-morning-poster.jpg" width="2752" height="1536" aria-label="후지타 코토네의 기상과 등교 준비를 담은 일상 애니메이션"><source src="assets/video/school-morning.mp4" type="video/mp4"><a href="assets/video/school-morning.mp4">영상 파일 열기</a></video><figcaption>후지타 코토네 · 학원 아이돌마스터 / 소리가 포함되어 있습니다.</figcaption></figure>
+      <section class="scene-journal" aria-labelledby="scene-journal-title">
+        <div class="scene-journal-heading"><h2 id="scene-journal-title">아침을 이루는 여섯 장면</h2><p>옆으로 넘기고, 눌러서 크게 보세요.</p></div>
+        <div class="scene-journal-layout">
+          <div class="filmstrip" role="region" aria-label="완성 영상의 장면 모음 · 가로로 스크롤" tabindex="0">
+            <a class="film-shot" href="assets/video/school-sleepy.jpg"><span class="film-frame"><img src="assets/video/school-sleepy.jpg" width="960" height="536" loading="lazy" alt="베개에 기댄 졸린 얼굴"></span><span class="film-caption">아직은 졸린 아침</span></a>
+            <a class="film-shot" href="assets/video/school-alarm.jpg"><span class="film-frame"><img src="assets/video/school-alarm.jpg" width="960" height="536" loading="lazy" alt="알람을 끄는 손 인서트"></span><span class="film-caption">알람을 끄는 손</span></a>
+            <a class="film-shot" href="assets/video/school-stretch.jpg"><span class="film-frame"><img src="assets/video/school-stretch.jpg" width="960" height="536" loading="lazy" alt="상반신 구도로 보여주는 기지개"></span><span class="film-caption">천천히, 기지개</span></a>
+            <a class="film-shot" href="assets/video/school-hair.jpg"><span class="film-frame"><img src="assets/video/school-hair.jpg" width="960" height="536" loading="lazy" alt="머리카락을 정리하는 손끝"></span><span class="film-caption">머리를 정돈하고</span></a>
+            <a class="film-shot" href="assets/video/school-smile.jpg"><span class="film-frame"><img src="assets/video/school-smile.jpg" width="960" height="536" loading="lazy" alt="입가에 집중한 작은 미소"></span><span class="film-caption">작은 미소 하나</span></a>
+            <a class="film-shot" href="assets/video/school-uniform.jpg"><span class="film-frame"><img src="assets/video/school-uniform.jpg" width="960" height="536" loading="lazy" alt="교복 차림으로 준비를 마친 모습"></span><span class="film-caption">이제, 하루의 시작</span></a>
+          </div>
+          <aside class="scene-note" aria-labelledby="scene-note-title"><span class="scene-note-label">작업 노트</span><div aria-live="polite" aria-atomic="true"><h3 id="scene-note-title">잠기운은 표정으로.</h3><p id="scene-note-copy">졸린 얼굴을 가까이 담고, 카메라는 고정했습니다. 큰 움직임보다 표정에 집중하는 장면입니다.</p></div></aside>
+        </div>
+      </section>
       <section class="school-direction" aria-labelledby="school-direction-title"><h2 id="school-direction-title">두 클립, 하나의 아침</h2><p class="direction-intro">각 15초·7개 샷을 목표로 작성한 입력 프롬프트입니다. 아래 스틸은 완성 영상에서 추출했습니다.</p>
         <article class="school-clip" aria-labelledby="school-clip-01"><div class="clip-heading"><span>CLIP 01</span><h3 id="school-clip-01">잠에서 깨어나는 순간</h3><p>알람 → 졸린 얼굴 → 기지개</p></div><div class="clip-stills"><figure><img src="assets/video/school-sleepy.jpg" width="960" height="536" alt="베개에 기댄 졸린 얼굴"><figcaption>베개에 기댄 졸린 얼굴</figcaption></figure><figure><img src="assets/video/school-alarm.jpg" width="960" height="536" alt="알람을 끄는 손 인서트"><figcaption>알람을 끄는 손 인서트</figcaption></figure><figure><img src="assets/video/school-stretch.jpg" width="960" height="536" alt="상반신 구도로 보여주는 기지개"><figcaption>상반신 구도로 보여주는 기지개</figcaption></figure></div><p class="clip-description">알람과 손의 짧은 인서트로 행동을 연결하고, 얼굴 클로즈업으로 잠기운을 표현하도록 설계했습니다. 기지개에는 긴 호흡을 배정해 컷의 속도에 차이를 주었습니다.</p><p class="clip-focus">고정 카메라 · 표정 중심의 클로즈업 · 알람이 멎은 뒤의 정적</p><details class="video-prompt"><summary><span class="prompt-open-label">클립 01 프롬프트 열기</span><span class="prompt-close-label">클립 01 프롬프트 닫기</span></summary><div class="video-prompt-content"><p>원본 영상의 워크플로우에 저장된 입력 프롬프트입니다. 타임코드는 클립별로 0초부터 시작합니다.</p><pre><code>subject_definitions:
   &lt;Subject 1&gt;: Fujita Kotone, as identified by the user. Use &lt;Picture 1&gt; for character identity, facial design,
@@ -283,5 +297,10 @@ N/A</code></pre>
     </section>
   </main>
   <footer class="wrap"><span>impacifist · AI Visual Portfolio</span><a href="#">맨 위로 ↑</a></footer>
+  <dialog id="scene-dialog" aria-labelledby="scene-dialog-title" aria-describedby="scene-dialog-note">
+    <div class="lightbox-header"><h2 id="scene-dialog-title">아직은 졸린 아침</h2><button type="button" id="close-scene">닫기 ×</button></div>
+    <img id="scene-dialog-image" alt="" width="960" height="536">
+    <div class="scene-dialog-bottom"><div><p id="scene-dialog-note"></p><p class="scene-credit">완성 영상에서 추출한 스틸 · 후지타 코토네 / 학원 아이돌마스터 · 비공식 개인 AI 영상 작업</p></div><div class="scene-pagination" role="group" aria-label="장면 이동"><button type="button" id="previous-scene" aria-label="이전 장면">←</button><span id="scene-position" aria-live="polite">1 / 6</span><button type="button" id="next-scene" aria-label="다음 장면">→</button></div></div>
+  </dialog>
   <dialog id="lightbox" aria-labelledby="lightbox-title"><div class="lightbox-header"><h2 id="lightbox-title"></h2><button type="button" id="close-lightbox" aria-label="확대 이미지 닫기">닫기 ×</button></div><img id="lightbox-image" alt=""><p id="lightbox-credit"></p></dialog>
 </body></html>
