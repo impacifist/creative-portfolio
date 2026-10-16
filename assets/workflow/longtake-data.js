@@ -18,7 +18,7 @@ window.longTakeGraph = {
     {id:'join12',x:1540,y:390,title:'구간 1 + 2 연결',sub:'ImageBatch / AudioConcat',ins:['영상 1','정리 영상 2','오디오 1','정리 오디오 2'],outs:['영상 1+2','오디오 1+2'],area:'finish',source:'subgraph #6019, #6020',desc:'중복 정리가 끝난 구간을 영상 배치와 오디오 각각으로 이어 붙입니다. AudioConcat 자체가 음성의 지각적 연속성이나 크로스페이드를 보장하는 것은 아닙니다.'},
     {id:'join123',x:1540,y:760,title:'세 구간과 출력 선택',sub:'Batch / Concat / LazySwitch',ins:['영상 1+2','정리 영상 3','오디오 1+2','정리 오디오 3'],outs:['선택된 영상','선택된 오디오'],area:'finish',source:'subgraph #6034, #6035, #6036, #6037, #6038, #6039, #6040, #6041',desc:'세 번째 구간을 누적 영상·오디오에 연결합니다. clip_count의 계산 결과로 LazySwitch를 제어해 요청한 구간 수에 맞는 출력을 선택합니다. 이 공개도는 최대 세 구간의 연결을 보여줍니다.'},
     {id:'enhance',x:1840,y:760,title:'선택적 후처리',sub:'Upsampler / Interpolate / RTX',ins:['선택된 영상'],outs:['최종 프레임'],area:'finish',source:'subgraph #4084, #2715, #2814, #2546, #2537, #2528, #2532',desc:'H3 업샘플, 프레임 보간, RTX 프레임 생성, 리사이즈·업스케일·리파이너와 워터마크 경로가 배치돼 있습니다. 실행 여부는 노드 스위치와 루트 옵션에 따릅니다. 모든 후처리가 켜졌거나 화질 향상이 검증됐다는 뜻은 아닙니다.'},
-    {id:'save',x:2140,y:760,title:'최종 영상 · 오디오 저장',sub:'DaSiWa_EnhancedVideoCombine',ins:['최종 프레임','선택된 오디오'],outs:[],area:'finish',source:'root #2568',desc:'최종 프레임과 선택된 오디오, 출력 FPS를 합쳐 인코딩·저장합니다. 완성 후에는 경계의 프레임 중복, 재생 속도, 음성 동기와 열화를 실제 결과로 확인해야 합니다.'},
+    {id:'save',x:2140,y:760,title:'최종 영상 · 오디오 저장',sub:'Video / Audio Encode & Save',ins:['최종 프레임','선택된 오디오'],outs:[],area:'finish',source:'root #2568',desc:'최종 프레임과 선택된 오디오, 출력 FPS를 합쳐 인코딩·저장합니다. 완성 후에는 경계의 프레임 중복, 재생 속도, 음성 동기와 열화를 실제 결과로 확인해야 합니다.'},
   ],
   edges: [
     ['resources',0,'guide1',0,'context'],['resources',0,'guide2',0,'context'],['resources',0,'guide3',0,'context'],
