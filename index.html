@@ -213,6 +213,18 @@
         <p>1~5명 캐릭터의 성격과 말투, 관계와 상황을 입력해 대사·행동·카메라 연출을 담은 콘티를 만드는 로컬 웹앱입니다. 컷을 편집하고 고정하거나, 저장한 콘티를 검색해 다시 작업할 수 있습니다.</p>
         <p>Seedance 2.0·MiniMax H3 가이드에 맞춰 변환하며, 30초 콘티는 15초 클립 두 개로 나눕니다. 대사와 화자는 프로그램이 원문 그대로 조립하고 영상 지시문은 영어로 구성합니다.</p>
         <p>Python과 JavaScript로 구현했습니다. OpenAI·호환 API, Claude, Ollama를 연결하며 한국어·영어·일본어 UI를 지원합니다. 캐릭터별 여러 참조 이미지를 지정하고 프롬프트 TXT·JSON·이미지 ZIP으로 내보낼 수 있습니다.</p>
+        <section class="director-techniques" aria-labelledby="director-techniques-title">
+          <h3 id="director-techniques-title">대사의 의도를 카메라 연출로</h3>
+          <p>공통 연출 지침과 75개 카메라 기법 목록을 AI에 전달합니다. 감정·정보·관계의 변화에 맞춰 구도를 선택하고, 각 컷에 그 장면을 보여주는 이유를 기록하도록 설계했습니다.</p>
+          <dl class="director-technique-list">
+            <div><dt>구도와 주의 대상<span>오버숄더 · 투샷 · 인서트 · 리액션</span></dt><dd>상대의 말이 미친 영향은 듣는 사람의 표정으로, 관계 변화는 두 사람의 거리로 보여줍니다. 손·소품의 단서는 인서트로 분리하고, 전경과 여백으로 관객의 시선을 정리합니다.</dd></div>
+            <div><dt>목적 있는 카메라 움직임<span>팬 · 틸트 · 돌리 · 트래킹</span></dt><dd>팬·틸트는 시선을 회전하고, 돌리·트래킹은 카메라 위치를 이동합니다. 시작 구도, 방향·속도, 종료 구도를 명시하며 정보 공개나 행동 추적에 필요할 때 선택합니다.</dd></div>
+            <div><dt>시선과 동선을 잇는 편집<span>대화축 · 시선 연결 · 전환 계기</span></dt><dd>인물의 위치와 바라보는 방향을 유지하고, 새 정보나 반응이 생기는 순간을 컷 전환의 계기로 삼습니다. 한 컷 안의 카메라 이동과 다음 컷으로의 편집을 구분합니다.</dd></div>
+            <div><dt>일본 2D 애니메이션의 연기<span>유지 샷 · 시선 변화 · 손 연기 · 반응의 여운</span></dt><dd>고정 구도에서도 눈·고개·손의 작은 움직임과 반응을 기다리는 시간으로 감정을 전달합니다. 과도한 회전이나 연속 줌을 피하고, 이야기의 변화에 맞춰 구도를 바꿉니다.</dd></div>
+          </dl>
+          <details class="source-detail"><summary>콘티 설계가 영상 프롬프트에 전달되는 방식</summary><p><code>purpose</code>에 컷의 목적, <code>visual</code>에 인물 배치·깊이·시선을 기록합니다. <code>camera</code>에는 샷 크기·앵글·움직임·전환을, <code>continuity</code>에는 다음 컷으로 이어질 상태를 담습니다.</p><p>변환 단계에서는 승인된 구도를 영어로 옮기고 프로그램이 카메라 항목을 명시적으로 조립합니다. 15초 경계에서 같은 컷이 나뉘어도 샷 크기·앵글·움직임·전환 지시를 공유해 카메라가 임의로 초기화되지 않도록 합니다.</p><p>기법 목록은 장면에 맞춰 선택하는 연출 어휘입니다. 모든 기법을 매번 사용하거나 영상 모델의 재현을 보장한다는 의미는 아닙니다. 이 설명은 현재 로컬 구현의 연출 지침을 기준으로 합니다.</p></details>
+          <a class="director-case-link" href="#current-storyboard">실제 제작 사례의 컷·대사·카메라 보기</a>
+        </section>
         <details class="source-detail"><summary>출력 검증과 현재 범위</summary><p>시간·컷 순서·대사 보존·공유 경계 상태를 검사하고, 구조화된 출력이 검증에 실패하면 최대 한 번 추가 호출로 교정합니다. 실제 영상과 콘티 이미지를 생성하는 기능은 포함하지 않습니다.</p><p>공개 베타이며 자동 검증은 모의 AI로 수행했습니다. 실제 유료 모델의 생성 품질과 영상의 연속성을 보장하지 않습니다.</p></details>
         <div class="inline-links"><a class="primary-action" href="https://github.com/impacifist/ai-video-storyboard-generator" target="_blank" rel="noopener noreferrer">GitHub · 다운로드 ↗</a><a href="https://github.com/impacifist/ai-video-storyboard-generator/blob/main/README.ko.md" target="_blank" rel="noopener noreferrer">한국어 사용 안내 ↗</a></div>
         <figure class="dataset-capture"><a href="assets/storyboard-generator/create-ko.png" target="_blank" rel="noopener noreferrer" aria-label="한국어 스토리보드 제작 화면 크게 보기"><img src="assets/storyboard-generator/create-ko.png" width="1600" height="1050" alt="캐릭터 성격과 말투를 설정하고 대사·행동·카메라 연출이 있는 컷을 편집하는 한국어 화면. 첫 컷은 고정된 상태."></a><figcaption>직접 작성한 공개 예시로 촬영한 실제 UI입니다. 클릭하면 크게 볼 수 있습니다.</figcaption></figure>
