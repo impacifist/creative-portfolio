@@ -20,7 +20,7 @@
   h1{font-size:clamp(34px,2.7vw,48px)}
   #technology{display:grid;grid-template-columns:240px minmax(0,1fr);gap:0 28px;align-items:start}
   #technology>.page-intro{grid-column:1/-1}
-  #technology>.technology-nav{grid-column:1;grid-row:2;display:flex;flex-direction:column;position:sticky;top:24px;gap:8px;margin:0}
+  #technology>.technology-nav{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:8px;margin:0}
   .technology-nav button{padding:17px 18px;border-radius:10px;background:transparent;border-color:var(--line);box-shadow:none}
   .technology-nav button:hover{transform:none;box-shadow:none;background:var(--action-soft)}
   .technology-nav button[aria-selected=true],.technology-nav button[aria-selected=true]:hover{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:none}
@@ -37,7 +37,7 @@
   .project-copy .text-flow{font-size:12px;gap:8px 12px}
   .project-copy .text-flow li:not(:last-child)::after{margin-left:12px}
   .project-copy .inline-links{gap:10px}
-  .project-media{position:sticky;top:24px}
+  .project-media{position:static}
   .project-media .dataset-capture{margin-top:0}
   .project-media .technology-example{margin-top:18px}
   .project-media .prompt-demo{grid-template-columns:1fr;gap:20px}
@@ -147,7 +147,6 @@ html{scroll-padding-top:110px}
 @media(min-width:1200px){
   .header.wrap{position:sticky;top:0;z-index:5;background:var(--bg);margin-top:0;min-height:88px}
   .category-panel{padding-top:28px}
-  #technology>.technology-nav,.project-media{top:112px}
   .technology-nav button{padding:14px 16px}
 }
 @media(min-width:801px) and (max-width:1100px){
