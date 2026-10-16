@@ -1,32 +1,6 @@
 'use strict';
-// Public functional groups only; no private workflow JSON or widget values.
-const nodes = [
- {id:'image',x:40,y:100,title:'참조 이미지',sub:'Image input',ins:[],outs:['이미지'],area:'input',desc:'같은 참조 이미지를 두 VLM에 전달합니다. 영상 생성기의 참조 조건은 생성 가이드에서 따로 구성합니다.'},
- {id:'prompt1',x:40,y:330,title:'Prompt Selector · 1',sub:'Clip 01 direction',ins:[],outs:['지시 텍스트'],area:'input',desc:'첫 클립의 동작과 카메라 지시를 준비합니다. 저장한 문구를 선택하거나 현재 내용을 편집합니다.'},
- {id:'prompt2',x:40,y:570,title:'Prompt Selector · 2',sub:'Clip 02 direction',ins:[],outs:['지시 텍스트'],area:'input',desc:'다음 클립에서 이어질 연출을 준비합니다. 목록은 공유하고 선택과 편집은 각자 유지합니다.'},
- {id:'vlm1',x:340,y:160,title:'VLM · 첫 클립',sub:'Ollama / image + text',ins:['이미지','지시'],outs:['프롬프트'],area:'input',desc:'참조 이미지와 첫 클립의 지시로 프롬프트를 구성합니다. 결과 텍스트를 확인한 뒤 생성에 사용합니다.'},
- {id:'vlm2',x:340,y:490,title:'VLM · 다음 클립',sub:'Ollama / image + text',ins:['이미지','지시'],outs:['프롬프트'],area:'input',desc:'같은 이미지와 두 번째 지시로 별도 프롬프트를 구성합니다. 첫 VLM과 연결·옵션을 공유합니다.'},
- {id:'guide1',x:640,y:160,title:'첫 클립 설정',sub:'Director · LoRA · Seed',ins:['프롬프트'],outs:['생성 조건','해상도'],area:'generate',desc:'첫 클립의 가이드·LoRA·시드를 정합니다. 공통 모델·샘플러 설정을 사용하고 해상도는 다음 클립에 전달합니다.'},
- {id:'guide2',x:640,y:490,title:'다음 클립 설정',sub:'Director · LoRA · Seed',ins:['프롬프트','해상도'],outs:['생성 조건'],area:'generate',desc:'다음 클립의 지시·LoRA·시드를 따로 설정합니다. 모델 자원과 샘플링 설정은 함께 관리합니다.'},
- {id:'clip1',x:940,y:160,title:'첫 클립 생성',sub:'Sampler · Video / Audio decode',ins:['생성 조건'],outs:['프레임·오디오','latent'],area:'generate',desc:'첫 클립의 영상과 오디오를 만듭니다. 프레임은 별도 저장으로, latent는 움직임 문맥으로 전달합니다.'},
- {id:'save1',x:1240,y:100,title:'첫 클립 저장',sub:'Save + frame passthrough',ins:['프레임·오디오'],outs:['프레임'],area:'generate',desc:'첫 클립을 개별 파일로 보관하고, 저장 노드를 통과한 프레임을 다음 생성의 문맥 입력으로 전달합니다.'},
- {id:'context',x:1240,y:420,title:'움직임 문맥',sub:'Motion Context',ins:['이전 프레임','이전 latent','다음 생성 조건'],outs:['문맥 조건','제거 프레임 수'],area:'generate',desc:'이전 프레임과 latent를 다음 생성 조건에 반영합니다. 겹치는 구간을 정리할 프레임 수도 함께 전달합니다.'},
- {id:'clip2',x:1540,y:420,title:'다음 클립 생성',sub:'Sampler · Video / Audio decode',ins:['생성 조건','문맥 조건'],outs:['프레임·오디오'],area:'generate',desc:'두 번째 클립의 초기 latent·시드와 문맥이 반영된 조건으로 영상과 오디오를 생성합니다.'},
- {id:'trim',x:1840,y:420,title:'중복 구간 제거',sub:'Motion Context Trim',ins:['프레임·오디오','제거 프레임 수'],outs:['정리된 클립'],area:'finish',desc:'문맥으로 겹친 두 번째 클립의 앞부분을 영상과 오디오에서 정리합니다.'},
- {id:'join',x:1840,y:800,title:'영상 · 오디오 연결',sub:'ImageBatch / AudioConcat',ins:['첫 클립','정리된 클립'],outs:['영상','오디오'],area:'finish',reverse:true,desc:'첫 클립과 정리한 두 번째 클립을 각각 영상·오디오로 연결합니다. 오디오는 바로 최종 저장으로 보냅니다.'},
- {id:'interpolate',x:1540,y:800,title:'프레임 보간',sub:'FrameInterpolate',ins:['영상'],outs:['보간 프레임'],area:'finish',reverse:true,desc:'연결된 영상에 중간 프레임을 추가합니다. 보간 배수에 맞춰 출력 FPS도 조정합니다.'},
- {id:'enhance',x:1240,y:800,title:'크기 · 화질 처리',sub:'Resize / Upscale / RTX',ins:['보간 프레임'],outs:['최종 프레임'],area:'finish',reverse:true,desc:'RTX 화질 처리를 적용합니다. 리사이즈·모델 업스케일·워터마크는 필요한 경우에 켭니다.'},
- {id:'save',x:940,y:800,title:'최종 영상 저장',sub:'Video + audio + FPS',ins:['최종 프레임','오디오'],outs:[],area:'finish',reverse:true,desc:'후처리한 영상과 연결된 오디오를 출력 FPS에 맞춰 저장하고 재생 속도와 음성 동기를 확인합니다.'}
-];
-// [source node, output slot, target node, input slot, data kind]
-const edges = [
- ['image',0,'vlm1',0,'image'],['image',0,'vlm2',0,'image'],['prompt1',0,'vlm1',1,'text'],['prompt2',0,'vlm2',1,'text'],
- ['vlm1',0,'guide1',0,'text'],['vlm2',0,'guide2',0,'text'],['guide1',1,'guide2',1,'context'],
- ['guide1',0,'clip1',0,'context'],['clip1',0,'save1',0,'image'],['save1',0,'context',0,'image'],['clip1',1,'context',1,'context'],
- ['guide2',0,'context',2,'context'],['guide2',0,'clip2',0,'context'],['context',0,'clip2',1,'context'],
- ['context',1,'trim',1,'context'],['clip2',0,'trim',0,'image'],['trim',0,'join',1,'image'],['clip1',0,'join',0,'image'],
- ['join',0,'interpolate',0,'image'],['interpolate',0,'enhance',0,'image'],['enhance',0,'save',0,'image'],['join',1,'save',1,'audio']
-];
+// Actual workflow groups are defined separately from the interactive viewer.
+const { nodes, edges } = window.longTakeGraph;
 const colors={image:'#8ccfa1',text:'#8fbbef',context:'#e1ae70',audio:'#d598d1'};
 const canvas=document.getElementById('canvas'), viewport=document.getElementById('viewport');
 const NS='http://www.w3.org/2000/svg', W=240;
@@ -37,7 +11,7 @@ const height=n=>92+(n.ins.length+n.outs.length)*24;
 function port(n,slot,out){return [n.x+((out!==!!n.reverse)?W:0),n.y+85+(slot+(out?n.ins.length:0))*24];}
 const nodeElements=new Map(), wireElements=[];
 let selected=null;
-function select(n){selected=n.id;document.getElementById('detail-title').textContent=n.title;document.getElementById('detail-text').textContent=n.desc;for(const[id,g]of nodeElements)g.classList.toggle('selected',id===selected);edges.forEach((e,i)=>{const related=e[0]===selected||e[2]===selected;wireElements[i].classList.toggle('related',related);wireElements[i].classList.toggle('dim',!related);});}
+function select(n){selected=n.id;document.getElementById('detail-title').textContent=n.title;document.getElementById('detail-text').textContent=n.desc;document.getElementById('detail-nodes').textContent=`원본 노드: ${n.source}`;for(const[id,g]of nodeElements)g.classList.toggle('selected',id===selected);edges.forEach((e,i)=>{const related=e[0]===selected||e[2]===selected;wireElements[i].classList.toggle('related',related);wireElements[i].classList.toggle('dim',!related);});}
 for(const [i,edge]of edges.entries()){const path=el('path',{class:'wire',stroke:colors[edge[4]],'data-edge':i});wireElements.push(path);document.getElementById('wires').append(path);}
 for(const n of nodes){
  const g=el('g',{class:'node','data-node':n.id,tabindex:0,role:'button','aria-label':n.title});

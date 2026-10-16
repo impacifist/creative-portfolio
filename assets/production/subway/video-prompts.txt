@@ -1,0 +1,173 @@
+Clip C01 | 0-15s | 15s
+
+subject_definitions
+<Subject 1> Character 1 — <Picture 1>; reference role: face. Hair color, facial expression, appearance, and clothing
+<Subject 2> Character 2 — <Picture 2>; reference role: face. Hair color, facial expression, appearance, and clothing
+<Subject 1> is Sora, defined by <Picture 1>. <Subject 2> is Haru, defined by <Picture 2>. Both characters remain seated in the subway car throughout this clip, with Sora occupying the left seat and Haru the right seat in a back-row bench.
+
+summary
+Sora initiates an animated story about forgetting her phone in a restroom and panicking after boarding the train, only to discover it missing when she returned. Haru listens with minimal physical response, offering brief acknowledgments that keep the conversation going. The clip establishes their contrasting energy levels and the spatial relationship of the subway seats.
+
+retention_analysis
+From <Picture 1>: preserve Sora's hair color, facial features, cheerful expression range, and clothing. From <Picture 2>: preserve Haru's hair color, facial features, tired/relaxed expression, and clothing. Both characters maintain consistent seated postures and screen positions.
+
+detailed_description
+Japanese 2D animation. Inside a moving subway car, early afternoon with bright natural light streaming through windows. Sora sits on screen left and Haru on screen right in the back row of seats. The car interior shows overhead route displays, handrails, and passing exterior brightness visible through windows. Steady ambient train motion sound throughout. Sora is energetic and leans toward Haru; Haru maintains a tired posture leaning against the backrest. The camera axis remains consistent from the aisle side facing the seats.
+
+[Shot 1]
+Camera: Medium-long two-shot; angle: Eye level of seated figures, frontal view of the seats; movement: Locked.
+Layout: Framed from the aisle, showing both figures from the knees up with a small gap between them. Sora occupies screen left, Haru screen right. Bright afternoon light and passing exterior shadows visible through the rear window. Composition leaves room on the left for Sora's rightward lean, while Haru remains against the backrest with minimal movement.
+Sora sits with both hands resting on her knees, then lifts them slightly and leans her upper body toward Haru on the right. While Sora calls out, Haru remains leaning back, gazing forward briefly before slowly shifting her eyes to Sora. As Sora finishes speaking, she smiles and prepares to continue, while Haru maintains her tired expression with eyes now on Sora.
+(S1) Character 1. Delivery: Brightly and familiarly calling out, then trailing off lightly as if recalling something interesting. <d>[Japanese] ねぇねぇ、そういえばさ。</d>
+At the end of this source shot: Cut as Haru's gaze reaches Sora, carrying the eye contact into the next shot
+
+[Shot 2] At 00:03.000,
+Camera: Medium shot; angle: Eye level, oblique angle close to Sora's frontal view; movement: Locked.
+Layout: Sora framed from the waist up on screen left-center, with Haru's shoulder partially visible on the right edge. Sora's face occupies the left-center area, and both hands fit fully in the lower-center frame. Empty space in front of Sora accommodates the mime gestures without appearing as actual handoff to Haru.
+Receiving Haru's attention, Sora straightens her posture slightly and begins her story. She forms one hand as if holding a small object, then mimes setting it down in the empty space in front of her. When mentioning boarding the train, she points to herself, and upon describing her panic, she widens her eyes and lifts her shoulders once. Haru's shoulder remains partially visible on screen right, indicating continued attention.
+(S1) Character 1. Delivery: Clear and brisk conversational pace, with a trace of laughter even when confessing the mistake. <d>[Japanese] トイレにスマホ忘れて電車乗っちゃって、めっちゃ焦ったんだけどさ。</d>
+At the end of this source shot: Cut on Sora's raised shoulder pose, connecting to a side two-shot where both reactions are visible
+
+[Shot 3] At 00:08.000,
+Camera: Medium two-shot; angle: Eye level, oblique side view of the seats; movement: Locked.
+Layout: Oblique angle from the aisle side showing Sora's right profile on screen left and Haru's near-frontal face on screen right in a waist-up composition. Sora's spreading hands occupy the lower space between them without blocking Haru's face.
+Sora drops the self-pointing hand and brings both hands together in front as she speaks of returning. When stating the phone was gone, she spreads both arms wide to the sides and raises her eyebrows. Haru's eyes briefly follow the hand gesture before returning to Sora's face and slowly blinking once.
+(S1) Character 1. Delivery: As if still surprised by the memory, brightening and emphasizing the final phrase. <d>[Japanese] 戻ったら、スマホなくなってたの！</d>
+At the end of this source shot: Cut as Haru reopens her eyes, shifting to a closer view that receives Haru's response
+
+[Shot 4] At 00:11.000,
+Camera: Over-the-shoulder medium close-up; angle: Eye level, over Sora's shoulder toward Haru; movement: Locked.
+Layout: Sora's shoulder in the left foreground, with Haru framed from the chest up in the right midground. Haru's half-lowered eyelids and small mouth movement are legible. Sora's spread hands remain outside the crop, continuing from the previous state.
+After opening her eyes, Haru gazes at Sora and offers a brief acknowledgment. Her jaw and body barely move, and even as her voice trails off, she does not avert her gaze. Sora, visible at the left frame edge, holds her spread-arm posture and waits for Haru's next words.
+(S2) Character 2. Delivery: Low and languid, as if receiving a familiar story, without force. <d>[Japanese] はいはい……。</d>
+At the end of this source shot: Cut on Haru's brief intake before continuing her question, shifting to a Sora-centered composition that receives the question
+
+[Shot 5] At 00:13.000,
+Camera: Sora-centered medium shot; angle: Eye level, oblique angle with Haru's profile in the foreground; movement: Locked.
+Layout: Sora occupies the left-center area from the waist up, with a small portion of Haru's profile and shoulder on the right foreground. Enough lower frame space to see Sora's face and her spread hands together. Haru's face appears small on the edge, connecting the questioner's position.
+As Haru asks about the outcome, Sora waits while watching Haru. Upon hearing the full question, Sora draws her spread hands back toward her body and straightens her upper body. Her expression brightens and she nods briefly. Haru remains leaning back with hands on her knees, maintaining the same low-energy vocal delivery.
+(S2) Character 2. Delivery: Maintaining a low, bored-sounding tone but lifting the final syllable slightly for clarity. <d>[Japanese] で、どうなったの？</d>
+End at shared boundary B01: Character 1: position=Seated on screen left in the back-row subway seat, upper body straightened and turned slightly toward Haru on the right; pose=Seated upright with both hands drawn inward in front of the chest, having just finished pulling spread arms back toward the body; gaze=Toward Haru's face on the right; emotion=Increasingly excited after receiving Haru's continued questions | Character 2: position=Seated on screen right in the back-row subway seat, leaning against the backrest; pose=Leaning back against the seat with both hands resting on her knees, maintaining a relaxed seated posture; gaze=Toward Sora's face on the left; emotion=Languid but willing to continue the conversation
+Continue this source shot into the next clip without an edit or camera reset.
+
+overall_soundscape
+Steady ambient train motion with muffled rolling wheels and occasional distant mechanical sounds from the moving subway car. Sora's voice is clear and animated; Haru's voice is quieter and flatter. No approaching-station announcements or door signals during this segment.
+
+non_diegetic_music
+N/A
+
+Clip C02 | 15-30s | 15s
+
+subject_definitions
+<Subject 1> Character 1 — <Picture 1>; reference role: face. Hair color, facial expression, appearance, and clothing
+<Subject 2> Character 2 — <Picture 2>; reference role: face. Hair color, facial expression, appearance, and clothing
+<Subject 1> is Sora, defined by <Picture 1>. <Subject 2> is Haru, defined by <Picture 2>. Both remain seated in the same subway back-row seats, Sora left and Haru right, throughout this clip.
+
+summary
+Sora explains how she asked a nearby friend to call her phone, miming the request and dialing gestures. She reveals that someone answered the call, pausing with anticipation for Haru to ask the obvious question. Haru obliges with a low-energy inquiry about the caller's identity, and Sora excitedly names Mizuha from the neighboring class, celebrating the unexpected connection with a big gesture. The contrast between Sora's excitement and Haru's subdued listening continues.
+
+retention_analysis
+From <Picture 1>: preserve Sora's hair color, expressive facial features, energetic smile range, and clothing. From <Picture 2>: preserve Haru's hair color, tired eyes, subdued expression, and clothing. Maintain the established screen-left/screen-right seating positions and consistent seated postures.
+
+detailed_description
+Japanese 2D animation. Continuing inside the same moving subway car, same seating arrangement with Sora on screen left and Haru on screen right. Bright early-afternoon light through windows, with the overhead route display visible above the aisle across from the seats. Sora's energy rises as she recounts asking a nearby friend to call her phone and mimes the dialing gesture. Haru continues to listen with minimal movement, eventually asking who answered. Steady train motion sound continues.
+
+[Shot 1]
+Camera: Sora-centered medium shot; angle: Eye level, oblique angle with Haru's profile in the foreground; movement: Locked.
+Layout: Sora occupies the left-center area from the waist up, with a small portion of Haru's profile and shoulder on the right foreground. Lower frame includes space for Sora's hands to move forward. Haru's face is small on the edge, maintaining the conversational axis.
+Continue the same source shot and ongoing camera motion; do not replay its opening or add a cut.
+Start at shared boundary B01: Character 1: position=Seated on screen left in the back-row subway seat, upper body straightened and turned slightly toward Haru on the right; pose=Seated upright with both hands drawn inward in front of the chest, having just finished pulling spread arms back toward the body; gaze=Toward Haru's face on the right; emotion=Increasingly excited after receiving Haru's continued questions | Character 2: position=Seated on screen right in the back-row subway seat, leaning against the backrest; pose=Leaning back against the seat with both hands resting on her knees, maintaining a relaxed seated posture; gaze=Toward Sora's face on the left; emotion=Languid but willing to continue the conversation
+Sora straightens her seated posture and draws her hands inward toward her body. Her expression brightens and she nods briefly. Haru remains leaning against the backrest with hands on her knees, gazing at Sora with the same languid demeanor.
+At the end of this source shot: Cut as Sora straightens and draws her hands in, leading to a two-shot with space for hand gestures
+
+[Shot 2] At 00:01.000,
+Camera: Medium two-shot; angle: Eye level, oblique angle close to frontal view of the seats; movement: Locked.
+Layout: Both figures from the waist up in a near-frontal two-shot. Sora on screen left, Haru on screen right, maintaining the established positions. Empty space below and in front of Sora for the mime gestures, which are directed toward Sora's own frontal space, not toward Haru. Haru's eyes and Sora's hands are legible in the same frame.
+Sora turns her face slightly toward the empty space in front of her and brings both hands together, briefly reenacting the request she made to a friend at the time. As she mentions asking to call her phone, she spreads her left hand flat like a screen and taps it twice with her right index finger, miming dialing. Sora then looks back at Haru with a smile. Haru's eyes move from the gesture to Sora's face. Sora's right hand pauses above the left after completing the tapping motion, and she does not yet continue to the next part of the story.
+(S1) Character 1. Delivery: Confidently, as if recalling a clever solution, with the request portion slightly emphasized in a playful tone. <d>[Japanese] そばにいた友達に、私のスマホに電話してって頼んだの！</d>
+At the end of this source shot: Cut as Sora turns her gaze back to Haru to continue, and the next shot receives this with the same left-right arrangement and paused hand pose
+
+[Shot 3] At 00:06.000,
+Camera: Sora-centered medium shot; angle: Eye level, maintaining the frontal aisle-side axis; movement: Locked.
+Layout: Sora large on screen left from the waist up, with Haru's shoulder and partial profile on the right edge. Frame includes both Sora's hands in front of her body and the raised hand beside her ear. Space remains on the right for Sora to lean her head forward into.
+Sora raises her right hand from the dialing mime to the side of her ear and lowers her left hand toward her body. While announcing that someone answered, she widens her eyes and smiles. She then lowers her right hand from the ear to chest level, leans her head slightly toward Haru, closes her mouth, and waits for a reaction.
+(S1) Character 1. Delivery: Excitedly emphasizing the unexpected connection, then lifting the final phrase to invite curiosity. <d>[Japanese] そしたら、誰か出たんだよ！</d>
+At the end of this source shot: Cut as Sora stops speaking and gazes at Haru in anticipation, shifting to a composition that receives Haru's response
+
+[Shot 4] At 00:09.000,
+Camera: Haru-centered medium close-up; angle: Eye level, over Sora's shoulder in an oblique view; movement: Locked.
+Layout: Sora's shoulder on the left foreground edge, with Haru framed from the chest up in the right midground. Haru's half-lowered eyelids and face turning slightly toward Sora are unobstructed.
+Haru sees Sora waiting and turns her jaw slightly. While maintaining her leaning posture, she asks who answered. In the foreground, Sora hears the question and begins to pull her head back slightly, preparing to open her mouth.
+(S2) Character 2. Delivery: Low and effortless voice, as if bored, asking briefly without rushing. <d>[Japanese] 誰が出たの？</d>
+At the end of this source shot: Cut as Sora prepares to answer, shifting to a two-shot that includes her gestures
+
+[Shot 5] At 00:11.000,
+Camera: Medium-long two-shot; angle: Eye level, oblique angle close to frontal view of the seats; movement: Locked.
+Layout: Both figures from above the knees in a two-shot. Space on both sides of Sora for her arms to spread laterally. Sora's hands spread in front of her own body and to the left, not blocking Haru's face. Haru remains in a stable posture parallel to the backrest on the right.
+Sora straightens her upper body and announces Mizuha's name from the neighboring class. She lifts her shoulders once in a large motion and spreads both hands wide, emphasizing the surprising encounter. She asks brightly whether it is not amazing, then beams at Haru. Haru keeps only her eyes on Sora's face, listening without moving her body.
+(S1) Character 1. Delivery: Confidently announcing the name, then with a bright, excited voice seeking Haru's agreement on the final question. <d>[Japanese] 隣のクラスのミズハさん！ すごくない！？</d>
+At the end of this source shot: Cut as Sora holds her spread-arm pose and smiles, waiting for agreement, and the next shot continues with a closer composition to receive Haru's quiet acknowledgment
+
+overall_soundscape
+Steady train motion sound with rolling wheels and muffled mechanical rumble. Sora's voice remains lively and clear; Haru's voice stays quiet and flat. No door chimes or announcements yet. Ambient continuity from the previous clip.
+
+non_diegetic_music
+N/A
+
+Clip C03 | 30-45s | 15s
+
+subject_definitions
+<Subject 1> Character 1 — <Picture 1>; reference role: face. Hair color, facial expression, appearance, and clothing
+<Subject 2> Character 2 — <Picture 2>; reference role: face. Hair color, facial expression, appearance, and clothing
+<Subject 1> is Sora, defined by <Picture 1>. <Subject 2> is Haru, defined by <Picture 2>. Sora begins seated on screen left, then stands and exits the frame. Haru remains seated on screen right throughout.
+
+summary
+Haru nods quietly in response to Sora's excitement, and Sora relaxes, lowering her hands to her knees with satisfaction. Sora's gaze drifts to the overhead route display across the aisle; she registers the recently passed station and suddenly realizes she has missed her stop. She stiffens, grips the front edge of the seat, pulls her feet under her, and quickly stands, turning toward the left aisle. She rushes off-screen left in the direction of the closed doors. Haru watches Sora's sudden departure, then looks down at the empty seat beside her and exhales a long, wordless sigh, shoulders dropping. The familiar contrast between Sora's impulsive energy and Haru's weary composure closes the sequence.
+
+retention_analysis
+From <Picture 1>: preserve Sora's hair color, facial features, range from bright smile to sudden panic, and clothing during both seated and standing poses. From <Picture 2>: preserve Haru's hair color, tired expression, and clothing in the final seated and sighing pose.
+
+detailed_description
+Japanese 2D animation. Continuing in the same moving subway car with Sora and Haru in the back-row seats, Sora left and Haru right. Bright early-afternoon light through windows. The overhead route display across the aisle is visible in some shots, showing a recently passed station marker. After Sora finishes her excited story, she notices the route display, realizes she has missed her stop, and abruptly stands and rushes off-screen left toward the closed doors. Haru watches from her seat and sighs at the empty space left behind. Train motion sound continues throughout; doors remain closed.
+
+[Shot 1]
+Camera: Medium two-shot; angle: Eye level, same frontal aisle-side view as the previous shot; movement: Locked.
+Layout: Both figures from the waist up with the same left-right arrangement. Space between their faces to clearly read Haru's small head nod and Sora's watching expression. Lower frame includes the upper legs where Sora's hands descend.
+Sora holds her spread-arm pose briefly while gazing at Haru. Haru nods her head once, a small motion without additional questions. Sora narrows her eyes in a smile, relaxes her shoulders, and lowers both hands to her knees.
+At the end of this source shot: Cut as Sora's hands settle on her knees and the conversation quiets, then shift to a composition that includes the route display and Sora together
+
+[Shot 2] At 00:03.000,
+Camera: Medium depth composition including both Sora and the route display; angle: Around Sora's seated eye level, oblique view across the aisle from the established frontal axis; movement: Locked.
+Layout: Depth composition looking obliquely across the aisle from the seats' frontal side. Sora's profile and upper body occupy the left near space; the route display with its passed-station marker and progress arrow occupies the right upper distant space at a legible size. Haru remains off-frame to the right, still in her seat.
+After the conversation ends, Sora straightens her seated posture with hands resting on her knees. She shifts her gaze from Haru to the upper area across the aisle and lifts her chin slightly. Her gaze stops at the recently passed station marker on the route display. A trace of her smile still lingers.
+At the end of this source shot: Cut as Sora's gaze stops at the passed-station marker, shifting to a composition that shows her face and hands receiving the information
+
+[Shot 3] At 00:06.000,
+Camera: Sora-centered medium shot including face and both hands; angle: Eye level, oblique angle from the frontal aisle side; movement: Locked.
+Layout: Close medium shot capturing Sora from the head to the front edge of the seat. Sora occupies the left-center area, with Haru's profile and shoulder on the right edge. Sora's hands moving from knees to seat edge are visible in the lower frame, and her upward-gazing eyes and stopping smile are large enough to read. Haru's face on the edge shows her subtle reaction.
+Sora visually confirms the passed-station marker and the direction of travel on the route display. Her smile stops, her eyes widen, and her back suddenly straightens. She moves both hands from her knees to grip the front edge of the seat. She does not yet stand or pull her feet back. Haru, partially visible on the right edge, sees Sora's changed expression and lifts her eyelids slightly.
+At the end of this source shot: Cut as Sora's hands reach the seat edge, carrying this hand position into S13's foot-pulling and standing action
+
+[Shot 4] At 00:08.000,
+Camera: Two-shot capturing full-body standing transition and floor in front of seat; angle: Oblique view from the established frontal aisle side, around seated eye level; movement: Locked.
+Layout: Full-body two-shot maintaining the frontal aisle axis. Sora on screen left with floor space in front of the seat fully visible. Frame height accommodates Sora's head when standing from the beginning. Space on the left front aisle for Sora's turned body. Bright windows and fixed interior fixtures remain in the background.
+With her hands already gripping the seat edge, Sora pulls both feet under her body and plants them on the floor. She pushes against the seat for support and turns her knees and torso toward the left front aisle. She shifts her weight forward onto her feet and quickly stands, her upper body rising first and her arms following with exaggerated urgency. She releases the seat and now stands in the aisle directly in front of the seat, body turned left. Haru remains seated, lifting her chin to look up at Sora's face.
+At the end of this source shot: Cut as Sora finishes standing and shifts her weight toward the left aisle, and S14 continues the first step from the same axis
+
+[Shot 5] At 00:11.000,
+Camera: Medium two-shot showing Haru from above the knees and Sora's exit path; angle: Oblique view from the frontal aisle side, around Haru's seated eye level; movement: Locked, does not pan to follow Sora.
+Layout: Composition includes the left front aisle for Sora's exit motion and Haru's upper body on the right. Does not follow Sora's movement; instead holds the composition so the vacated seat is revealed and Haru's watching expression is preserved. Sora crosses the left frame edge and disappears.
+Sora takes her first step into the left aisle, swinging her arms quickly in short, rapid strides. She moves completely off-screen past the left frame edge. No action of reaching or opening doors is shown. Haru remains seated, following Sora with her head and eyes. After Sora disappears, the left seat previously blocked by her body is revealed, and Haru continues gazing briefly in the exit direction.
+At the end of this source shot: Cut after Sora completely exits the frame and Haru's gaze remains on the left exterior, receiving Haru's reaction in the final shot
+
+[Shot 6] At 00:13.000,
+Camera: Medium close-up of Haru and the adjacent empty seat; angle: Oblique view from the established frontal aisle side, at Haru's eye level; movement: Locked.
+Layout: Asymmetric composition with Haru on screen right from the chest up, and the empty left seat and backrest occupying the left half. Maintains the left-exit direction; Sora remains off-screen. Bright afternoon light unchanged, but the center of movement is now absent.
+Haru lowers her gaze from the left off-screen area to Sora's empty seat. She parts her lips slightly and exhales a long, wordless sigh, dropping both shoulders with the breath. She holds the tired sidelong glance at the empty seat and lowered shoulders for a brief final moment. Train motion sound continues.
+At the end of this source shot: Hold the post-sigh posture briefly, then end the video and ambient sound together
+
+overall_soundscape
+Steady train motion sound with rolling wheels and muffled mechanical rumble continuing from the previous clips. Sora's rapid footsteps briefly audible as she rushes off-screen. Haru's wordless exhale, soft and weary. No door chimes or opening sounds; doors remain closed. Ambient train sound sustains through the final empty moment.
+
+non_diegetic_music
+N/A

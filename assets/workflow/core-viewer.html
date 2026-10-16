@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>영상 제작 · 노드 연결도</title><link rel="stylesheet" href="core-viewer.css"><script defer src="core-viewer.js"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>H3 롱테이크 · 3구간 연결도</title><link rel="stylesheet" href="core-viewer.css"><script defer src="longtake-data.js"></script><script defer src="core-viewer.js"></script></head>
 <body>
-<header><strong>영상 제작 · 노드 연결도</strong><nav aria-label="보기 영역"><button data-view="all">전체</button><button data-view="input">입력</button><button data-view="generate">생성</button><button data-view="finish">연결·출력</button></nav><nav aria-label="확대 및 배치"><button id="minus" aria-label="축소">−</button><output id="zoom">100%</output><button id="plus" aria-label="확대">＋</button><button id="reset">배치 초기화</button></nav></header>
+<header><strong>H3 롱테이크 · 3구간 연결도</strong><nav aria-label="보기 영역"><button data-view="all">전체</button><button data-view="input">공통 설정</button><button data-view="generate">구간 생성</button><button data-view="finish">정리·출력</button></nav><nav aria-label="확대 및 배치"><button id="minus" aria-label="축소">−</button><output id="zoom">100%</output><button id="plus" aria-label="확대">＋</button><button id="reset">배치 초기화</button></nav></header>
 <main id="canvas" tabindex="0" aria-label="노드 연결도. 빈 곳을 드래그해 이동하고 노드를 드래그해 배치합니다. 휠로 확대, 방향키로 이동, Home 키로 전체 보기.">
-<svg id="graph" xmlns="http://www.w3.org/2000/svg" aria-labelledby="graph-title"><title id="graph-title">이미지와 클립별 지시에서 영상 생성, 움직임 문맥 전달, 중복 정리와 최종 저장까지의 연결</title><g id="viewport"><g id="groups"></g><g id="wires"></g><g id="nodes"></g></g></svg>
+<svg id="graph" xmlns="http://www.w3.org/2000/svg" aria-labelledby="graph-title"><title id="graph-title">세 구간의 latent 문맥 전달, 두 단계 샘플링, 연결부 혼합과 영상·오디오 출력 구조</title><g id="viewport"><g id="groups"></g><g id="wires"></g><g id="nodes"></g></g></svg>
 </main>
-<aside aria-live="polite"><strong id="detail-title">노드를 선택해 보세요</strong><p id="detail-text">빈 곳 드래그로 이동 · 노드 드래그로 배치 · 휠 또는 두 손가락으로 확대</p></aside>
-<footer><span><i class="image"></i>영상 <i class="text"></i>텍스트 <i class="context"></i>문맥 <i class="audio"></i>오디오</span><span>공개용 기능 구조도 · 개인 입력 제외</span></footer>
+<aside aria-live="polite"><strong id="detail-title">기능 그룹을 선택해 보세요</strong><p id="detail-text">선택하면 작동 방식과 대응하는 원본 노드 ID를 확인할 수 있습니다.</p><p id="detail-nodes"></p></aside>
+<footer><span><i class="image"></i>영상 <i class="context"></i>latent·조건 <i class="audio"></i>오디오</span><span>원본 노드를 기능별로 묶은 구조도 · 개인 입력 제외</span></footer>
 </body></html>

@@ -88,6 +88,7 @@ function routePortfolio() {
   const target = byId(location.hash.slice(1));
   const panel = target?.closest('[data-portfolio-panel]');
   selectPortfolio(panel?.id || 'video');
+  if (!panel || panel.id === 'video') window.selectVideoCase?.(target?.closest('[data-video-case-panel]')?.id || 'video-current-case');
   const project = target?.closest('.project-row');
   if (project && panel?.id === 'technology') selectTechnology(project.id);
   if (target && panel) requestAnimationFrame(() => {

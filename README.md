@@ -1,6 +1,12 @@
 # AI Visual Portfolio
 **포트폴리오:** https://impacifist.github.io/creative-portfolio/
 
+영상 제작 탭의 첫 사례는 **지하철에서 나누는 두 친구의 이야기**입니다. 2026-10-16 오후 2:31에 저장한 15컷·45초 콘티와 제공된 `video-prompts.json`의 원본 해시를 대조했습니다. 실제 페르소나·입력 원문, 15컷 탐색과 세 구간 프롬프트를 `production.js`가 읽어 표시합니다. 영상은 제작 중으로 표시하며 재생 파일을 꾸며 넣지 않았습니다. 기존 **30초 등교** 영상·스틸·프롬프트는 두 번째 사례에 보존했습니다. `#video-current-case`, `#video-school-case`로 직접 접근하며 기본 대문은 첫 사례입니다. 새 별도 페이지는 만들지 않습니다.
+
+공개 자료는 `assets/production/subway/`에 있으며 입력과 story, 최종 프롬프트를 보존하되 저장 이력·개인 경로·참조 파일명·시스템 프롬프트·API 설정은 제외했습니다. 저장 제목에 버스가 언급되지만 실제 배경은 지하철이며 사용자의 확인을 받아 이 기준으로 소개합니다. 완성 영상이 준비되면 `.current-film`의 준비 영역을 그 작품의 `<video controls playsinline preload="none">`와 실제 포스터로 교체합니다.
+
+워크플로우 탭은 **Dasiwa_H3_LongTakeNoCuts_3Clips** 원본과 해당 노드 구현을 읽고 다시 구성했습니다. `assets/workflow/longtake-data.js`는 17개 기능 그룹과 원본 노드 ID, 데이터 흐름을 정의하고 기존 viewer는 이동·확대·노드 상세 표시를 제공합니다. 본문은 공통 자원, latent 문맥, 두 단계 샘플링·혼합, 디코딩·중복 정리, 자원 제어·출력을 상세히 설명합니다. 개인 워크플로우 JSON과 위젯 입력은 배포하지 않습니다. 화질 열화 최소화는 설계 목적이며 정량 개선 결과로 소개하지 않습니다.
+
 기술·파이프라인의 첫 항목은 [AI 영상 스토리보드 생성기](https://github.com/impacifist/ai-video-storyboard-generator)입니다. 한국어 제작 화면과 30초 콘티를 15초씩 두 클립으로 변환하는 모의 AI 예시를 소개합니다. 캡처 원본은 해당 저장소의 `docs/screenshots/create-ko.png`, `convert-ko.png`이며 개인 설정·API 키·개인 콘티는 포함하지 않습니다.
 
 PC에서는 최대 1520px까지 사용하고, 기술 도구 목록·설명·실제 화면을 가로로 배치합니다. 영상·이미지 탭도 소개와 결과를 나란히 보여주며, 1200px 미만에서는 한 열 중심의 배치를 사용합니다. `desktop.css`가 기본 배치를, `studio.css`가 작품 중심의 여백·타이포그래피·색상과 반응형 마감을 담당합니다.
