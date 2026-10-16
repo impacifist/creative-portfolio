@@ -68,6 +68,7 @@
     }
     container.replaceChildren(...controls);
     select(0);
+    return select;
   }
   Promise.all([
     fetch('assets/production/subway/storyboard.json').then(r => { if (!r.ok) throw new Error('storyboard'); return r.json(); }),
@@ -83,7 +84,7 @@
     for (const [key, title] of Object.entries({title:'저장 제목', relationship:'관계', location:'장소', time:'시간', atmosphere:'분위기', situation:'시작 상황', intent:'원하는 상호작용', ending:'결말', style:'연출 스타일'})) field(original, title, doc.brief[key]);
     original.append(element('p', '원문에는 버스와 지하철 표현이 섞여 있습니다. 이번 사례는 실제 생성 결과를 기준으로 지하철 이야기로 소개합니다.', 'case-source-note'));
     document.getElementById('case-summary').textContent = doc.story.summary;
-    tabs(doc.story.shots, 'case-shot-list', 'case-shot-panel', shot => `${shot.id} · ${shot.duration}초`, shot => {
+    const selectShot = tabs(doc.story.shots, 'case-shot-list', 'case-shot-panel', shot => `${shot.id} · ${shot.duration}초`, shot => {
       const panel = document.getElementById('case-shot-panel'); panel.replaceChildren();
       panel.append(element('h4', `${shot.id} · ${shot.camera.size}`));
       field(panel, '보여주려는 것', shot.purpose); field(panel, '화면', shot.visual);
@@ -95,6 +96,35 @@
       if (!shot.dialogue.length) speech.append(element('p', '대사 없이 행동과 반응으로 이어지는 컷입니다.'));
       panel.append(speech);
       field(panel, '카메라', `${shot.camera.angle} / ${shot.camera.movement}\n${shot.camera.transition}`);
+    });
+    const shots = Object.fromEntries(doc.story.shots.map(shot => [shot.id, shot]));
+    const evidence = [
+      {title: '성격의 대비', request: '밝고 낙관적인 소라와 피곤해 보여도 이야기를 들어주는 하루.',
+        result: `${shots.S03.actions[1]}\n${shots.S03.actions[2]}`, ids: ['S03']},
+      {title: '일본어로 이어지는 대화', request: '휴대폰 분실 이야기에서 친구에게 전화를 부탁하고, 뜻밖의 통화 상대를 밝히는 흐름.',
+        result: `S06 · ${shots.S06.dialogue[0].text}\nS09 · ${shots.S09.dialogue[0].text}`, ids: ['S06', 'S09']},
+      {title: '원하는 결말', request: '소라가 급히 좌석에서 뛰쳐나가 프레임을 벗어나고, 남겨진 하루의 한숨으로 마무리.',
+        result: `${shots.S14.actions[1].split('. ')[0]}.\n${shots.S15.actions[1]}`, ids: ['S14', 'S15']},
+    ];
+    const evidenceContainer = document.getElementById('case-intent-evidence');
+    evidenceContainer.replaceChildren();
+    evidence.forEach(item => {
+      const card = element('article'); card.append(element('h4', item.title));
+      field(card, '내가 정한 방향 · 요약', item.request);
+      field(card, '콘티에서 구현된 모습 · 발췌', item.result);
+      const links = element('div', undefined, 'intent-shot-links');
+      item.ids.forEach(id => {
+        const button = element('button', `${id} 컷에서 확인`);
+        button.type = 'button';
+        button.addEventListener('click', () => {
+          selectShot(doc.story.shots.findIndex(shot => shot.id === id), true);
+          const panel = document.getElementById('case-shot-panel');
+          panel.focus({preventScroll: true});
+          panel.scrollIntoView({block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+        });
+        links.append(button);
+      });
+      card.append(links); evidenceContainer.append(card);
     });
     document.getElementById('case-reference-count').textContent = `캐릭터 참조 이미지 ${prompts.reference_count}장`;
     tabs(prompts.clips, 'case-clip-list', 'case-prompt-panel', clip => `${clip.id} · ${clip.duration}초`, clip => {
