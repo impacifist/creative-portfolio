@@ -196,11 +196,13 @@ document.querySelectorAll('#technology .project-row').forEach(project => {
   copy.className = 'project-copy';
   const media = document.createElement('div');
   media.className = 'project-media';
+  const wide = [];
   [...body.children].forEach(child => {
+    if (child.matches('.project-wide')) { wide.push(child); return; }
     (child.matches('.dataset-capture, .technology-example, .model-detail') ? media : copy).append(child);
   });
   layout.append(copy, media);
-  body.append(layout);
+  body.append(layout, ...wide);
 });
 
 // Each single-map clip is a spatial crop of the same public comparison video.
