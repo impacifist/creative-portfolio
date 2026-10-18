@@ -82,7 +82,7 @@
     });
     const original = document.getElementById('case-original-input');
     for (const [key, title] of Object.entries({title:'저장 제목', relationship:'관계', location:'장소', time:'시간', atmosphere:'분위기', situation:'시작 상황', intent:'원하는 상호작용', ending:'결말', style:'연출 스타일'})) field(original, title, doc.brief[key]);
-    original.append(element('p', '원문에는 버스와 지하철 표현이 섞여 있습니다. 이번 사례는 실제 생성 결과를 기준으로 지하철 이야기로 소개합니다.', 'case-source-note'));
+    original.append(element('p', '최신 원본은 11컷·43초입니다. 공개본은 S01~S07의 7컷·30초를 발췌했으며, 이 구성의 결말·요약·목표 길이는 발췌 범위에 맞춰 정리했습니다. 원본 전체는 별도 JSON으로 보존합니다.', 'case-source-note'));
     document.getElementById('case-summary').textContent = doc.story.summary;
     const selectShot = tabs(doc.story.shots, 'case-shot-list', 'case-shot-panel', shot => `${shot.id} · ${shot.duration}초`, shot => {
       const panel = document.getElementById('case-shot-panel'); panel.replaceChildren();
@@ -102,9 +102,9 @@
       {title: '성격의 대비', request: '밝고 낙관적인 소라와 피곤해 보여도 이야기를 들어주는 하루.',
         result: `${shots.S03.actions[1]}\n${shots.S03.actions[2]}`, ids: ['S03']},
       {title: '일본어로 이어지는 대화', request: '휴대폰 분실 이야기에서 친구에게 전화를 부탁하고, 뜻밖의 통화 상대를 밝히는 흐름.',
-        result: `S06 · ${shots.S06.dialogue[0].text}\nS09 · ${shots.S09.dialogue[0].text}`, ids: ['S06', 'S09']},
-      {title: '원하는 결말', request: '소라가 급히 좌석에서 뛰쳐나가 프레임을 벗어나고, 남겨진 하루의 한숨으로 마무리.',
-        result: `${shots.S14.actions[1].split('. ')[0]}.\n${shots.S15.actions[1]}`, ids: ['S14', 'S15']},
+        result: `S04 · ${shots.S04.dialogue[0].text}\nS06 · ${shots.S06.dialogue[0].text}`, ids: ['S04', 'S06']},
+      {title: '작은 반응의 연출', request: '들뜬 소라와 나른한 하루의 성격 차이를, 대사 뒤의 눈깜박임과 작은 미소로 이어가기.',
+        result: `${shots.S07.actions[0]}\n${shots.S07.actions[1]}`, ids: ['S07']},
     ];
     const evidenceContainer = document.getElementById('case-intent-evidence');
     evidenceContainer.replaceChildren();
@@ -126,10 +126,10 @@
       });
       card.append(links); evidenceContainer.append(card);
     });
-    document.getElementById('case-reference-count').textContent = `캐릭터 참조 이미지 ${prompts.reference_count}장`;
+    document.getElementById('case-reference-count').textContent = `캐릭터 2장·배경 1장, 총 ${prompts.reference_count}장의 참조 이미지`;
     tabs(prompts.clips, 'case-clip-list', 'case-prompt-panel', clip => `${clip.id} · ${clip.duration}초`, clip => {
       document.getElementById('case-prompt-text').textContent = clip.prompt;
-      document.getElementById('case-clip-scope').textContent = `${clip.shots.map(s => s.id).join(' · ')} / 전체 타임라인 ${clip.timeline_start}~${clip.timeline_end}초`;
+      document.getElementById('case-clip-scope').textContent = `${clip.shots.map(s => s.id).join(' · ')} / 프롬프트 설계 구간 ${clip.timeline_start}~${clip.timeline_end}초 · 최종 영상은 편집 후 27.46초`;
     });
   }).catch(() => {
     document.getElementById('case-summary').textContent = '자료를 불러오지 못했습니다. 아래 JSON·TXT 다운로드로 원문을 확인할 수 있습니다.';
