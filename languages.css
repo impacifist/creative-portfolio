@@ -1,0 +1,24 @@
+/* Keep language controls alongside the existing profile link. */
+.header-actions { display: flex; align-items: center; justify-self: end; gap: 14px; min-width: 0; }
+.language-picker { position: relative; display: inline-flex; color: var(--muted, #676176); }
+.language-trigger { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; color: inherit; background: transparent; border: 1px solid transparent; border-radius: 50%; cursor: pointer; }
+.language-trigger:hover, .language-trigger[aria-expanded="true"] { color: var(--accent, #7450b4); background: var(--action-soft, #ece6f5); }
+.language-picker button:focus-visible { outline: 2px solid var(--accent, #7450b4); outline-offset: 3px; }
+.language-menu { position: absolute; z-index: 20; top: calc(100% + 8px); right: 0; width: 172px; padding: 6px; background: #fff; border: 1px solid var(--line, #e0ddeb); border-radius: 12px; box-shadow: 0 8px 28px #302b4214; }
+.language-menu button { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 42px; padding: 9px 12px; color: var(--ink, #302b42); font: inherit; font-size: 13px; border: 0; border-radius: 7px; background: transparent; text-align: left; cursor: pointer; }
+.language-menu button:hover, .language-menu button[aria-checked="true"] { color: var(--accent, #7450b4); background: var(--action-soft, #ece6f5); }
+.language-check { visibility: hidden; }
+[aria-checked="true"] > .language-check { visibility: visible; }
+.header-actions .text-link { font-size: 12px; white-space: nowrap; }
+.notes-language { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+html:lang(ja) { font-family: "Yu Gothic UI", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; word-break: normal; overflow-wrap: anywhere; }
+.current-case-heading > div, .observations > div, .simple-flow > li, .longtake-rationale > div { min-width: 0; }
+.control-choices button { white-space: normal; overflow-wrap: anywhere; min-width: 0; }
+html:lang(en) .page-intro h1 { letter-spacing: -.035em; overflow-wrap: anywhere; }
+@media (min-width: 1101px) { .header.wrap { grid-template-columns: minmax(150px, 1fr) auto auto; gap: 18px; } }
+@media (max-width: 1100px) { .header-actions { grid-column: 2; grid-row: 1; } }
+@media (max-width: 600px) {
+  .header-actions { gap: 8px; }
+  .header-actions .text-link { font-size: 11px; }
+  .header.wrap { column-gap: 8px; }
+}

@@ -48,6 +48,7 @@
   const resizeObserver = new ResizeObserver(positionMarker);
   resizeObserver.observe(nav);
   positionMarker();
+  window.addEventListener('portfolio:languagechange', positionMarker);
   document.fonts.ready.then(positionMarker);
 
   document.querySelectorAll('.clip-stills img').forEach(img => {
@@ -78,10 +79,11 @@
     });
     document.querySelector('#scene-note-title').textContent = title;
     document.querySelector('#scene-note-copy').textContent = copy;
-    document.querySelector('#scene-dialog-title').textContent = shot.querySelector('.film-caption').textContent;
+    const caption = shot.querySelector('.film-caption');
+    document.querySelector('#scene-dialog-title').textContent = window.portfolioI18n?.sourceText(caption) || caption.textContent;
     const preview = document.querySelector('#scene-dialog-image');
     preview.src = image.src;
-    preview.alt = image.alt;
+    preview.alt = window.portfolioI18n?.sourceAttribute(image, 'alt') || image.alt;
     document.querySelector('#scene-dialog-note').textContent = copy;
     document.querySelector('#scene-position').textContent = `${activeShot + 1} / ${shots.length}`;
   }

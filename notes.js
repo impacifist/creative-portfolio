@@ -9,7 +9,8 @@ function updateNotesReturn() {
   };
   const [id, label] = destinations[section?.id] || ['technology', '포트폴리오'];
   document.querySelectorAll('[data-notes-return]').forEach(link => {
-    link.href = `index.html#${id}`;
+    const language = window.portfolioI18n?.language || new URLSearchParams(location.search).get('lang');
+    link.href = `index.html${['ko', 'en', 'ja'].includes(language) ? `?lang=${language}` : ''}#${id}`;
     link.textContent = `← ${label}로 돌아가기`;
   });
 }

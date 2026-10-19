@@ -227,5 +227,6 @@ function selectControlView(key) {
 controlChoices.forEach(button => button.addEventListener('click', () => selectControlView(button.dataset.controlView)));
 selectControlView(window.matchMedia('(max-width: 600px)').matches ? 'pose' : 'all');
 window.addEventListener('hashchange', routePortfolio);
+window.addEventListener('popstate', routePortfolio);
 window.addEventListener('pageshow', routePortfolio);
 routePortfolio();
