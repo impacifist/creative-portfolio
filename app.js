@@ -85,6 +85,15 @@ portfolioTabs.forEach((tab, index) => {
   });
 });
 function routePortfolio() {
+  // Preserve previously shared GPU links after moving the case to its own page.
+  if (location.hash.startsWith('#gpu-')) {
+    const page = new URL('gpu-engineering.html', location.href);
+    const language = new URLSearchParams(location.search).get('lang');
+    if (['ko', 'en', 'ja'].includes(language)) page.searchParams.set('lang', language);
+    if (location.hash !== '#gpu-unlock') page.hash = location.hash;
+    location.replace(page.href);
+    return;
+  }
   const target = byId(location.hash.slice(1));
   const panel = target?.closest('[data-portfolio-panel]');
   selectPortfolio(panel?.id || 'video');
