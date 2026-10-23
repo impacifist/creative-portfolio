@@ -8,7 +8,8 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2322241e'/%3E%3Cpath d='M19 16h8v32h-8zm18 0h8v32h-8z' fill='%23deff60'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="site.css"><link rel="stylesheet" href="portfolio-polish.css"><link rel="stylesheet" href="desktop.css"><link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="production-cases.css"><script defer src="content.js"></script><script defer src="production.js"></script><script defer src="app.js"></script><script defer src="studio.js"></script>
   <link rel="stylesheet" href="languages.css">
-  <script defer src="locales/content.js"></script><script defer src="locales/tools.js"></script><script defer src="locales/workflow.js"></script><script defer src="i18n.js"></script>
+  <link rel="stylesheet" href="gpu-case.css">
+  <script defer src="locales/content.js"></script><script defer src="locales/tools.js"></script><script defer src="locales/workflow.js"></script><script defer src="locales/gpu.js"></script><script defer src="i18n.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">본문으로 바로가기</a>
@@ -37,6 +38,7 @@
       </div>
       <section id="process" class="editorial-section"><h2>데이터에서 생성까지</h2><ol class="simple-flow"><li><h3>데이터 선별</h3><p>캐릭터별 50~150장.<br>의상의 일관성을 고려했습니다.</p></li><li><h3>배경 제거</h3><p>ComfyUI의 SAM3 노드로<br>캐릭터 영역을 분리했습니다.</p></li><li><h3>캡션 검수</h3><p>자동 태깅 후 배경 태그를 정리하고 트리거 워드를 부여했습니다.</p></li><li><h3>LoRA 학습</h3><p>kohya_ss로 학습하고<br>ComfyUI에서 생성했습니다.</p></li></ol><p id="evaluation" class="muted">화풍·캐릭터 특징·의상과 액세서리·포즈 구현을 기준으로 검토했습니다.</p><div class="inline-links"><a href="technical-notes.html#image-process">전처리 과정 자세히 보기 ↗</a><a href="#video">생성 이미지를 참조한 영상 보기 →</a></div></section>
       <section id="credits" class="editorial-section credits"><h2>출처와 제작 기여</h2><div><p><strong>후지타 코토네 · 학원 아이돌마스터</strong><br>THE IDOLM@STER™&amp; ©Bandai Namco Entertainment Inc.<br><a href="https://gakuen.idolmaster-official.jp/idol/kotone/" target="_blank" rel="noopener noreferrer">공식 캐릭터 소개 ↗</a></p><p><strong>벨리나 · 젠레스 존 제로</strong><br>작품·캐릭터: HoYoverse<br><a href="https://zenless.hoyoverse.com/ko-kr/" target="_blank" rel="noopener noreferrer">공식 작품 사이트 ↗</a></p><p>NVIDIA Cosmos 기반 파생 모델인 <a href="https://huggingface.co/circlestone-labs/Anima" target="_blank" rel="noopener noreferrer">Anima</a>와 <a href="https://github.com/bmaltais/kohya_ss" target="_blank" rel="noopener noreferrer">kohya_ss</a>를 사용했습니다. 본인 작업은 데이터 전처리, LoRA 학습, 워크플로우 구성과 이미지 생성입니다.</p><p class="fine-print">원작 캐릭터 기반의 비공식 개인 작업입니다. 비교 내용은 선택한 이미지의 관찰이며 정량 유사도 평가가 아닙니다.</p></div></section>
+      <aside class="gpu-discovery" aria-labelledby="gpu-discovery-title"><div><span class="gpu-kicker">제작 환경의 기술 기록</span><h2 id="gpu-discovery-title">작업 도구를 넘어, GPU 실행 환경까지.</h2><p>RTX 3090의 Windows 연산 경로를 진단하고, 부팅 인계와 측정 결과를 공개한 기술 사례입니다.</p></div><a href="#gpu-unlock">GPU 기술 사례 보기 →</a></aside>
       <noscript><p><a href="assets/kotone-reference.webp">참조 이미지</a> · <a href="assets/kotone-generated.png">생성 이미지</a>. 캐릭터 전환에는 JavaScript가 필요합니다.</p></noscript>
     </section>
     <section id="video" class="category-panel" role="tabpanel" aria-labelledby="portfolio-tab-video" data-portfolio-panel tabindex="0">
@@ -297,6 +299,32 @@ N/A</code></pre>
         <p>검색·태그·즐겨찾기로 문구를 찾고, 원본을 남겨 새 버전을 저장할 수 있습니다. 같은 워크플로우에서는 목록을 공유하면서 노드마다 다른 문구를 선택합니다.</p>
         <p>목록은 워크플로우에 저장하며 JSON 파일로 옮길 수 있습니다. Python과 JavaScript로 구현하고 Codex와 함께 개선했습니다. 별도 생성 모델 없이 사용하는 MIT 공개 도구입니다.</p>
         <div class="inline-links"><a href="https://github.com/impacifist/ComfyUI-Prompt-Selector" target="_blank" rel="noopener noreferrer">GitHub · 설치 파일 ↗</a><a href="https://github.com/impacifist/ComfyUI-Prompt-Selector/blob/main/README.ko.md" target="_blank" rel="noopener noreferrer">사용 방법과 예제 ↗</a></div>
+      </div></article>
+      <article id="gpu-unlock" class="project-row"><div class="project-number" aria-hidden="true">05</div><div>
+        <span class="gpu-kicker">시스템 진단 · 재현 가능한 검증</span>
+        <h2>Windows GPU UNLOCK</h2>
+        <p class="project-lead">같은 GPU에서,<br>부팅 인계의 차이를 찾다.</p>
+        <p>UEFI에서 성공을 보고해도 Windows의 연산 성능은 달랐습니다. RTX 3090·AMD 내장그래픽 환경으로 포팅하고, 언락 이후 리셋 없이 Windows로 이어가는 경로를 확인했습니다.</p>
+        <dl class="gpu-role"><dt>담당한 작업</dt><dd>RTX 3090 환경 포팅 · 부팅 인계 진단 · 동일 조건 벤치마크 · 공개 문서화</dd></dl>
+        <p>Codex와 협업해 구현·검증했습니다. 원천 코어는 Zagitta/gpu-unlock이며, rough2515-hub의 RTX 3080 UEFI 포트를 바탕으로 확장했습니다.</p>
+        <div class="inline-links gpu-links"><a href="https://github.com/impacifist/Windows-GPU-UNLOCK" target="_blank" rel="noopener noreferrer">공개 소스와 적용 안내 ↗</a><a href="https://github.com/impacifist/Windows-GPU-UNLOCK/blob/main/docs/RESULTS.en.md" target="_blank" rel="noopener noreferrer">측정 근거와 한계 ↗</a></div>
+        <figure class="dataset-capture gpu-benchmark" aria-labelledby="gpu-chart-title" aria-describedby="gpu-chart-caption">
+          <div class="gpu-chart-head"><span class="gpu-chip">RTX 3090 · WINDOWS</span><span class="gpu-date">2026.10.20</span></div>
+          <h3 id="gpu-chart-title">Windows에서 확인한 Tensor 연산.</h3>
+          <p class="gpu-chart-subtitle">동일 실행 파일 · 각 경로 3회 중앙값</p>
+          <div class="gpu-legend"><span><i class="gpu-swatch gpu-swatch-before" aria-hidden="true"></i>이전 부팅 경로</span><span><i class="gpu-swatch gpu-swatch-after" aria-hidden="true"></i>리셋 없는 Windows 인계</span></div>
+          <div class="gpu-measure"><div class="gpu-measure-heading"><h4>FP16 Tensor</h4><span>+78.47%</span></div><div class="gpu-bars" aria-hidden="true"><div class="gpu-bar gpu-bar-before" style="--bar:50.39%"><span>70.55</span></div><div class="gpu-bar gpu-bar-after" style="--bar:89.93%"><span>125.91</span></div></div></div>
+          <div class="gpu-measure"><div class="gpu-measure-heading"><h4>BF16 Tensor</h4><span>+82.48%</span></div><div class="gpu-bars" aria-hidden="true"><div class="gpu-bar gpu-bar-before" style="--bar:50.38%"><span>70.53</span></div><div class="gpu-bar gpu-bar-after" style="--bar:91.93%"><span>128.70</span></div></div></div>
+          <div class="gpu-chart-foot"><span>FP32 pedantic: 24.51 → 24.89</span><span>TFLOPS · FP32 누산</span></div>
+          <details class="gpu-values"><summary>정확한 측정값 보기</summary><div class="gpu-table-wrap"><table><caption>중앙값 · TFLOPS</caption><thead><tr><th scope="col">연산</th><th scope="col">이전 부팅 경로</th><th scope="col">리셋 없는 Windows 인계</th></tr></thead><tbody><tr><th scope="row">FP32 pedantic</th><td>24.505702</td><td>24.890281</td></tr><tr><th scope="row">FP16 / FP32</th><td>70.548081</td><td>125.907816</td></tr><tr><th scope="row">BF16 / FP32</th><td>70.529545</td><td>128.699728</td></tr></tbody></table></div></details>
+          <figcaption id="gpu-chart-caption">두 경로 모두 UEFI 성공을 보고한 뒤의 측정입니다. 미적용 콜드부팅 기준 실험이 아니며, 드라이버는 617.14로 유지했습니다.</figcaption>
+        </figure>
+        <section class="project-wide gpu-case-study" aria-labelledby="gpu-process-title">
+          <div class="gpu-section-heading"><span class="gpu-kicker">문제에서 공개 검증까지</span><h3 id="gpu-process-title">성공 메시지에서 멈추지 않은 진단.</h3></div>
+          <ol class="gpu-process"><li><span aria-hidden="true">01</span><h4>부팅 경계를 추적</h4><p>언락 상태와 Windows 인계를 구분하고, ASUS Boot Override로 리셋 없이 진입하는 경로를 확인했습니다.</p></li><li><span aria-hidden="true">02</span><h4>조건을 맞춰 측정</h4><p>같은 CUDA 12.6·cuBLAS 실행 파일의 4096 × 4096 GEMM을 비교했습니다. UEFI 성공과 실제 연산 결과를 별도로 기록했습니다.</p></li><li><span aria-hidden="true">03</span><h4>재현 자료로 공개</h4><p>EFI와 대응 소스를 해시로 연결하고, 영문·한국어 가이드와 읽기 전용 호환성 수집기를 공개했습니다. 도구 테스트 14개를 검증했습니다.</p></li></ol>
+          <div class="gpu-scope"><div><h4>실제로 확인한 범위</h4><p>RTX 3090 24 GiB · ASUS TUF B650M-PLUS WIFI · Ryzen 7 7800X3D · AMD iGPU · Windows 11 · NVIDIA 617.14</p></div><div><h4>아직 검증하지 않은 것</h4><p>다른 GPU·메인보드, 장시간 안정성, ComfyUI·게임의 실제 속도 향상은 미검증입니다. 범용화는 진단·제보 기반까지 구현했으며 EFI 지원 확대는 후속 과제입니다.</p></div></div>
+          <p class="gpu-learning">진단 → 가설 → 동일 조건 측정 → 근거와 한계 공개. 제작 환경의 문제를 재현 가능한 엔지니어링 기록으로 남겼습니다.</p>
+        </section>
       </div></article>
       <div class="inline-links section-links"><a href="#video-control-studio">Video Control net →</a><a href="#workflow">워크플로우 둘러보기 →</a><a href="#images">이미지 생성 사례 →</a></div>
     </section>
