@@ -134,6 +134,31 @@ async function selectLanguage(page, language) {
       await page.locator('[data-portfolio="video"]').click();
     }
     if (missing.size) console.log(JSON.stringify({ untranslated: [...missing] }, null, 2));
+    // The existing GPU deep link is now its own category, including nested chapters.
+    await page.goto(`${base}/?lang=en#gpu-unlock`);
+    assert.equal(await page.locator('#gpu-unlock').isVisible(), true);
+    assert.equal(await page.locator('#portfolio-tab-gpu-unlock').getAttribute('aria-selected'), 'true');
+    assert.equal(await page.locator('#technology [data-technology="gpu-unlock"]').count(), 0);
+    await page.locator('.gpu-values summary').click();
+    assert.equal(await page.locator('.gpu-values table').isVisible(), true);
+    assert.match(await page.locator('.gpu-values tbody').textContent(), /128\.699728/);
+    await selectLanguage(page, 'ja');
+    assert.equal(await page.locator('.gpu-values table').isVisible(), true);
+    await coverage();
+    for (const chapter of ['gpu-evidence', 'gpu-investigation', 'gpu-engineering', 'gpu-delivery']) {
+      await page.locator(`.gpu-section-nav a[href="#${chapter}"]`).click();
+      assert.equal(await page.locator('#gpu-unlock').isVisible(), true);
+      assert.equal(await page.locator('#portfolio-tab-gpu-unlock').getAttribute('aria-selected'), 'true');
+    }
+    await page.locator('#portfolio-tab-gpu-unlock').focus();
+    await page.keyboard.press('Home');
+    assert.equal(await page.locator('#video').isVisible(), true);
+    await page.keyboard.press('End');
+    assert.equal(await page.locator('#gpu-unlock').isVisible(), true);
+    await page.goto(`${base}/?lang=en#images`);
+    await page.locator('.gpu-discovery a').click();
+    assert.equal(await page.locator('#gpu-unlock').isVisible(), true);
+    assert.equal(await page.locator('#portfolio-tab-gpu-unlock').getAttribute('aria-selected'), 'true');
     for (const width of [320, 390, 768, 1100, 1200, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
       for (const language of ['ko', 'en', 'ja']) {
@@ -142,7 +167,7 @@ async function selectLanguage(page, language) {
         const menuBounds = await page.locator('#language-menu').boundingBox();
         assert.ok(menuBounds.x >= 0 && menuBounds.x + menuBounds.width <= width, `menu bounds ${width}/${language}`);
         await page.keyboard.press('Escape');
-        for (const panel of ['video', 'images', 'technology', 'video-control-studio', 'workflow']) {
+        for (const panel of ['video', 'images', 'technology', 'video-control-studio', 'workflow', 'gpu-unlock']) {
           await page.locator(`[data-portfolio="${panel}"]`).click();
           assert.equal(await page.locator('[data-portfolio-panel]:visible').count(), 1);
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `overflow ${width}/${language}/${panel}`);

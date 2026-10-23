@@ -121,7 +121,6 @@ const technologySummaries = {
   'vlm-pipeline': ['이미지 → 영상 프롬프트', 'VLM · Ollama · MiniMax H3'],
   'dataset-tools': ['LoRA 관리 → 프롬프트 준비', 'Python · ComfyUI'],
   'prompt-selector': ['문구 저장 → 선택 → 연결', 'Python · JavaScript · ComfyUI'],
-  'gpu-unlock': ['GPU 진단 → Windows 인계 → 검증', 'C · UEFI · Python · CUDA'],
 };
 technologyProjects.forEach((project, index) => {
   const button = document.createElement('button');
