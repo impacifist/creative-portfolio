@@ -61,8 +61,15 @@ const portfolioTabs = [...document.querySelectorAll('[data-portfolio]')];
 const portfolioPanels = [...document.querySelectorAll('[data-portfolio-panel]')];
 function selectPortfolio(key, { focus = false, updateUrl = false } = {}) {
   if (!portfolioPanels.some(panel => panel.id === key)) return;
+  const technical = ['technology', 'video-control-studio', 'workflow'].includes(key);
+  byId('technical-navigation').hidden = !technical;
+  byId('portfolio-tab-technology').setAttribute('aria-controls', technical ? key : 'technology');
+  document.querySelectorAll('#technical-navigation a').forEach(link => {
+    if (link.getAttribute('href') === `#${key}`) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
   portfolioTabs.forEach(tab => {
-    const selected = tab.dataset.portfolio === key;
+    const selected = tab.dataset.portfolio === (technical ? 'technology' : key);
     tab.setAttribute('aria-selected', String(selected));
     tab.tabIndex = selected ? 0 : -1;
     if (selected && focus) tab.focus();

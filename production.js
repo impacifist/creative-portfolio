@@ -117,6 +117,7 @@
         const button = element('button', `${id} 컷에서 확인`);
         button.type = 'button';
         button.addEventListener('click', () => {
+          document.getElementById('case-shot-panel').closest('details').open = true;
           selectShot(doc.story.shots.findIndex(shot => shot.id === id), true);
           const panel = document.getElementById('case-shot-panel');
           panel.focus({preventScroll: true});

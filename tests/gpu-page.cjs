@@ -25,13 +25,12 @@ const base = process.env.PORTFOLIO_URL || 'http://127.0.0.1:4186';
       assert.deepEqual(leftovers, []);
     }
     for (const language of ['en', 'ko', 'ja']) {
-      await page.goto(`${base}/?lang=${language}#images`);
+      await page.goto(`${base}/?lang=${language}#technology`);
       await page.waitForFunction(() => !!window.portfolioI18n);
       await page.evaluate(() => document.fonts.ready);
       const projectLink = page.locator('#portfolio-project-gpu');
-      const projectBounds = await projectLink.boundingBox();
-      const controlBounds = await page.locator('#portfolio-tab-video-control-studio').boundingBox();
-      assert.ok(projectBounds.x < controlBounds.x, 'project link sits left of Video Control net');
+      assert.equal(await page.locator('.portfolio-navigation [role="tab"]').count(), 3);
+      assert.equal(await projectLink.isVisible(), true, 'GPU case is discoverable under production skills');
       await projectLink.click();
       await page.waitForURL(`**/gpu-engineering.html?lang=${language}`);
       await page.waitForFunction(() => !!window.portfolioI18n);
@@ -40,8 +39,11 @@ const base = process.env.PORTFOLIO_URL || 'http://127.0.0.1:4186';
       assert.equal(await page.locator('[data-portfolio-panel]').count(), 0);
       assert.equal(await page.locator('script[src="app.js"]').count(), 0);
       assert.equal(await page.locator('.gpu-scope-map > li').count(), 6);
+      assert.equal(await page.locator('.gpu-scope-map').isVisible(), false, 'technical records start collapsed');
+      assert.equal(await page.locator('#gpu-evidence').isVisible(), true, 'result is visible before records');
       await page.locator('.gpu-values summary').click();
       assert.match(await page.locator('.gpu-values tbody').textContent(), /128\.699728/);
+      await page.locator('.focus-details > summary').click();
       for (const link of await page.locator('.gpu-section-nav a').all()) {
         await link.click();
         assert.equal(new URL(page.url()).pathname.endsWith('/gpu-engineering.html'), true);
@@ -63,9 +65,7 @@ const base = process.env.PORTFOLIO_URL || 'http://127.0.0.1:4186';
       for (const language of ['ko', 'en', 'ja']) {
         await page.evaluate(language => window.portfolioI18n.setLanguage(language), language);
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `project overflow ${width}/${language}`);
-        const current = await page.locator('[aria-current="page"]').boundingBox();
-        const control = await page.locator('[data-page-section="video-control-studio"]').boundingBox();
-        assert.ok(current.x < control.x, `project link position ${width}/${language}`);
+        assert.equal(await page.locator('.portfolio-navigation a').count(), 3);
         if (language !== 'ko') await noUntranslated();
       }
     }
@@ -79,6 +79,6 @@ const base = process.env.PORTFOLIO_URL || 'http://127.0.0.1:4186';
     assert.equal(await plain.locator('.gpu-scope-map > li').count(), 6);
     await plainContext.close();
     assert.deepEqual(errors, []);
-    console.log('PASS: independent project URL, navigation position, six scope areas, three languages, exact metrics, chapters, return links, legacy URLs, six viewport sizes and no-JS reading.');
+    console.log('PASS: three-category navigation, result-first case, collapsible evidence, three languages, exact metrics, chapters, return links, legacy URLs, six viewport sizes and no-JS reading.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

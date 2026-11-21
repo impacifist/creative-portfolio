@@ -7,6 +7,13 @@ async function selectLanguage(page, language) {
   await page.locator(`#language-menu [data-language="${language}"]`).click();
 }
 
+async function selectPanel(page, panel) {
+  if (['video-control-studio', 'workflow'].includes(panel)) {
+    await page.locator('[data-portfolio="technology"]').click();
+    await page.locator(`#portfolio-tab-${panel}`).click();
+  } else await page.locator(`[data-portfolio="${panel}"]`).click();
+}
+
 // Real browser checks: state preservation, late-rendered data, accessibility,
 // storage restrictions, deep links and narrow layouts, rather than catalog internals.
 (async () => {
@@ -72,7 +79,7 @@ async function selectLanguage(page, language) {
     assert.equal(await page.locator('#language-menu').isVisible(), false);
     assert.equal(await page.locator('.header-actions .text-link').evaluate(link => link === document.activeElement), true);
     await page.goto(`${base}/?lang=ko#video`);
-    await page.waitForSelector('#case-shot-list button');
+    await page.waitForSelector('#case-shot-list button', { state: 'attached' });
     const intro = await page.locator('.portfolio-intro').textContent();
     for (const language of ['en', 'ja']) {
       await selectLanguage(page, language);
@@ -81,6 +88,8 @@ async function selectLanguage(page, language) {
       assert.equal(await page.evaluate(() => localStorage.getItem('portfolio-language')), language);
       await coverage();
       await page.locator('[data-video-case="video-current-case"]').click();
+      const productionDetails = page.locator('.focus-details').filter({ has: page.locator('.production-steps') });
+      if (!await productionDetails.evaluate(element => element.open)) await productionDetails.locator(':scope > summary').click();
       for (const button of await page.locator('#case-shot-list button').all()) { await button.click(); await coverage(); }
       for (const button of await page.locator('#case-clip-list button').all()) { await button.click(); await coverage(); }
       await page.locator('[data-video-case="video-school-case"]').click();
@@ -105,11 +114,11 @@ async function selectLanguage(page, language) {
       }
       await page.locator('[data-portfolio="technology"]').click();
       for (const button of await page.locator('[data-technology]').all()) { await button.click(); await coverage(); }
-      await page.locator('[data-portfolio="video-control-studio"]').click();
+      await selectPanel(page, 'video-control-studio');
       for (const key of ['pose', 'depth', 'canny', 'all']) {
         await page.locator(`[data-control-view="${key}"]`).click(); await coverage();
       }
-      await page.locator('[data-portfolio="workflow"]').click();
+      await selectPanel(page, 'workflow');
       const frame = await page.locator('#workflow-viewer').contentFrame();
       await frame.locator('[data-node]').first().waitFor();
       await page.waitForFunction(lang => document.querySelector('#workflow-viewer').contentDocument.documentElement.lang === lang, language);
@@ -144,7 +153,7 @@ async function selectLanguage(page, language) {
         assert.ok(menuBounds.x >= 0 && menuBounds.x + menuBounds.width <= width, `menu bounds ${width}/${language}`);
         await page.keyboard.press('Escape');
         for (const panel of ['video', 'images', 'technology', 'video-control-studio', 'workflow']) {
-          await page.locator(`[data-portfolio="${panel}"]`).click();
+          await selectPanel(page, panel);
           assert.equal(await page.locator('[data-portfolio-panel]:visible').count(), 1);
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `overflow ${width}/${language}/${panel}`);
         }

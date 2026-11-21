@@ -1,0 +1,22 @@
+/* A short hiring-oriented overview, with the original evidence one click away. */
+.portfolio-intro{padding:28px 0 24px;border-bottom:1px solid var(--line);font-size:inherit;color:var(--ink)}
+.focus-eyebrow{font-size:10px;letter-spacing:.12em;color:var(--accent);font-weight:650}
+.portfolio-intro .focus-statement{font-size:clamp(23px,2.5vw,36px);line-height:1.5;letter-spacing:-.04em;margin:10px 0}
+.focus-statement strong{color:var(--accent);font-weight:650}
+.focus-skills{font-size:12px;color:var(--muted)}
+.focus-subnav{display:flex;flex-wrap:wrap;gap:8px 24px;padding:20px 0 0;font-size:13px;color:var(--muted)}
+.focus-subnav a{padding:7px 0}.focus-subnav [aria-current=page]{color:var(--accent);font-weight:650;text-decoration:underline;text-underline-offset:7px}
+.focus-contribution{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:24px 0;margin:26px 0;border-block:1px solid var(--line)}
+.focus-contribution dt{font-size:12px;font-weight:650;color:var(--accent);margin-bottom:8px}.focus-contribution dd{margin:0;font-size:13px;color:var(--muted);line-height:1.8}
+.focus-details{margin:26px 0;border:1px solid var(--line);border-radius:12px;padding:18px 22px;background:#fff7;min-width:0}
+.focus-details>summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--accent)}
+.focus-details[open]>summary{margin-bottom:24px}
+.focus-details>.gpu-project-scope{margin-bottom:0}
+.gpu-portfolio .gpu-hero{padding-bottom:30px}.gpu-portfolio .gpu-hero h1{font-size:clamp(36px,4.5vw,64px);line-height:1.2;letter-spacing:-.05em}
+.gpu-portfolio .gpu-section-nav{margin-bottom:32px;justify-content:flex-start}
+.gpu-portfolio>.gpu-evidence{margin-top:32px}.gpu-portfolio .gpu-evidence-copy h2{font-size:clamp(26px,3vw,38px)}
+.gpu-focus-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:24px 0;border-block:1px solid var(--line);margin-bottom:28px}
+.gpu-focus-summary h3{color:var(--accent);font-size:13px;margin-bottom:8px}.gpu-focus-summary p{font-size:13px;color:var(--muted);line-height:1.85}
+@media(min-width:1200px){.focus-contribution{grid-column:1/-1}.header .portfolio-navigation{flex:0 1 auto}.portfolio-intro{padding-top:24px}}
+@media(min-width:1100px){#video-current-case{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr);column-gap:40px;align-items:start}.current-case-heading{grid-column:1;grid-row:1;margin-top:12px}.current-case-heading h1{font-size:clamp(30px,3vw,46px)}.current-case-heading p{max-width:43ch}.production-status{display:none}.current-case-meta{grid-column:1;grid-row:2;justify-content:flex-start}.current-film{grid-column:2;grid-row:1/4}.current-scene-flow,.current-process,#video-current-case>.focus-contribution{grid-column:1/-1}}
+@media(max-width:800px){.portfolio-navigation{grid-template-columns:repeat(3,minmax(0,1fr))}.focus-contribution,.gpu-focus-summary{grid-template-columns:1fr;gap:16px}.focus-contribution>div{display:grid;grid-template-columns:80px minmax(0,1fr);gap:12px}.focus-contribution dt{margin:0}.focus-subnav{gap:4px 18px}.focus-details{padding:16px}.portfolio-intro{padding-top:20px}.focus-skills{font-size:11px}}
