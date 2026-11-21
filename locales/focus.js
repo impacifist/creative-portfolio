@@ -46,4 +46,11 @@
   '공개 자료와 검증 범위.': ['Public evidence and validation scope.', '公開資料と検証範囲。'],
   '완성 영상 보기 →': ['View finished films →', '完成映像を見る →'],
   '영상 제어 도구 보기 →': ['Explore the video control tool →', '映像制御ツールを見る →'],
+  '제작 도구를 넘어, GPU 실행 환경까지.': ['Beyond production tools, down to the GPU environment.', '制作ツールから、GPU実行環境まで。'],
+  'RTX 3090 환경 포팅 · Windows 연산 진단 · 성능 측정 · 공개 문서화': ['RTX 3090 adaptation · Windows compute diagnosis · Benchmarking · Public documentation', 'RTX 3090環境への移植 · Windows演算診断 · 性能測定 · 公開ドキュメント'],
+  '프로젝트 전체 지표 ·': ['Project-wide metrics ·', 'プロジェクト全体の指標 ·'],
+  '기준': ['snapshot', '時点'],
+  '기술 사례 보기 →': ['Explore the case study →', '技術事例を見る →'],
+  'GitHub 2.3K Stars의 공개 프로젝트.': ['An open-source project with 2.3K GitHub Stars.', 'GitHubで2.3K Starsを獲得した公開プロジェクト。'],
+  '본인 기여: RTX 3090 환경 포팅 · 부팅 인계 진단 · 성능 측정 · 공개 문서화': ['My contribution: RTX 3090 adaptation · Boot handoff diagnosis · Benchmarking · Public documentation', '本人の貢献：RTX 3090環境への移植 · 起動引き継ぎの診断 · 性能測定 · 公開ドキュメント'],
 });

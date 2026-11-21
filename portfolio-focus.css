@@ -4,6 +4,12 @@
 .portfolio-intro .focus-statement{font-size:clamp(23px,2.5vw,36px);line-height:1.5;letter-spacing:-.04em;margin:10px 0}
 .focus-statement strong{color:var(--accent);font-weight:650}
 .focus-skills{font-size:12px;color:var(--muted)}
+.gpu-recognition{display:flex;align-items:center;gap:22px 32px;padding:20px 24px;margin:20px 0 0;border:1px solid var(--action-border);border-radius:14px;background:linear-gradient(110deg,var(--action-soft),#fff);min-width:0}
+.gpu-recognition-copy{flex:1;min-width:0}.gpu-recognition-copy h2{font-size:18px;line-height:1.5;margin:5px 0}.gpu-recognition-copy p{font-size:12px;color:var(--muted);line-height:1.8}
+.gpu-recognition-proof{flex-shrink:0}.gpu-community-metrics{display:flex;align-items:baseline;gap:20px;font-size:11px;color:var(--muted)}.gpu-community-metrics span{white-space:nowrap}.gpu-community-metrics strong{font-size:24px;letter-spacing:-.04em;color:var(--accent);font-weight:700}.gpu-community-metrics span+span strong{font-size:19px}
+.gpu-recognition-proof small{display:block;margin-top:4px;font-size:10px;color:var(--muted)}.gpu-recognition-action{flex-shrink:0;font-size:13px;color:var(--accent);font-weight:600;padding:10px 0}
+@media(max-width:1100px){.gpu-recognition{flex-wrap:wrap}.gpu-recognition-copy{flex-basis:100%}.gpu-recognition-action{margin-left:auto}}
+@media(max-width:520px){.gpu-recognition{padding:16px;gap:12px}.gpu-recognition-copy h2{font-size:16px}.gpu-recognition-copy p{font-size:11px}.gpu-community-metrics{gap:16px}.gpu-community-metrics strong{font-size:22px}.gpu-recognition-action{font-size:12px}.gpu-recognition-proof{flex-shrink:1}}
 .focus-subnav{display:flex;flex-wrap:wrap;gap:8px 24px;padding:20px 0 0;font-size:13px;color:var(--muted)}
 .focus-subnav a{padding:7px 0}.focus-subnav [aria-current=page]{color:var(--accent);font-weight:650;text-decoration:underline;text-underline-offset:7px}
 .focus-contribution{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:24px 0;margin:26px 0;border-block:1px solid var(--line)}
